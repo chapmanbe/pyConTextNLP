@@ -22,5 +22,5 @@ setup(name='pyConTextNLP',
       #py_modules = pyn,
       packages=find_packages('src'),
       package_dir={'':'src'},
-      install_requires = ['python>=2.3','networkx>=1.0'],      
+      install_requires = ['python>=2.3','networkx>=1.0','nose'],      
      )

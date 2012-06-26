@@ -42,12 +42,14 @@ class contextItem(object):
         return self.__re
     def getRule(self):
         return self.__rule
-    def __str__(self):
-        txt = """literal<<%s>>; category<<%s>>; re<<%s>>; rule<<%s>>"""%(
+    def __unicode__(self):
+        txt = u"""literal<<%s>>; category<<%s>>; re<<%s>>; rule<<%s>>"""%(
             self.__literal,self.__category,self.__re, self.__rule)
         return txt
-    def __rpr__(self):
-        return self.__str__()
+    def __str__(self):
+        return unicode(self).encode('utf-8')
+    def __repr__(self):
+        return unicode(self).encode('utf-8')
    
 class itemData(list):
     def __init__(self,*args):
@@ -107,14 +109,16 @@ class itemData(list):
             else:
                 itm = contextItem(i)
             super(itemData,self).append(itm)
-    def __str__(self):
-        tmp = """itemData: %d items ["""%len(self)
+    def __unicode__(self):
+        tmp = u"""itemData: %d items ["""%len(self)
         for i in self:
             tmp = tmp+"%s, "%i.getLiteral()
         tmp = tmp+"]"
         return tmp
-    def __rpr__(self):
-        return self.__str__()
+    def __repr__(self):
+        return unicode(self).encode('utf-8')
+    def __str__(self):
+        return unicode(self).encode('utf-8')
 
 def instantiateFromCSV(csvFile):
     """takes a CSV file of itemdata rules and creates itemData instances.
