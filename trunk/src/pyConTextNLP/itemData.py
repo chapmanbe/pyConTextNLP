@@ -32,7 +32,7 @@ class contextItem(object):
     def __init__(self,args):
         self.__literal = args[0]
         self.__category = args[1]
-        self.__re = args[2]
+        self.__re = args[2] # I need to figure out how to read this raw string in properly
         self.__rule = args[3]
     def getLiteral(self):
         return self.__literal
@@ -133,7 +133,9 @@ def instantiateFromCSV(csvFile):
             case = row[0]
 #        print case
             category = items.get(case,itemData())
-            item = contextItem(row[1:])
+            tmp = row[1:5]
+            tmp[2] = ur"%s"%tmp[2] # convert the regular expression string into a raw string
+            item = contextItem(tmp)
             category.append(item)
             items[case] = category
         rownum += 1
