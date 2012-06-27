@@ -26,7 +26,7 @@ The module instantiates several instances of this object:
     8) definites
 """
 import csv
-
+import unicodecsv
 class contextItem(object):
     __numEnteries = 4
     def __init__(self,args):
@@ -120,11 +120,12 @@ class itemData(list):
     def __str__(self):
         return unicode(self).encode('utf-8')
 
-def instantiateFromCSV(csvFile):
+def instantiateFromCSV(csvFile, encoding='utf-8'):
     """takes a CSV file of itemdata rules and creates itemData instances.
     Expects first row to be header"""
     items = {} # dictionary of itemData categories to be returned to the user
-    reader = csv.reader( open(csvFile, 'rU') )
+    reader = unicodecsv.reader( open(csvFile, 'rU'),encoding=encoding )
+    #reader = csv.reader(open(csvFile, 'rU'))
     rownum=0
     for row in reader:
         if rownum == 0:

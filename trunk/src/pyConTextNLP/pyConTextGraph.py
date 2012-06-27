@@ -93,9 +93,12 @@ class tagObject(object):
     def getConTextCategory(self):
         return self.__ConTextCategory
     def getBriefDescription(self):
-        return u"""(%d,%d): %s (%s) <<%s>>"""%(self.getSpan()[0],self.getSpan()[1],
-                                              self.getLiteral(),self.getPhrase(),
-                                              self.getCategory())
+        description = u"""<<span>>(%d,%d); """%(self.getSpan()[0],self.getSpan()[1])
+        description+= u"""<<scope>>(%d,%d); """%(self.getScope()[0],self.getScope()[1])
+        description+= u"""<<literal>>%s; """%self.getLiteral()
+        description+= u"""<<matched phrase>>%s; """%self.getPhrase()
+        description+= u"""<<category>>%s"""%self.getCategory()
+        return description
     def getLiteral(self):
         """returns the term defining this object"""
         return self.__item.getLiteral()
@@ -254,18 +257,18 @@ class pyConText(object):
 	if( self.getVerbose() ):
 	    print u"cleaned text is now",self.__txt
     def __unicode__(self):
-        txt = u''
-	txt += 'rawTxt: %s\n'%self.__rawTxt
-	txt += 'txt: %s\n'%self.__txt
+        txt = u'_'*42+"\n"
+	txt += 'rawText: %s\n'%self.__rawTxt
+	txt += 'cleanedText: %s\n'%self.__txt
 	nodes = [n for n in self.__graph.nodes(data=True) if n[1].get('category','') == 'target']
 	for n in nodes:
 	    txt += "*"*32+"\n"
-	    txt += "TARGET: %s\n"%n[0].__str__()
+	    txt += "TARGET: %s\n"%n[0].__unicode__()
 	    modifiers = self.__graph.predecessors(n[0])
 	    for m in modifiers:
-	        txt += "->"*5+"MODIFIED BY: %s\n"%m.__str__()
+	        txt += "->"*5+"MODIFIED BY: %s\n"%m.__unicode__()
 	    
-        txt += "\n\n\n"
+        txt += u"_"*42+"\n"
         return txt
     def __str__(self):
         return unicode(self).encode('utf-8')
