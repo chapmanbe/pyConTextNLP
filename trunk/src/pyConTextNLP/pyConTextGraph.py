@@ -131,7 +131,8 @@ class tagObject(object):
     def __gt__(self,other): return self.__spanStart > other.__spanStart
     def __ge__(self,other): return self.__spanStart >= other.__spanStart
     def encompasses(self,other):
-        """tests whether other is completely encompassed with the current object"""
+        """tests whether other is completely encompassed with the current object
+           ??? should we not prune identical span tagObjects???"""
         if( self.__spanStart <= other.__spanStart and 
             self.__spanEnd >= other.__spanEnd ):
             return True
@@ -151,12 +152,12 @@ class pyConText(object):
     found in text and markedModifiers, tagObjects found in the text
     """
     # regular expressions for cleaning text
-    r1 = re.compile(r"""\W""")
-    r2 = re.compile(r"""\s+""")
-    r3 = re.compile(r"""\d""")
+    r1 = re.compile(r"""\W""",re.UNICODE)
+    r2 = re.compile(r"""\s+""",re.UNICODE)
+    r3 = re.compile(r"""\d""",re.UNICODE)
     # regular expression for identifying word boundaries (used for more
     # complex rule specifications
-    rb = re.compile(r"""\b""")
+    rb = re.compile(r"""\b""",re.UNICODE)
     def __init__(self,txt=u'',txtEncoding='utf-8'):
         """txt is the string to parse"""
         # __archive is for multisentence text processing. A markup is done
@@ -204,7 +205,7 @@ class pyConText(object):
                                                   "scope":copy.copy(self.__scope),
                                                   "scopeUpdated":self.__SCOPEUPDATED}
         self.__currentSentence += 1
-        self.setTxt()
+        self.setRawText()
     def setSentence(self,num):
         """
         set the current context to sentence num in the archive
@@ -216,14 +217,14 @@ class pyConText(object):
         self.__SCOPEUPDATED = self.__archive[num]["scopeUpdated"]
 
                                         
-    def setTxt(self,txt=u''):
+    def setRawText(self,txt=u''):
         """
         sets the current txt to txt and resets the current attributes to empty
         values, but does not modify the object archive
         """
 	if( self.getVerbose() ):
 	    print "Setting text to",txt
-        self.__rawTxt = unicode(txt).encoding(self.__txtEncoding)
+        self.__rawTxt = unicode(txt)
         self.__txt = None
         self.__graph = nx.DiGraph(sentence=self.__rawTxt)
         self.__scope = None
@@ -231,6 +232,8 @@ class pyConText(object):
         
     def getText(self):
         return self.__txt
+    def getRawText(self):
+        return self.__rawTxt
     def getNumberSentences(self):
         return len(self.__archive)
     def getCurrentSentenceNumber(self):
@@ -240,7 +243,7 @@ class pyConText(object):
         return self.__graph
     def getDocumentGraph(self):
         return self.__documentGraph
-    def getCleanTxt(self,stripNumbers=False):
+    def cleanText(self,stripNumbers=False):
         """Need to rename. applies the regular expression scrubbers to rawTxt"""
         self.__txt = self.r1.sub(" ",self.__rawTxt)
         self.__txt = self.r2.sub(" ",self.__txt)
@@ -318,7 +321,7 @@ class pyConText(object):
         IGNORECASE."""
             
         if( not self.__txt ):
-            self.getCleanTxt()
+            self.cleanText()
 
         # See if we have already created a regular expression
 
@@ -328,9 +331,9 @@ class pyConText(object):
             else:
                 regExp = item.getRE()
             if( ignoreCase ):
-                r = re.compile(regExp, re.IGNORECASE)
+                r = re.compile(regExp, re.IGNORECASE|re.UNICODE)
             else:
-                r = re.compile(regExp)
+                r = re.compile(regExp,re.UNICODE)
             self.res[item.getLiteral()] = r
         else:
             r = self.res[item.getLiteral()]
