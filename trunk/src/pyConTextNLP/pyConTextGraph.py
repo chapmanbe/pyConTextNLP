@@ -30,43 +30,43 @@ import copy
 tagObjectXMLSkel=\
 u"""
 <tagObject>
-    <id> %s </id>
-    <phrase> %s </phrase>
-    <literal> %s </literal>
-    <category> %s </category>
-    <spanStart> %d </spanStart>
-    <spanStop> %d </spanStop>
-    <scopeStart> %d </scopeStart>
-    <scopeStop> %d </scopeStop>
+<id> %s </id>
+<phrase> %s </phrase>
+<literal> %s </literal>
+<category> %s </category>
+<spanStart> %d </spanStart>
+<spanStop> %d </spanStop>
+<scopeStart> %d </scopeStart>
+<scopeStop> %d </scopeStop>
 </tagObject>
 """
 
 pyConTextXMLSkel = \
 u"""
 <pyConTextNLPMarkup>
-    <rawText> %s </rawText>
-    <cleanText> %s </cleanText>
-    <sentenceNumber> %s </sentenceNumber>
-    <nodes>
-        %s
-    </nodes>
-    <edges>
-        %s
-    </edges>
+<rawText> %s </rawText>
+<cleanText> %s </cleanText>
+<sentenceNumber> %s </sentenceNumber>
+<nodes>
+%s
+</nodes>
+<edges>
+%s
+</edges>
 </pyConTextNLPMarkUp>
 """
 edgeXMLSkel=\
 u"""
 <edge>
-    <startNode> %s </startNode>
-    <endNode> %s </endNode>
-    %s
+<startNode> %s </startNode>
+<endNode> %s </endNode>
+%s
 </edge>
 """
 nodeXMLSkel=\
 u"""
 <node>
-    %s
+%s
 </node>
 """
 class tagObject(object):
@@ -331,7 +331,7 @@ class pyConText(object):
             keys.sort()
             for k in keys:
                 attributeString += """<%s> %s </%s>\n"""%(k,n[1][k],k)
-            nodeString += nodeXMLSkel%(attributeString+"    %s"%n[0].getXML() )
+            nodeString += nodeXMLSkel%(attributeString+"%s"%n[0].getXML() )
 
         edges = g.edges(data=True)
         edges.sort()
@@ -342,11 +342,11 @@ class pyConText(object):
             attributeString = u''
             for k in keys:
                 attributeString += """<%s> %s </%s>\n"""%(k,e[2][k],k)
-            edgeString += "    %s"%edgeXMLSkel%(e[0].getTagID(),e[1].getTagID(),attributeString)
+            edgeString += "%s"%edgeXMLSkel%(e[0].getTagID(),e[1].getTagID(),attributeString)
 
         return pyConTextXMLSkel%(self.getRawText(),self.getText(),
                                        self.getCurrentSentenceNumber(),
-                                       u"    %s"%nodeString,u"    %s"%edgeString)
+                                       u"%s"%nodeString,u"%s"%edgeString)
     def __unicode__(self):
         txt = u'_'*42+"\n"
 	txt += 'rawText: %s\n'%self.__rawTxt
