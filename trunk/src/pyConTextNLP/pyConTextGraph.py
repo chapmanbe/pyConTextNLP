@@ -53,7 +53,7 @@ u"""
 <edges>
 %s
 </edges>
-</pyConTextNLPMarkUp>
+</pyConTextNLPMarkup>
 """
 edgeXMLSkel=\
 u"""
