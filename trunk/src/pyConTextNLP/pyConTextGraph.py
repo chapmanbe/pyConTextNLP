@@ -46,7 +46,7 @@ u"""
 <pyConTextNLPMarkup>
     <rawText> %s </rawText>
     <cleanText> %s </cleanText>
-    <sentenceNumber %s </sentenceNumber>
+    <sentenceNumber> %s </sentenceNumber>
     <nodes>
         %s
     </nodes>
@@ -346,7 +346,7 @@ class pyConText(object):
 
         return pyConTextXMLSkel%(self.getRawText(),self.getText(),
                                        self.getCurrentSentenceNumber(),
-                                       nodeString,edgeString)
+                                       u"    %s"%nodeString,u"    %s"%edgeString)
     def __unicode__(self):
         txt = u'_'*42+"\n"
 	txt += 'rawText: %s\n'%self.__rawTxt
