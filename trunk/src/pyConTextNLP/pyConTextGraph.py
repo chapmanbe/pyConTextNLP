@@ -25,7 +25,50 @@ import re
 import copy
 import networkx as nx
 import platform
+import copy
         
+tagObjectXMLSkel=\
+u"""
+<tagObject>
+    <id> %s </id>
+    <phrase> %s </phrase>
+    <literal> %s </literal>
+    <category> %s </category>
+    <spanStart> %d </spanStart>
+    <spanStop> %d </spanStop>
+    <scopeStart> %d </scopeStart>
+    <scopeStop> %d </scopeStop>
+</tagObject>
+"""
+
+pyConTextXMLSkel = \
+u"""
+<pyConTextNLPMarkup>
+    <rawText> %s </rawText>
+    <cleanText> %s </cleanText>
+    <sentenceNumber %s </sentenceNumber>
+    <nodes>
+        %s
+    </nodes>
+    <edges>
+        %s
+    </edges>
+</pyConTextNLPMarkUp>
+"""
+edgeXMLSkel=\
+u"""
+<edge>
+    <startNode> %s </startNode>
+    <endNode> %s </endNode>
+    %s
+</edge>
+"""
+nodeXMLSkel=\
+u"""
+<node>
+    %s
+</node>
+"""
 class tagObject(object):
     """
     A class that describes terms of interest in the text.
@@ -34,7 +77,7 @@ class tagObject(object):
     3) The location of the tag within the text being parsed
 
     """
-    def __init__(self, item, ConTextCategory,scope=None, **kwargs):
+    def __init__(self, item, ConTextCategory,scope=None, tagid='', **kwargs):
         """
         item: contextItem used to generate term
         ConTextCategory: category this term is being used for in pyConText
@@ -45,6 +88,7 @@ class tagObject(object):
         self.__spanStart = 0
         self.__spanEnd = 0
         self.__ConTextCategory = ConTextCategory
+        self.__tagID = tagid
         if( scope == None ):
             self.__scope = []
         else:
@@ -61,6 +105,8 @@ class tagObject(object):
         elif( 'backward' in self.__item.getRule().lower() ):
             self.__scope[1] = self.getSpan()[0]
             
+    def getTagID(self):
+        return self.__tagID
     def parseRule(self):
         """parse the rule for the associated"""
         pass
@@ -72,17 +118,25 @@ class tagObject(object):
     def limitScope(self,obj):
         """If self and obj are of the same category or if obj has a rule of
         'terminate', use the span of obj to
-        update the scope of self"""
+        update the scope of self
+        returns True if a termination rule modified the scope"""
         if( not self.getRule() or self.getRule()== 'terminate' or 
              (self.getCategory() != obj.getCategory() and obj.getRule() != 'terminate')):
-            return
-        if( 'forward' in self.getRule().lower() ):
+            return False
+        originalScope = copy.copy((self.getScope()))
+        if( 'forward' in self.getRule().lower() or 
+            'bidirectional' in self.getRule().lower() ):
             if( obj > self ):
                 self.__scope[1] = min(self.__scope[1],obj.getSpan()[0])
-        elif( 'backward' in self.getRule().lower() ):
+        elif( 'backward' in self.getRule().lower() or 
+              'bidirectional' in self.getRule().lower() ):
             if( obj < self ):
                 self.__scope[0] = max(self.__scope[0],obj.getSpan()[1])
-
+        if( obj.getRule() == 'terminate' and originalScope != self.__scope ):
+            return True
+        else:
+            return False
+        
     def applyRule(self,term):
         """applies self's rule to term. If the start of term lines within
         the span of self, then term may be modified by self"""
@@ -92,12 +146,17 @@ class tagObject(object):
             return True #term.updateModifiedBy(self)
     def getConTextCategory(self):
         return self.__ConTextCategory
+    def getXML(self):
+        return   tagObjectXMLSkel%(self.getTagID(),self.getPhrase(),self.getLiteral(),self.getCategory(),
+                                    self.getSpan()[0],self.getSpan()[1],
+                                    self.getScope()[0],self.getScope()[1])
+
     def getBriefDescription(self):
-        description = u"""<<span>>(%d,%d); """%(self.getSpan()[0],self.getSpan()[1])
-        description+= u"""<<scope>>(%d,%d); """%(self.getScope()[0],self.getScope()[1])
-        description+= u"""<<literal>>%s; """%self.getLiteral()
-        description+= u"""<<matched phrase>>%s; """%self.getPhrase()
-        description+= u"""<<category>>%s"""%self.getCategory()
+        description = u"""<phrase %s/> """%self.getPhrase()
+        description+= u"""<literal %s/> """%self.getLiteral()
+        description+= u"""<category %s/> """%self.getCategory()
+        description+= u"""<span %d %d/> """%(self.getSpan()[0],self.getSpan()[1])
+        description+= u"""<scope %d %d/> """%(self.getScope()[0],self.getScope()[1])
         return description
     def getLiteral(self):
         """returns the term defining this object"""
@@ -176,11 +235,13 @@ class pyConText(object):
         self.__documentGraph = nx.DiGraph()
 	self.__VERBOSE = False
         self.__txtEncoding = txtEncoding
+        self.__tagID = 0
 
         # regular expressions for finding text
         self.res = {}
-
-
+    def getNextTagID(self):
+        self.__tagID += 1
+        return u"cid%06d"%self.__tagID
     def toggleVerbose(self):
         """toggles the boolean value for verbose mode"""
 	self.__VERBOSE = not self.__VERBOSE
@@ -256,17 +317,53 @@ class pyConText(object):
         self.__scope= (0,len(self.__txt))
 	if( self.getVerbose() ):
 	    print u"cleaned text is now",self.__txt
+    def getXML(self,currentGraph = True):
+        if( currentGraph ):
+            g = self.__graph
+        else:
+            g = self.__documentGraph
+        nodes = g.nodes(data=True) 
+        nodes.sort()
+        nodeString = u''
+        for n in nodes:
+            attributeString = u''
+            keys = n[1].keys()
+            keys.sort()
+            for k in keys:
+                attributeString += """<%s> %s </%s>\n"""%(k,n[1][k],k)
+            nodeString += nodeXMLSkel%(attributeString+"    %s"%n[0].getXML() )
+
+        edges = g.edges(data=True)
+        edges.sort()
+        edgeString = u''
+        for e in edges:
+            keys = e[2].keys()
+            keys.sort()
+            attributeString = u''
+            for k in keys:
+                attributeString += """<%s> %s </%s>\n"""%(k,e[2][k],k)
+            edgeString += "    %s"%edgeXMLSkel%(e[0].getTagID(),e[1].getTagID(),attributeString)
+
+        return pyConTextXMLSkel%(self.getRawText(),self.getText(),
+                                       self.getCurrentSentenceNumber(),
+                                       nodeString,edgeString)
     def __unicode__(self):
         txt = u'_'*42+"\n"
 	txt += 'rawText: %s\n'%self.__rawTxt
 	txt += 'cleanedText: %s\n'%self.__txt
 	nodes = [n for n in self.__graph.nodes(data=True) if n[1].get('category','') == 'target']
+        nodes.sort()
 	for n in nodes:
 	    txt += "*"*32+"\n"
 	    txt += "TARGET: %s\n"%n[0].__unicode__()
 	    modifiers = self.__graph.predecessors(n[0])
+            modifiers.sort()
 	    for m in modifiers:
-	        txt += "->"*5+"MODIFIED BY: %s\n"%m.__unicode__()
+	        txt += "-"*4+"MODIFIED BY: %s\n"%m.__unicode__()
+                mms = self.__graph.predecessors(m)
+                if( mms ):
+                    for ms in mms:
+                        txt += "-"*8+"MODIFIED BY: %s\n"%ms.__unicode__()
 	    
         txt += u"_"*42+"\n"
         return txt
@@ -305,8 +402,10 @@ class pyConText(object):
             modifier = modifiers[i]
             for j in range(i+1,len(modifiers)):
                 modifier2 = modifiers[j]
-                modifier.limitScope(modifier2)
-                modifier2.limitScope(modifier)
+                if( modifier.limitScope(modifier2) ):
+                    self.__graph.add_edge(modifier2,modifier)
+                if( modifier2.limitScope(modifier) ):
+                    self.__graph.add_edge(modifier,modifier2)
 
     def markItems(self,items, mode="target"):
         """tags the sentence for a list of items
@@ -343,7 +442,8 @@ class pyConText(object):
         iter = r.finditer(self.__txt)
         terms=[]
         for i in iter:
-            tO = tagObject(item,ConTextMode, scope = self.__scope)
+            tO = tagObject(item,ConTextMode, tagid=self.getNextTagID(), 
+                           scope = self.__scope)
     
             tO.setSpan(i.span())
             tO.setPhrase(i.group())
@@ -459,10 +559,12 @@ class pyConText(object):
            for each sentence in the archive. Note that the algorithm in NetworkX 
            is different based on whether the Python version is greater than or
            equal to 2.6"""
+        # Note that this as written does not include the currentGraph in the DocumentGraph
+        # Maybe this should be changed
         self.__documentGraph = nx.DiGraph()
         for key in self.__archive.keys():
-            if( platform.python_version() <= '2.6' ):
-                g = self.__archive[key]["graph"]
+            g = self.__archive[key]["graph"]
+            if( platform.python_version() >= '2.6' ):
                 self.__documentGraph = nx.union(g,self.__documentGraph)
                 # this should work but doesn't preseve the node data attributes
             else:

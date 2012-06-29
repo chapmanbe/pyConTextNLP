@@ -24,6 +24,7 @@ class imageTools_test(unittest.TestCase):
         self.context.setRawText(self.su2)
         self.context.cleanText()
         assert self.context.getText().rfind(u'.') == -1
+    # add function to test DocumentGraph generation  
 def run():
     pass
     
