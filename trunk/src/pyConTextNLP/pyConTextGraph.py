@@ -220,7 +220,7 @@ class pyConText(object):
     # regular expression for identifying word boundaries (used for more
     # complex rule specifications
     rb = re.compile(r"""\b""",re.UNICODE)
-    def __init__(self,txt=u'',txtEncoding='utf-8'):
+    def __init__(self,txt=u'',unicodeEncoding='utf-8'):
         """txt is the string to parse"""
         # __archive is for multisentence text processing. A markup is done
         # for each sentence and then put in the archives when the next sentence
@@ -234,11 +234,14 @@ class pyConText(object):
         self.__SCOPEUPDATED = False
         self.__documentGraph = nx.DiGraph()
 	self.__VERBOSE = False
-        self.__txtEncoding = txtEncoding
+        self.__unicodeEncoding = unicodeEncoding
         self.__tagID = 0
 
         # regular expressions for finding text
         self.res = {}
+
+    def getUnicodeEncoding(self):
+        return self.__unicodeEncoding
     def getNextTagID(self):
         self.__tagID += 1
         return u"cid%06d"%self.__tagID
