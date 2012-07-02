@@ -12,7 +12,12 @@
 #See the License for the specific language governing permissions and
 #limitations under the License.
 
+"""Simple helper package for doing sentence splitting. Right now exception to termination terms (e.g. Mrs.) are stored in termExceptions, a list. This list could be modified by adding or deleting terms. When sentence splitting is performed both the exceptions, and upepr and lower case conversions of the terms are tested also."""
+termExceptions = ['.','Dr.','Mr.','Mrs.','Ms.','M.D.','Ph.D.','D.M.D.','R.N.','B.A.','A.B.','B.S.','q.','viz.','e.g.']
 def sentenceSplitter(txt):
+    tes = []
+    for t in termExceptions:
+        tes.extend([t,t.lower(),t.upper()])
     txt = txt.split()
     sentences = []
     wordLoc = 0
@@ -21,7 +26,7 @@ def sentenceSplitter(txt):
     while(wordLoc < len(txt) ):
         currentWord = txt[wordLoc]
         if( currentWord[-1] in '.?!' ):
-            if( currentWord in  ['.','Dr.','Mr.','Mrs','Ms.','M.D.','Ph.D.','D.M.D.','R.N.','B.A.','A.B.','B.S.','q.','viz.','e.g.']):
+            if( currentWord in  tes ):
                 wordLoc += 1
             elif( set('0123456789').intersection(currentWord) and not set('()').intersection(currentWord)):
                 wordLoc += 1
