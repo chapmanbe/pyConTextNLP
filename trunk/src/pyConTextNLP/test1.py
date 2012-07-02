@@ -25,7 +25,7 @@ class imageTools_test(unittest.TestCase):
         self.context.setRawText(self.su2)
         self.context.cleanText()
         assert self.context.getText().rfind(u'.') == -1
-    def text_sentenceSplitter1(self):
+    def test_sentenceSplitter1(self):
         """test whether we properly capture text that terminates without a recognized sentence termination"""
         sentences = helpers.sentenceSplitter(self.su3)
         assert len(sentences) == 2
