@@ -119,7 +119,7 @@ class tagObject(object):
         """If self and obj are of the same category or if obj has a rule of
         'terminate', use the span of obj to
         update the scope of self
-        returns True if a termination rule modified the scope"""
+        returns True if a obj modified the scope of self"""
         if( not self.getRule() or self.getRule()== 'terminate' or 
              (self.getCategory() != obj.getCategory() and obj.getRule() != 'terminate')):
             return False
@@ -132,7 +132,7 @@ class tagObject(object):
               'bidirectional' in self.getRule().lower() ):
             if( obj < self ):
                 self.__scope[0] = max(self.__scope[0],obj.getSpan()[1])
-        if( obj.getRule() == 'terminate' and originalScope != self.__scope ):
+        if( originalScope != self.__scope ):
             return True
         else:
             return False
@@ -383,8 +383,8 @@ class pyConText(object):
     def updateScopes(self):
         """
         update the scopes of all the marked modifiers in the txt. The scope
-        of a modifier is limited by its own span and the and the span of
-        modifiers in the same category marked in the text.
+        of a modifier is limited by its own span, the span of modifiers in the 
+        same category marked in the text, and modifiers with rule 'terminate'.
         """
 	if( self.getVerbose() ):
 	    print u"updating scopes"
@@ -405,9 +405,11 @@ class pyConText(object):
             modifier = modifiers[i]
             for j in range(i+1,len(modifiers)):
                 modifier2 = modifiers[j]
-                if( modifier.limitScope(modifier2) ):
+                if( modifier.limitScope(modifier2) and 
+                        modifier2.getRule().lower() == 'terminate'):
                     self.__graph.add_edge(modifier2,modifier)
-                if( modifier2.limitScope(modifier) ):
+                if( modifier2.limitScope(modifier) and 
+                        modifier.getRule().lower() == 'terminate'):
                     self.__graph.add_edge(modifier,modifier2)
 
     def markItems(self,items, mode="target"):
