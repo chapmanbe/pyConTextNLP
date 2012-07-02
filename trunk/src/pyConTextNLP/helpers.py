@@ -31,4 +31,12 @@ def sentenceSplitter(txt):
                 wordLoc = 0
         else:
             wordLoc += 1
+
+    # if any texts remains (due to failure to identify a final sentence termination,
+    # then take all remaining text and put into a sentences
+    if( txt ):
+        sentences.append(' '.join(txt) )
+
+    print sentences
+
     return sentences
