@@ -310,9 +310,12 @@ class pyConText(object):
         return self.__graph
     def getDocumentGraph(self):
         return self.__documentGraph
-    def cleanText(self,stripNumbers=False):
+    def cleanText(self,stripNonAlphaNumeric=False, stripNumbers=False):
         """Need to rename. applies the regular expression scrubbers to rawTxt"""
-        self.__txt = self.r1.sub(" ",self.__rawTxt)
+        if( stripNonAlphaNumeric ):
+            self.__txt = self.r1.sub(" ",self.__rawTxt)
+        else:
+            self.__txt = self.__rawTxt
         self.__txt = self.r2.sub(" ",self.__txt)
         if( stripNumbers ):
             self.__txt = self.r3.sub("",self.__txt)
