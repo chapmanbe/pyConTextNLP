@@ -152,11 +152,9 @@ class tagObject(object):
                                     self.getScope()[0],self.getScope()[1])
 
     def getBriefDescription(self):
-        description = u"""<phrase %s/> """%self.getPhrase()
-        description+= u"""<literal %s/> """%self.getLiteral()
-        description+= u"""<category %s/> """%self.getCategory()
-        description+= u"""<span %d %d/> """%(self.getSpan()[0],self.getSpan()[1])
-        description+= u"""<scope %d %d/> """%(self.getScope()[0],self.getScope()[1])
+        description = u"""<id> %s </id> """%self.getTagID()
+        description+= u"""<phrase> %s </phrase> """%self.getPhrase()
+        description+= u"""<category> %s </category> """%self.getCategory()
         return description
     def getLiteral(self):
         """returns the term defining this object"""
@@ -337,8 +335,21 @@ class pyConText(object):
             keys.sort()
             for k in keys:
                 attributeString += """<%s> %s </%s>\n"""%(k,n[1][k],k)
-            nodeString += nodeXMLSkel%(attributeString+"%s"%n[0].getXML() )
-
+            modificationString = u'' 
+            modifiedBy = self.__graph.predecessors(n[0])
+            if( modifiedBy ):
+                for m in modifiedBy:
+                    modificationString += u"""<modifiedBy>\n"""
+                    modificationString += u"""<modifyingNode> %s </modifyingNode>\n"""%m.getTagID()
+                    modificationString += u"""<modifyingCategory> %s </modifyingCategory>\n"""%m.getCategory()
+                    modificationString += u"""</modifiedBy>\n"""
+            modifies = self.__graph.successors(n[0])
+            if( modifies ):
+                for m in modifies:
+                    modificationString += u"""<modifies>\n"""
+                    modificationString += u"""<modifiedNode> %s </modifiedNode>\n"""%m.getTagID()
+                    modificationString += u"""</modifies>\n"""
+            nodeString += nodeXMLSkel%(attributeString+"%s"%n[0].getXML()+modificationString )
         edges = g.edges(data=True)
         edges.sort()
         edgeString = u''
