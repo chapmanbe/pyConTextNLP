@@ -12,36 +12,87 @@
 #See the License for the specific language governing permissions and
 #limitations under the License.
 
-"""Simple helper package for doing sentence splitting. Right now exception to termination terms (e.g. Mrs.) are stored in termExceptions, a list. This list could be modified by adding or deleting terms. When sentence splitting is performed both the exceptions, and upepr and lower case conversions of the terms are tested also."""
-termExceptions = ['.','Dr.','Mr.','Mrs.','Ms.','M.D.','Ph.D.','D.M.D.','R.N.','B.A.','A.B.','B.S.','q.','viz.','e.g.']
-def sentenceSplitter(txt):
-    tes = []
-    for t in termExceptions:
-        tes.extend([t,t.lower(),t.upper()])
-    txt = txt.split()
-    sentences = []
-    wordLoc = 0
-    digits = set('0123456789')
-    
-    while(wordLoc < len(txt) ):
-        currentWord = txt[wordLoc]
-        if( currentWord[-1] in '.?!' ):
-            if( currentWord in  tes ):
-                wordLoc += 1
-            elif( set('0123456789').intersection(currentWord) and not set('()').intersection(currentWord)):
-                wordLoc += 1
+"""
+The module defines a class sentenceSplitter that defines how sentence splitting is to be done including
+exception terms that include sentence termination terms but do not indicate a termination (e.g. Mrs.). 
+The exception terms are contained in the attribute exceptionTerms. Terms can be added or deleted
+through the class methods addExceptionTerms and deleteExceptionTerms. A short list of default terms
+common in English texts are included in the attribute defaultExceptions. By default these are
+used when a sentenceSplitter instance is created.
+"""
+class sentenceSplitter(object):
+    """Class for splitting sentences"""
+
+    def __init__(self, useDefaults=True, useCaseVariants=True):
+        """
+        useDefaults: Populate the exceptionTerms with default values
+        useCaseVariants: add upper and lower case variants of terms also
+        """
+
+        self.defaultExceptions = ['.','Dr.','Mr.','Mrs.','Ms.','M.D.',
+                               'Ph.D.','D.M.D.','R.N.','B.A.','A.B.',
+                               'B.S.','M.S.','q.','viz.','e.g.']
+        self.exceptionTerms = set(())
+
+        self.digits = set('0123456789')
+        if( useDefaults ):
+            for term in self.defaultExceptions:
+                try:
+                    self.exceptionTerms.add(term)
+                    if( useCaseVariants ):
+                        self.exceptionTerms.add(term.lower())
+                        self.exceptionTerms.add(term.upper())
+                except TypeError:
+                    print "Terms must be of type string. You provided %s which is a %s"%(term,type(term))
+
+    def addExceptionTerms(self, *terms, **kwargs): #addCaseVariants=True):
+        """add exception terms to list of terms not to terminate sentence at.
+        If keyword argument addCaseVariants = True is provided, then also add the lower and upper case variants to the list """
+        addCaseVariants = kwargs.pop('addCaseVariants', False)
+        for t in terms:
+            self.exceptionTerms.add(t)
+            if( addCaseVariants ):
+                self.exceptionTerms.add(t.lower())
+                self.exceptionTerms.add(t.upper())
+
+    def getExceptionTerms(self):
+        return self.exceptionTerms
+    def deleteExceptionTerms(self,*terms, **kwargs): #deleteCaseVariants=True):
+        """delete exception terms from list of terms not to terminate sentence at.
+        If keyword argument deleteCaseVariants = True is provided, then also delete the lower and upper case variants from the list"""
+        deleteCaseVariants = kwargs.pop('deleteCaseVariants', False)
+        for t in terms:
+            self.exceptionTerms.discard(t)
+            if( deleteCaseVariants ):
+                self.exceptionTerms.discard(t.lower())
+                self.exceptionTerms.discard(t.upper())
+
+    def splitSentences(self,txt):
+        """
+        Splt txt into sentences a list of sentences is returned
+        """
+        txt = txt.split()
+        sentences = []
+        wordLoc = 0
+        
+        while(wordLoc < len(txt) ):
+            currentWord = txt[wordLoc]
+            if( currentWord[-1] in '.?!' ):
+                if( currentWord in  self.exceptionTerms ):
+                    wordLoc += 1
+                elif( self.digits.intersection(currentWord) and 
+                        not set('()').intersection(currentWord)): # word doesn't include parentheses. Is this necessary?
+                    wordLoc += 1
+                else:
+                    sentences.append(' '.join(txt[:wordLoc+1])) 
+                    txt = txt[wordLoc+1:]
+                    wordLoc = 0
             else:
-                sentences.append(' '.join(txt[:wordLoc+1])) 
-                txt = txt[wordLoc+1:]
-                wordLoc = 0
-        else:
-            wordLoc += 1
+                wordLoc += 1
 
-    # if any texts remains (due to failure to identify a final sentence termination,
-    # then take all remaining text and put into a sentences
-    if( txt ):
-        sentences.append(' '.join(txt) )
+        # if any texts remains (due to failure to identify a final sentence termination,
+        # then take all remaining text and put into a sentence
+        if( txt ):
+            sentences.append(' '.join(txt) )
 
-    print sentences
-
-    return sentences
+        return sentences
