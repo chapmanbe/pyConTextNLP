@@ -343,6 +343,7 @@ class ConTextDocument(object):
         return unicode(self).encode('utf-8')
     def getConTextModeNodes(self,mode):
         nodes = [n[0] for n in self.__documentGraph.nodes(data=True) if n[1]['category'] == mode]
+        nodes.sort()
         return nodes
 
     def computeDocumentGraph(self):
@@ -489,6 +490,7 @@ class ConTextMarkup(nx.DiGraph):
         return unicode(self).encode('utf-8')
     def getConTextModeNodes(self,mode):
         nodes = [n[0] for n in self.nodes(data=True) if n[1]['category'] == mode]
+        nodes.sort()
         return nodes
     def updateScopes(self):
         """
@@ -646,9 +648,11 @@ class ConTextMarkup(nx.DiGraph):
                     self.add_edge(modifier, target)
     def getMarkedTargets(self):
         """
-        Return the list of marked targets in the current sentence
+        Return the list of marked targets in the current sentence. List is sorted by span
         """
-        return self.getConTextModeNodes("target")
+        targets = self.getConTextModeNodes("target")
+        targets.sort()
+        return targets
     def getNumMarkedTargets(self):
         """
         Return the number of marked targets in the current sentence
@@ -656,12 +660,45 @@ class ConTextMarkup(nx.DiGraph):
         return len(self.getConTextModeNodes("target"))
            
     def getModifiers(self, node):
-        return self.predecessors(node)
-    def isModifiedBy(self,node, modFilter):
-        """tests whether self is modified by term. Return modifier if true"""
+        """
+        return immediate predecessorts of node. The returned list is sorted by node span.
+        """
+        modifiers = self.predecessors(node)
+        modifiers.sort()
+        return modifiers
+    def isModifiedByCategory(self,node, queryCategory):
+        """
+        tests whether node in markUp is modified by a tagObject with category equal to queryCategory. Return modifier if True
+        """
         pred = self.getModifiers(node )
         for p in pred:
-            if( modFilter.lower() == p.getCategory().lower() ):
-                return p
+            if( queryCategory.lower() == p.getCategory().lower() ):
+                return True
                  
-        return None
+        return False
+    def isModifiedBy(self, node, query):
+        """
+        Tests whether node in markUp is modified by any tagObjects with category including query. This does not need to be an exact match. Thus "probable" will match "probable_existence" and "probable_negated_existence"
+        """
+        pred = self.getModifiers(node)
+        q = query.lower()
+        for p in pred:
+            if( q in p.getCategory().lower() ):
+                return True
+        return False
+
+    def getTokenDistance(self,n1,n2):
+        """returns the number of tokens (word) between n1 and n2"""
+        txt = self.getText()
+        if( n1 < n2 ):
+            start = n1.getSpan()[1]+1
+            end = n2.getSpan()[0]
+            direction = 1
+        else:
+            start = n2.getSpan()[1]+1
+            end = n1.getSpan()[0]
+            direction = -1
+
+        subTxt = txt[start:end]
+        tokens = subTxt.split()
+        return len(tokens)*direction
