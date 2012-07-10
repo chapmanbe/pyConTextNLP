@@ -26,6 +26,13 @@ import copy
 import networkx as nx
 import platform
 import copy
+
+r1 = re.compile(r"""\W""",re.UNICODE)
+r2 = re.compile(r"""\s+""",re.UNICODE)
+r3 = re.compile(r"""\d""",re.UNICODE)
+
+compiledRegExprs = {}
+
         
 tagObjectXMLSkel=\
 u"""
@@ -41,19 +48,18 @@ u"""
 </tagObject>
 """
 
-pyConTextXMLSkel = \
+ConTextMarkupXMLSkel = \
 u"""
-<pyConTextNLPMarkup>
+<ConTextMarkup>
 <rawText> %s </rawText>
 <cleanText> %s </cleanText>
-<sentenceNumber> %s </sentenceNumber>
 <nodes>
 %s
 </nodes>
 <edges>
 %s
 </edges>
-</pyConTextNLPMarkup>
+</ConTextMarkup>
 """
 edgeXMLSkel=\
 u"""
@@ -68,6 +74,13 @@ u"""
 <node>
 %s
 </node>
+"""
+
+ConTextDocumentXMLSkel=\
+u"""
+<ConTextDocument>
+%s
+</ConTextDocument>
 """
 class tagObject(object):
     """
@@ -162,7 +175,6 @@ class tagObject(object):
     def getCategory(self):
         """returns the category (e.g. CONJUNCTION) for this object"""
         return self.__item.getCategory()
-
     def setSpan(self,span):
         """set the span within the associated text for this object"""
         self.__spanStart = span[0]
@@ -176,7 +188,6 @@ class tagObject(object):
     def getPhrase(self):
         """return the actual matched phrase used to generate this object"""
         return self.__foundPhrase
-        
     def dist(self,obj):
         """returns the minimum distance from the current object and obj.
         Distance is measured as current start to object end or current end to object start"""
@@ -205,41 +216,181 @@ class tagObject(object):
         return unicode(self).encode('utf-8')
     def __repr__(self):
         return unicode(self).encode('utf-8')
-class pyConText(object):
+class ConTextDocument(object):
     """
     base class for context.
     build around markedTargets a list of termObjects representing desired terms
     found in text and markedModifiers, tagObjects found in the text
     """
-    # regular expressions for cleaning text
-    r1 = re.compile(r"""\W""",re.UNICODE)
-    r2 = re.compile(r"""\s+""",re.UNICODE)
-    r3 = re.compile(r"""\d""",re.UNICODE)
-    # regular expression for identifying word boundaries (used for more
-    # complex rule specifications
     rb = re.compile(r"""\b""",re.UNICODE)
-    def __init__(self,txt=u'',unicodeEncoding='utf-8'):
+    def __init__(self,unicodeEncoding='utf-8'):
         """txt is the string to parse"""
-        # __archive is for multisentence text processing. A markup is done
+        # __document capture the document level structure
         # for each sentence and then put in the archives when the next sentence
         # is processed
-        self.__archive = {}
-        self.__currentSentence = 0
-        self.__rawTxt = txt
-        self.__txt = None
-        self.__graph = nx.DiGraph()
-        self.__scope = None
-        self.__SCOPEUPDATED = False
-        self.__documentGraph = nx.DiGraph()
-	self.__VERBOSE = False
         self.__unicodeEncoding = unicodeEncoding
-        self.__tagID = 0
+        self.__document = nx.DiGraph()
+        self.__currentSentenceNum = 0
+        self.__currentSectionNum = 0
+        self.__document.add_node("document", category="section", __sectionNumber = self.__currentSectionNum)
+        self.__currentSectionNum += 1
+        self.__currentParent = "document"
+        self.__root = "document"
+        self.__documentGraph = None 
 
-        # regular expressions for finding text
-        self.res = {}
+    def insertSection(self,sectionLabel,setToParent=False):
+        self.__document.add_edge(self.__currentParent,sectionLabel,category="section",__sectionNumber=self.__currentSectionNum)
+        self.__currentSectionNum += 1
+        if( setToParent ):
+            self.__currentParent = self.__document.node(sectionLabel)
+
+    def getCurrentSentenceNumber(self):
+        return self.__currentSentenceNum
+    def getCurrentSectionNumber(self):
+        return self.__currentSectionNum
+    def setParent(self, label=None):
+        self.__currentParent = label
+    def getCurrentparent(self):
+        return self.__currentParent
+    def addSectionattributes(self,**kwargs):
+        for key in kwargs.keys():
+            self.__document.node[self.__currentParent][key] = kwargs[key]
+    def getUnicodeEncoding(self):
+        return self.__unicodeEncoding
+
+    def addMarkup(self, markup):
+        """
+        add the markup as a node in the document attached to the current parent.
+        """
+        # I'm not sure if I want to be using copy here
+        self.__document.add_edge(self.__currentParent,markup, 
+                category="markup",
+                sentenceNumber=self.__currentSentenceNum)
+        self.__currentSentenceNum += 1
+    def retrieveMarkup(self,sentenceNumber):
+        """
+        retrieve the markup corresponding to sentenceNumber
+        """
+        edge = [e for e in self.__document.edges(data=True) if e[2]['category'] == "markup" and e[2]['sentenceNumber'] == sentenceNumber]
+        if( edge ):
+            return edge[0]
+
+    def getSectionNodes(self,sectionLabel = None, category="markup"):
+        if( not sectionLabel ):
+            sectionLabel = self.__currentParent
+        successors = [(e[2]['__sectionNumber'],e[1]) for e in self.__document.out_edges(sectionLabel, data=True) 
+                                                            if e[2].get("category") == category]
+        successors.sort()
+        tmp = zip(*successors)
+        return tmp[1]
+
+    def getSectionMarkups(self, sectionLabel = None, returnSentenceNumbers=True ):
+        """return the markup graphs for the section ordered by sentence number"""
+        if( not sectionLabel ):
+            sectionLabel = self.__currentParent
+        successors = [(e[2]['sentenceNumber'],e[1]) for e in self.__document.out_edges(sectionLabel, data=True) 
+                                                            if e[2].get("category") == "markup"]
+        successors.sort()
+        if( returnSentenceNumbers ):
+            return successors
+        else:
+            tmp = zip(*successors)
+            return tmp[1]
+
+    def getDocumentSections(self):
+        edges = [ (e[2]['sectionNumber'],e[1]) for e in self.__document.edges(data=True) if e[2].get("category") == "section"]
+        edges.sort()
+        tmp = zip(*edges)
+        try:
+            tmp = tmp[1]
+            tmp.insert(0,self.__root)
+        except IndexError:
+            tmp = [self.__root]
+        return tmp
+
+    def getSectionText(self,sectionLabel = None ):
+        """
+        """
+        markups = self.getSectionMarkups(sectionLabel,returnSentenceNumbers = False)
+        txt = " ".join([ m.getText() for m in markups])
+        return txt
+
+    def getDocumentGraph(self):
+        if( not self.__documentGraph ):
+            self.computeDocumentGraph()
+        return self.__documentGraph
+
+    def getXML(self):
+        txt = u""
+
+        # get children sections of root
+        
+        sections = self.getDocumentSections()
+        for s in sections:
+            txt += u"""<section>\n<sectionLabel> %s </sectionLabel>\n"""%s
+            markups = self.getSectionMarkups(s)
+            for m in markups:
+                txt += u"<sentence>\n<sentenceNumber> %s </sentenceNumber>\n</sentence>\n%s"%(m[0],m[1].getXML())
+            txt += u"""</section>\n"""
+
+        return ConTextDocumentXMLSkel%txt
+    def __unicode__(self):
+        txt = u'_'*42+"\n"
+        return txt
+    def __str__(self):
+        return unicode(self).encode('utf-8')
+    def __repr__(self):
+        return unicode(self).encode('utf-8')
+    def getConTextModeNodes(self,mode):
+        nodes = [n[0] for n in self.__documentGraph.nodes(data=True) if n[1]['category'] == mode]
+        nodes.sort()
+        return nodes
+
+    def computeDocumentGraph(self, verbose=False):
+        """Create a single document graph from the union of the graphs created
+           for each sentence in the archive. Note that the algorithm in NetworkX 
+           is different based on whether the Python version is greater than or
+           equal to 2.6"""
+        # Note that this as written does not include the currentGraph in the DocumentGraph
+        # Maybe this should be changed
+        self.__documentGraph = nx.DiGraph()
+        if( verbose ):
+            print "Document markup has %d edges"%self.__document.number_of_edges()
+        markups = [e[1] for e in self.__document.edges(data=True) if e[2].get('category') == 'markup']
+        if( verbose ):
+            print "Document markup has %d conTextMarkup objects"%len(markups)
+        ic = 0
+        for i in range(len(markups)):
+        #for m in markups:
+            m = markups[i]
+            if( verbose ):
+                print "markup %d has %d total items including %d targets"%(i,m.number_of_nodes(),m.getNumMarkedTargets())
+
+            self.__documentGraph = nx.union(m,self.__documentGraph)
+            if( verbose ):
+                print "documentGraph now has %d nodes"%self.__documentGraph.number_of_nodes()
+
+class ConTextMarkup(nx.DiGraph):
+    """
+    base class for context document.
+    build around markedTargets a list of termObjects representing desired terms
+    found in text and markedModifiers, tagObjects found in the text
+    """
+    def __init__(self,txt=u'',unicodeEncoding='utf-8'):
+        """txt is the string to parse"""
+        # __document capture the document level structure
+        # for each sentence and then put in the archives when the next sentence
+        # is processed
+        super(ConTextMarkup,self).__init__(__txt=None,__rawtxt=txt,__scope=None,__SCOPEUPDATED=False)
+        self.__document = nx.DiGraph()
+        self.__document.add_node("top",category="document")
+	self.__VERBOSE = False
+        self.__tagID = 0
+        self.__unicodeEncoding = unicodeEncoding
 
     def getUnicodeEncoding(self):
         return self.__unicodeEncoding
+
     def getNextTagID(self):
         self.__tagID += 1
         return u"cid%06d"%self.__tagID
@@ -248,40 +399,7 @@ class pyConText(object):
 	self.__VERBOSE = not self.__VERBOSE
     def getVerbose(self):
         return self.__VERBOSE
-    def reset(self):
-        """deletes all archived values and sets all class attributes to empty or
-        zero values
-        """
-        self.__archive = {}
-        self.__graph = nx.DiGraph()
-        self.__scope = None
-        self.__SCOPEUPDATED 
-        self.__currentSentence = 0
-        self.__documentGraph = nx.DiGraph()
-    def commit(self):
-        """
-        takes the values stored in current attributes and copies them to the
-        object archive
-        """
-        # I'm not sure if I want to be using copy here
-        self.__archive[self.__currentSentence] = {"rawTxt":self.__rawTxt,
-                                                  "txt":self.__txt,
-                                                  "graph":self.__graph.copy(),
-                                                  "scope":copy.copy(self.__scope),
-                                                  "scopeUpdated":self.__SCOPEUPDATED}
-        self.__currentSentence += 1
-        self.setRawText()
-    def setSentence(self,num):
-        """
-        set the current context to sentence num in the archive
-        """
-        self.__rawTxt = self.__archive[num]["rawTxt"]
-        self.__txt = self.__archive[num]["txt"]
-        self.__graph = self.__archive[num]["graph"]
-        self.__scope = self.__archive[num]["scope"]
-        self.__SCOPEUPDATED = self.__archive[num]["scopeUpdated"]
 
-                                        
     def setRawText(self,txt=u''):
         """
         sets the current txt to txt and resets the current attributes to empty
@@ -289,44 +407,39 @@ class pyConText(object):
         """
 	if( self.getVerbose() ):
 	    print "Setting text to",txt
-        self.__rawTxt = unicode(txt)
-        self.__txt = None
-        self.__graph = nx.DiGraph(sentence=self.__rawTxt)
-        self.__scope = None
-        self.__SCOPEUPDATED = False
+        self.graph["__rawTxt"] = txt
+        self.graph["__txt"] = None
+        self.graph["__scope"] = None
+        self.graph["__SCOPEUPDATED"] = False
         
     def getText(self):
-        return self.__txt
+        return self.graph.get("__txt",u'')
+    def getScope(self):
+        return self.graph.get("__scope",u'')
+    def getScopeUpdated(self):
+        return self.graph.get("__SCOPEUPDATED")
     def getRawText(self):
-        return self.__rawTxt
-    def getNumberSentences(self):
-        return len(self.__archive)
-    def getCurrentSentenceNumber(self):
-        return self.__currentSentence
-
-    def getCurrentGraph(self):
-        return self.__graph
-    def getDocumentGraph(self):
-        return self.__documentGraph
+        return self.graph.get("__rawTxt",u'')
+    def getNumberSentences(self): # !!! Need to rewrite this to match graph
+        return len(self.__document)
     def cleanText(self,stripNonAlphaNumeric=False, stripNumbers=False):
         """Need to rename. applies the regular expression scrubbers to rawTxt"""
         if( stripNonAlphaNumeric ):
-            self.__txt = self.r1.sub(" ",self.__rawTxt)
+            txt = r1.sub(" ",self.getRawText() )
         else:
-            self.__txt = self.__rawTxt
-        self.__txt = self.r2.sub(" ",self.__txt)
+            txt = self.getRawText()
+
+        # clean up white spaces
+        txt = r2.sub(" ",txt)
         if( stripNumbers ):
-            self.__txt = self.r3.sub("",self.__txt)
+            txt = r3.sub("",txt)
            
-        self.__scope= (0,len(self.__txt))
+        self.graph["__scope"] = (0,len(txt))
+        self.graph["__txt"] = txt
 	if( self.getVerbose() ):
-	    print u"cleaned text is now",self.__txt
-    def getXML(self,currentGraph = True):
-        if( currentGraph ):
-            g = self.__graph
-        else:
-            g = self.__documentGraph
-        nodes = g.nodes(data=True) 
+	    print u"cleaned text is now",self.getText()
+    def getXML(self):
+        nodes = self.nodes(data=True) 
         nodes.sort()
         nodeString = u''
         for n in nodes:
@@ -336,21 +449,21 @@ class pyConText(object):
             for k in keys:
                 attributeString += """<%s> %s </%s>\n"""%(k,n[1][k],k)
             modificationString = u'' 
-            modifiedBy = self.__graph.predecessors(n[0])
+            modifiedBy = self.predecessors(n[0])
             if( modifiedBy ):
                 for m in modifiedBy:
                     modificationString += u"""<modifiedBy>\n"""
                     modificationString += u"""<modifyingNode> %s </modifyingNode>\n"""%m.getTagID()
                     modificationString += u"""<modifyingCategory> %s </modifyingCategory>\n"""%m.getCategory()
                     modificationString += u"""</modifiedBy>\n"""
-            modifies = self.__graph.successors(n[0])
+            modifies = self.successors(n[0])
             if( modifies ):
                 for m in modifies:
                     modificationString += u"""<modifies>\n"""
                     modificationString += u"""<modifiedNode> %s </modifiedNode>\n"""%m.getTagID()
                     modificationString += u"""</modifies>\n"""
             nodeString += nodeXMLSkel%(attributeString+"%s"%n[0].getXML()+modificationString )
-        edges = g.edges(data=True)
+        edges = self.edges(data=True)
         edges.sort()
         edgeString = u''
         for e in edges:
@@ -361,23 +474,22 @@ class pyConText(object):
                 attributeString += """<%s> %s </%s>\n"""%(k,e[2][k],k)
             edgeString += "%s"%edgeXMLSkel%(e[0].getTagID(),e[1].getTagID(),attributeString)
 
-        return pyConTextXMLSkel%(self.getRawText(),self.getText(),
-                                       self.getCurrentSentenceNumber(),
+        return ConTextMarkupXMLSkel%(self.getRawText(),self.getText(),
                                        u"%s"%nodeString,u"%s"%edgeString)
     def __unicode__(self):
         txt = u'_'*42+"\n"
-	txt += 'rawText: %s\n'%self.__rawTxt
-	txt += 'cleanedText: %s\n'%self.__txt
-	nodes = [n for n in self.__graph.nodes(data=True) if n[1].get('category','') == 'target']
+	txt += 'rawText: %s\n'%self.getRawText()
+	txt += 'cleanedText: %s\n'%self.getText()
+	nodes = [n for n in self.nodes(data=True) if n[1].get('category','') == 'target']
         nodes.sort()
 	for n in nodes:
 	    txt += "*"*32+"\n"
 	    txt += "TARGET: %s\n"%n[0].__unicode__()
-	    modifiers = self.__graph.predecessors(n[0])
+	    modifiers = self.predecessors(n[0])
             modifiers.sort()
 	    for m in modifiers:
 	        txt += "-"*4+"MODIFIED BY: %s\n"%m.__unicode__()
-                mms = self.__graph.predecessors(m)
+                mms = self.predecessors(m)
                 if( mms ):
                     for ms in mms:
                         txt += "-"*8+"MODIFIED BY: %s\n"%ms.__unicode__()
@@ -388,11 +500,9 @@ class pyConText(object):
         return unicode(self).encode('utf-8')
     def __repr__(self):
         return unicode(self).encode('utf-8')
-    def getConTextModeNodes(self,mode, currentGraph = True ):
-        if( currentGraph ):
-            nodes = [n[0] for n in self.__graph.nodes(data=True) if n[1]['category'] == mode]
-        else:
-            nodes = [n[0] for n in self.__documentGraph.nodes(data=True) if n[1]['category'] == mode]
+    def getConTextModeNodes(self,mode):
+        nodes = [n[0] for n in self.nodes(data=True) if n[1]['category'] == mode]
+        nodes.sort()
         return nodes
     def updateScopes(self):
         """
@@ -421,10 +531,10 @@ class pyConText(object):
                 modifier2 = modifiers[j]
                 if( modifier.limitScope(modifier2) and 
                         modifier2.getRule().lower() == 'terminate'):
-                    self.__graph.add_edge(modifier2,modifier)
+                    self.add_edge(modifier2,modifier)
                 if( modifier2.limitScope(modifier) and 
                         modifier.getRule().lower() == 'terminate'):
-                    self.__graph.add_edge(modifier,modifier2)
+                    self.add_edge(modifier,modifier2)
 
     def markItems(self,items, mode="target"):
         """tags the sentence for a list of items
@@ -432,7 +542,7 @@ class pyConText(object):
         if( not items ):
             return
         for item in items:
-            self.__graph.add_nodes_from(self.markItem(item, ConTextMode=mode), category=mode)
+            self.add_nodes_from(self.markItem(item, ConTextMode=mode), category=mode)
 
                                 
     def markItem(self,item, ConTextMode="target", ignoreCase=True ):
@@ -441,12 +551,12 @@ class pyConText(object):
         If ignoreCase is True (default), the regular expression is compiled with
         IGNORECASE."""
             
-        if( not self.__txt ):
+        if( not self.getText() ):
             self.cleanText()
 
         # See if we have already created a regular expression
 
-        if(not self.res.has_key(item.getLiteral()) ):
+        if(not compiledRegExprs.has_key(item.getLiteral()) ):
             if(not item.getRE()):
                 regExp = item.getLiteral()
             else:
@@ -455,14 +565,14 @@ class pyConText(object):
                 r = re.compile(regExp, re.IGNORECASE|re.UNICODE)
             else:
                 r = re.compile(regExp,re.UNICODE)
-            self.res[item.getLiteral()] = r
+            compiledRegExprs[item.getLiteral()] = r
         else:
-            r = self.res[item.getLiteral()]
-        iter = r.finditer(self.__txt)
+            r = compiledRegExprs[item.getLiteral()]
+        iter = r.finditer(self.getText())
         terms=[]
         for i in iter:
             tO = tagObject(item,ConTextMode, tagid=self.getNextTagID(), 
-                           scope = self.__scope)
+                           scope = self.getScope())
     
             tO.setSpan(i.span())
             tO.setPhrase(i.group())
@@ -476,29 +586,29 @@ class pyConText(object):
         prune Marked objects by deleting any objects that lie within the span of
         another object. Currently modifiers and targets are treated separately
         """
-        self.__prune_marks(self.__graph.nodes())
+        self.__prune_marks(self.nodes())
     def dropInactiveModifiers(self):
-        mnodes = [ n for n in self.getConTextModeNodes("modifier") if self.__graph.degree(n) == 0]
+        mnodes = [ n for n in self.getConTextModeNodes("modifier") if self.degree(n) == 0]
         if( self.getVerbose() and mnodes ):
             print u"dropping the following inactive modifiers"
             for mn in mnodes:
                 print mn
 
-        self.__graph.remove_nodes_from(mnodes)
+        self.remove_nodes_from(mnodes)
     def pruneModifierRelationships(self):
         """Initially modifiers may be applied to multiple targets. This function
         computes the text difference between the modifier and each modified
         target and keeps only the minimum distance relationship"""
         modifiers = self.getConTextModeNodes("modifier")
         for m in modifiers:
-            modifiedBy = self.__graph.successors(m)
+            modifiedBy = self.successors(m)
             if( modifiedBy and len(modifiedBy) > 1 ):
                 minm = min([ (m.dist(mb),mb) for mb in modifiedBy ])
-                edgs = self.__graph.edges(m)
+                edgs = self.edges(m)
                 if( self.getVerbose() ):
                     print u"deleting relationship",m,minm[1]
                 edgs.remove((m,minm[1]))
-                self.__graph.remove_edges_from(edgs)
+                self.remove_edges_from(edgs)
         
     def __prune_marks(self, marks):
         if( len(marks) < 2 ):
@@ -520,16 +630,16 @@ class pyConText(object):
             print u"pruning the following nodes"
             for n in nodesToRemove:
                 print n
-        self.__graph.remove_nodes_from(nodesToRemove)
+        self.remove_nodes_from(nodesToRemove)
         
     def dropMarks(self,category="exclusion"):
         """Drop any targets that have the category equal to category"""
-        dnodes = [n for n in self.__graph.nodes() if n.getCategory().lower() == category.lower()]
+        dnodes = [n for n in self.nodes() if n.getCategory().lower() == category.lower()]
         if( self.getVerbose() and dnodes ):
             print u"droping the following markedItems"
             for n in dnodes:
                 print n
-        self.__graph.remove_nodes_from(dnodes)           
+        self.remove_nodes_from(dnodes)           
 
     def applyModifiers(self):
         """
@@ -537,7 +647,7 @@ class pyConText(object):
         
         Loop through the marked targets and for each target apply the modifiers
         """
-        if( not self.__SCOPEUPDATED ):
+        if( not self.getScopeUpdated() ):
             self.updateScopes()
         targets = self.getConTextModeNodes("target")
         modifiers = self.getConTextModeNodes("modifier")
@@ -547,50 +657,60 @@ class pyConText(object):
                     if( self.getVerbose() ):
                         print u"applying relationship between",modifier,target
 
-                    self.__graph.add_edge(modifier, target)
+                    self.add_edge(modifier, target)
     def getMarkedTargets(self):
         """
-        Return the list of marked targets in the current sentence
+        Return the list of marked targets in the current sentence. List is sorted by span
         """
-        return self.getConTextModeNodes("target")
+        targets = self.getConTextModeNodes("target")
+        targets.sort()
+        return targets
     def getNumMarkedTargets(self):
         """
         Return the number of marked targets in the current sentence
         """
         return len(self.getConTextModeNodes("target"))
            
-    def getModifiers(self, node, currentGraph = True):
-        if( currentGraph ):
-            return self.__graph.predecessors(node)
-        else:
-            return self.__documentGraph.predecessors(node)
-    def isModifiedBy(self,node, modFilter, currentGraph = True):
-        """tests whether self is modified by term. Return modifier if true"""
-        pred = self.getModifiers(node, currentGraph)
+    def getModifiers(self, node):
+        """
+        return immediate predecessorts of node. The returned list is sorted by node span.
+        """
+        modifiers = self.predecessors(node)
+        modifiers.sort()
+        return modifiers
+    def isModifiedByCategory(self,node, queryCategory):
+        """
+        tests whether node in markUp is modified by a tagObject with category equal to queryCategory. Return modifier if True
+        """
+        pred = self.getModifiers(node )
         for p in pred:
-            if( modFilter.lower() == p.getCategory().lower() ):
-                return p
+            if( queryCategory.lower() == p.getCategory().lower() ):
+                return True
                  
-        return None
+        return False
+    def isModifiedBy(self, node, query):
+        """
+        Tests whether node in markUp is modified by any tagObjects with category including query. This does not need to be an exact match. Thus "probable" will match "probable_existence" and "probable_negated_existence"
+        """
+        pred = self.getModifiers(node)
+        q = query.lower()
+        for p in pred:
+            if( q in p.getCategory().lower() ):
+                return True
+        return False
 
-    def computeDocumentGraph(self):
-        """Create a single document graph from the union of the graphs created
-           for each sentence in the archive. Note that the algorithm in NetworkX 
-           is different based on whether the Python version is greater than or
-           equal to 2.6"""
-        # Note that this as written does not include the currentGraph in the DocumentGraph
-        # Maybe this should be changed
-        self.__documentGraph = nx.DiGraph()
-        for key in self.__archive.keys():
-            g = self.__archive[key]["graph"]
-            if( platform.python_version() >= '2.6' ):
-                self.__documentGraph = nx.union(g,self.__documentGraph)
-                # this should work but doesn't preseve the node data attributes
-            else:
-                nds = g.nodes(data=True) # for python < 2.6 need to use code below
-                for n in nds:
-                    self.__documentGraph.add_node(n[0],category=n[1]['category'])
-                
-                self.__documentGraph.add_edges_from(g.edges())
+    def getTokenDistance(self,n1,n2):
+        """returns the number of tokens (word) between n1 and n2"""
+        txt = self.getText()
+        if( n1 < n2 ):
+            start = n1.getSpan()[1]+1
+            end = n2.getSpan()[0]
+            direction = 1
+        else:
+            start = n2.getSpan()[1]+1
+            end = n1.getSpan()[0]
+            direction = -1
 
-    
+        subTxt = txt[start:end]
+        tokens = subTxt.split()
+        return len(tokens)*direction
