@@ -346,7 +346,7 @@ class ConTextDocument(object):
         nodes.sort()
         return nodes
 
-    def computeDocumentGraph(self):
+    def computeDocumentGraph(self, verbose=False):
         """Create a single document graph from the union of the graphs created
            for each sentence in the archive. Note that the algorithm in NetworkX 
            is different based on whether the Python version is greater than or
@@ -354,9 +354,21 @@ class ConTextDocument(object):
         # Note that this as written does not include the currentGraph in the DocumentGraph
         # Maybe this should be changed
         self.__documentGraph = nx.DiGraph()
+        if( verbose ):
+            print "Document markup has %d edges"%self.__document.number_of_edges()
         markups = [e[1] for e in self.__document.edges(data=True) if e[2].get('category') == 'markup']
-        for m in markups:
+        if( verbose ):
+            print "Document markup has %d conTextMarkup objects"%len(markups)
+        ic = 0
+        for i in range(len(markups)):
+        #for m in markups:
+            m = markups[i]
+            if( verbose ):
+                print "markup %d has %d total items including %d targets"%(i,m.number_of_nodes(),m.getNumMarkedTargets())
+
             self.__documentGraph = nx.union(m,self.__documentGraph)
+            if( verbose ):
+                print "documentGraph now has %d nodes"%self.__documentGraph.number_of_nodes()
 
 class ConTextMarkup(nx.DiGraph):
     """

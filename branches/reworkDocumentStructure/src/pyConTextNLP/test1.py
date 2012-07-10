@@ -11,6 +11,11 @@ class pyConTextNLP_test(unittest.TestCase):
         self.su1 = u'kanso <Diagnosis>**diabetes**</Diagnosis> utesl\xf6t eller diabetes men inte s\xe4kert. Vi siktar p\xe5 en r\xf6ntgenkontroll. kan det vara nej panik\xe5ngesten\n?'
         self.su2 =  u'IMPRESSION: 1. LIMITED STUDY DEMONSTRATING NO GROSS EVIDENCE OF SIGNIFICANT PULMONARY EMBOLISM.'
         self.su3 = u'This is a sentence that does not end with a number. But this sentence ends with 1.'
+        self.items = [ [u"pulmonary embolism",u"PULMONARY_EMBOLISM",ur"""pulmonary\s(artery )?(embol[a-z]+)""",""],["no gross evidence of","PROBABLE_NEGATED_EXISTENCE","","forward"]]
+        self.itemData = itemData.itemData()
+        for i in self.items:
+            cit = itemData.contextItem
+
     def tearDown(self):
         self.context = 0
         self.splitter = 0
@@ -43,6 +48,16 @@ class pyConTextNLP_test(unittest.TestCase):
         self.splitter.deleteExceptionTerms("M.D.")
         assert ("M.D." not in self.splitter.getExceptionTerms())
         assert ("m.d." in self.splitter.getExceptionTerms())
+    def test_instantiate_contextItem(self):
+        cit1 = itemData.contextItem(self.items[0])
+        assert cit1
+    def test_instantiate_itemData(self):
+        cit1 = itemData.contextItem(self.items[0])
+        it1 = itemData.itemData()
+        it1.append(cit1)
+        assert it1
+    def test_tokenDistance(self):
+        assert False
     def test_sentenceSplitter1(self):
         """test whether we properly capture text that terminates without a recognized sentence termination"""
         splitter = helpers.sentenceSplitter()
