@@ -141,3 +141,36 @@ def instantiateFromCSV(csvFile, encoding='utf-8'):
             items[case] = category
         rownum += 1
     return items
+def instantiateFromCSVtoitemData(csvFile, encoding='utf-8',headerRows=1,
+        literalColumn = 0, categoryColumn = 1, regexColumn = 2, ruleColumn = 3):
+    """
+    takes a CSV file of itemdata rules and creates a single itemData instance.
+    csvFile: name of file to read items from
+    encoding: unicode enocidng to use; default = 'utf-8'
+    headerRows: number of header rows in file; default = 1
+    literalColumn: column from which to read the literal; default = 0
+    categoryColumn: column from which to read the category; default = 1
+    regexColumn: column from which to read the regular expression: default = 2
+    ruleColumn: column from which to read the rule; default = 3
+    """
+    items = itemData() # itemData to be returned to the user
+    header = []
+    reader = unicodecsv.reader( open(csvFile, 'rU'),encoding=encoding )
+    #reader = csv.reader(open(csvFile, 'rU'))
+    # first grab numbe rof specified header rows
+    for i in range(headerRows):
+        row = reader.next()
+        header.append(row)
+    # now grab each itemData
+    for row in reader:
+        tmp = [row[literalColumn], row[categoryColumn],
+               row[regexColumn], row[ruleColumn]]
+        tmp[2] = ur"%s"%tmp[2] # convert the regular expression string into a raw string
+        item = contextItem(tmp)
+        items.append(item)
+    return items
+def instantiateFromSQLite(dbName):
+    """
+    instantiate itemData from SQLite database. This is not yet implemented.
+    """
+    pass
