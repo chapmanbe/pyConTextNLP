@@ -342,6 +342,11 @@ class ConTextDocument(object):
     def __repr__(self):
         return unicode(self).encode('utf-8')
     def getConTextModeNodes(self,mode):
+        """
+        Deprecated. This functionality should be accessed via the ConTextMarkup object now returned from getDocumentGraph()
+        """
+        print "This function is deprecated and will be eliminated shortly."
+        print "The same functionality can be accessed through the ConTextMarkup object returned from getDocumentGraph()"
         nodes = [n[0] for n in self.__documentGraph.nodes(data=True) if n[1]['category'] == mode]
         nodes.sort()
         return nodes
@@ -353,7 +358,7 @@ class ConTextDocument(object):
            equal to 2.6"""
         # Note that this as written does not include the currentGraph in the DocumentGraph
         # Maybe this should be changed
-        self.__documentGraph = nx.DiGraph()
+        self.__documentGraph = ConTextMarkup()
         if( verbose ):
             print "Document markup has %d edges"%self.__document.number_of_edges()
         markups = [e[1] for e in self.__document.edges(data=True) if e[2].get('category') == 'markup']
