@@ -14,16 +14,6 @@
 
 """
 A module defining the itemData class. itemData objects are the basis tools for text markup.
-
-The module instantiates several instances of this object:
-    1) probableNegations
-    2) definiteNegations
-    3) pseudoNegations
-    4) indications
-    5) historicals
-    6) conjugates
-    7) probables
-    8) definites
 """
 import csv
 import unicodecsv
@@ -169,8 +159,29 @@ def instantiateFromCSVtoitemData(csvFile, encoding='utf-8',headerRows=1,
         item = contextItem(tmp)
         items.append(item)
     return items
-def instantiateFromSQLite(dbName):
+
+def instantiateFromSQLite(dbPath, label, tableName, literalColumn="literal", 
+        categoryColumn="category", regexColumn="re", ruleColumn="rule", 
+        labelColumn="label"):
     """
-    instantiate itemData from SQLite database. This is not yet implemented.
+    Written from Glenn Dayton, IV
     """
-    pass
+    conn = sqlite3.connect(dbPath)
+    c = conn.cursor()
+    
+    items = itemData()
+    ex_cmd = """SELECT %s, %s, %s, %s FROM %s WHERE %s= (?)"""%(literalColumn,
+                                                                categoryColumn, 
+                                                                regexColumn, 
+                                                                ruleColumn, 
+                                                                tableName, 
+                                                                labelColumn)
+    for row in c.execute(ex_cmd , (label, )):
+        tmp = [row[0], row[1], 
+        	   row[2], row[3]]
+        tmp[2] = ur"%s"%tmp[2]
+        item = contextItem(tmp)
+        items.append(item)
+        
+    c.close()
+    return items
