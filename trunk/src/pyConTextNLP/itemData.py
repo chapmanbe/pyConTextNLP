@@ -17,6 +17,7 @@ A module defining the itemData class. itemData objects are the basis tools for t
 """
 import csv
 import unicodecsv
+import sqlite3
 class contextItem(object):
     __numEnteries = 4
     def __init__(self,args):
