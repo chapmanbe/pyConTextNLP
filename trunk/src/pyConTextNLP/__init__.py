@@ -21,5 +21,5 @@ other.
 
 Also it is hoped that the use of a directional graph could ultimately simplify
 our itemData structures as we could chain together items"""
-__version_info__ = ('0','4','0')
+__version_info__ = ('0','5','0')
 __version__ = '.'.join(__version_info__)
