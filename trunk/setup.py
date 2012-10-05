@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 
 doclines = __doc__.split("\n")
 setup(name='pyConTextNLP',
-      version='0.4.0',
+      version='0.5.0',
       description=doclines[0],
       long_description = "\n".join(doclines[1:]),
       author='Brian Chapman',
@@ -22,5 +22,5 @@ setup(name='pyConTextNLP',
       #py_modules = pyn,
       packages=find_packages('src'),
       package_dir={'':'src'},
-      install_requires = ['python>=2.3','networkx>=1.0','nose','unicodecsv'],      
+      install_requires = ['networkx','nose','unicodecsv'],
      )
