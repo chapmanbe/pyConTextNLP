@@ -16,9 +16,9 @@ This module contains three class definitions that are used in the pyConText
 algorithm. The pyConText algorithm relies on regular expressions to identify
 sub-texts of interest
 
-1) termObject: a class that describes terms of interest within the text 
+1) termObject: a class that describes terms of interest within the text
 2) tagObject: a class inherited from termObject that describes modifiers
-3) pyConText: a class that implements the context algorithm 
+3) pyConText: a class that implements the context algorithm
 
 """
 import re
@@ -33,7 +33,7 @@ r3 = re.compile(r"""\d""",re.UNICODE)
 
 compiledRegExprs = {}
 
-        
+
 tagObjectXMLSkel=\
 u"""
 <tagObject>
@@ -94,7 +94,7 @@ class tagObject(object):
         """
         item: contextItem used to generate term
         ConTextCategory: category this term is being used for in pyConText
-        
+
         variants
         """
         self.__item = item
@@ -112,12 +112,12 @@ class tagObject(object):
         applies the objects own rule and span to modify the object's scope
         Currently only "forward" and "backward" rules are implemented
         """
-        
+
         if( 'forward' in self.__item.getRule().lower() ):
             self.__scope[0] = self.getSpan()[1]
         elif( 'backward' in self.__item.getRule().lower() ):
             self.__scope[1] = self.getSpan()[0]
-            
+
     def getTagID(self):
         return self.__tagID
     def parseRule(self):
@@ -127,21 +127,21 @@ class tagObject(object):
         return self.__scope
     def getRule(self):
         return self.__item.getRule()
- 
+
     def limitScope(self,obj):
         """If self and obj are of the same category or if obj has a rule of
         'terminate', use the span of obj to
         update the scope of self
         returns True if a obj modified the scope of self"""
-        if( not self.getRule() or self.getRule()== 'terminate' or 
+        if( not self.getRule() or self.getRule()== 'terminate' or
              (self.getCategory() != obj.getCategory() and obj.getRule() != 'terminate')):
             return False
         originalScope = copy.copy((self.getScope()))
-        if( 'forward' in self.getRule().lower() or 
+        if( 'forward' in self.getRule().lower() or
             'bidirectional' in self.getRule().lower() ):
             if( obj > self ):
                 self.__scope[1] = min(self.__scope[1],obj.getSpan()[0])
-        elif( 'backward' in self.getRule().lower() or 
+        elif( 'backward' in self.getRule().lower() or
               'bidirectional' in self.getRule().lower() ):
             if( obj < self ):
                 self.__scope[0] = max(self.__scope[0],obj.getSpan()[1])
@@ -149,7 +149,7 @@ class tagObject(object):
             return True
         else:
             return False
-        
+
     def applyRule(self,term):
         """applies self's rule to term. If the start of term lines within
         the span of self, then term may be modified by self"""
@@ -192,11 +192,11 @@ class tagObject(object):
         """returns the minimum distance from the current object and obj.
         Distance is measured as current start to object end or current end to object start"""
         return min(abs(self.__spanEnd-obj.__spanStart),abs(self.__spanStart-obj.__spanEnd))
-                    
+
     def __lt__(self,other): return self.__spanStart < other.__spanStart
     def __le__(self,other): return self.__spanStart <= other.__spanStart
-    def __eq__(self,other): 
-        return (self.__spanStart == other.__spanStart and 
+    def __eq__(self,other):
+        return (self.__spanStart == other.__spanStart and
                 self.__spanEnd == other.__spanEnd)
     def __ne__(self,other): return self.__spanStart != other.__spanStart
     def __gt__(self,other): return self.__spanStart > other.__spanStart
@@ -204,7 +204,7 @@ class tagObject(object):
     def encompasses(self,other):
         """tests whether other is completely encompassed with the current object
            ??? should we not prune identical span tagObjects???"""
-        if( self.__spanStart <= other.__spanStart and 
+        if( self.__spanStart <= other.__spanStart and
             self.__spanEnd >= other.__spanEnd ):
             return True
         else:
@@ -236,7 +236,7 @@ class ConTextDocument(object):
         self.__currentSectionNum += 1
         self.__currentParent = "document"
         self.__root = "document"
-        self.__documentGraph = None 
+        self.__documentGraph = None
 
     def insertSection(self,sectionLabel,setToParent=False):
         self.__document.add_edge(self.__currentParent,sectionLabel,category="section",__sectionNumber=self.__currentSectionNum)
@@ -263,9 +263,10 @@ class ConTextDocument(object):
         add the markup as a node in the document attached to the current parent.
         """
         # I'm not sure if I want to be using copy here
-        self.__document.add_edge(self.__currentParent,markup, 
+        self.__document.add_edge(self.__currentParent,markup,
                 category="markup",
                 sentenceNumber=self.__currentSentenceNum)
+
         self.__currentSentenceNum += 1
     def retrieveMarkup(self,sentenceNumber):
         """
@@ -278,7 +279,7 @@ class ConTextDocument(object):
     def getSectionNodes(self,sectionLabel = None, category="markup"):
         if( not sectionLabel ):
             sectionLabel = self.__currentParent
-        successors = [(e[2]['__sectionNumber'],e[1]) for e in self.__document.out_edges(sectionLabel, data=True) 
+        successors = [(e[2]['__sectionNumber'],e[1]) for e in self.__document.out_edges(sectionLabel, data=True)
                                                             if e[2].get("category") == category]
         successors.sort()
         tmp = zip(*successors)
@@ -288,7 +289,7 @@ class ConTextDocument(object):
         """return the markup graphs for the section ordered by sentence number"""
         if( not sectionLabel ):
             sectionLabel = self.__currentParent
-        successors = [(e[2]['sentenceNumber'],e[1]) for e in self.__document.out_edges(sectionLabel, data=True) 
+        successors = [(e[2]['sentenceNumber'],e[1]) for e in self.__document.out_edges(sectionLabel, data=True)
                                                             if e[2].get("category") == "markup"]
         successors.sort()
         if( returnSentenceNumbers ):
@@ -324,7 +325,7 @@ class ConTextDocument(object):
         txt = u""
 
         # get children sections of root
-        
+
         sections = self.getDocumentSections()
         for s in sections:
             txt += u"""<section>\n<sectionLabel> %s </sectionLabel>\n"""%s
@@ -353,7 +354,7 @@ class ConTextDocument(object):
 
     def computeDocumentGraph(self, verbose=False):
         """Create a single document graph from the union of the graphs created
-           for each sentence in the archive. Note that the algorithm in NetworkX 
+           for each sentence in the archive. Note that the algorithm in NetworkX
            is different based on whether the Python version is greater than or
            equal to 2.6"""
         # Note that this as written does not include the currentGraph in the DocumentGraph
@@ -416,7 +417,7 @@ class ConTextMarkup(nx.DiGraph):
         self.graph["__txt"] = None
         self.graph["__scope"] = None
         self.graph["__SCOPEUPDATED"] = False
-        
+
     def getText(self):
         return self.graph.get("__txt",u'')
     def getScope(self):
@@ -438,13 +439,13 @@ class ConTextMarkup(nx.DiGraph):
         txt = r2.sub(" ",txt)
         if( stripNumbers ):
             txt = r3.sub("",txt)
-           
+
         self.graph["__scope"] = (0,len(txt))
         self.graph["__txt"] = txt
 	if( self.getVerbose() ):
 	    print u"cleaned text is now",self.getText()
     def getXML(self):
-        nodes = self.nodes(data=True) 
+        nodes = self.nodes(data=True)
         nodes.sort()
         nodeString = u''
         for n in nodes:
@@ -453,7 +454,7 @@ class ConTextMarkup(nx.DiGraph):
             keys.sort()
             for k in keys:
                 attributeString += """<%s> %s </%s>\n"""%(k,n[1][k],k)
-            modificationString = u'' 
+            modificationString = u''
             modifiedBy = self.predecessors(n[0])
             if( modifiedBy ):
                 for m in modifiedBy:
@@ -498,7 +499,7 @@ class ConTextMarkup(nx.DiGraph):
                 if( mms ):
                     for ms in mms:
                         txt += "-"*8+"MODIFIED BY: %s\n"%ms.__unicode__()
-	    
+
         txt += u"_"*42+"\n"
         return txt
     def __str__(self):
@@ -512,7 +513,7 @@ class ConTextMarkup(nx.DiGraph):
     def updateScopes(self):
         """
         update the scopes of all the marked modifiers in the txt. The scope
-        of a modifier is limited by its own span, the span of modifiers in the 
+        of a modifier is limited by its own span, the span of modifiers in the
         same category marked in the text, and modifiers with rule 'terminate'.
         """
 	if( self.getVerbose() ):
@@ -534,10 +535,10 @@ class ConTextMarkup(nx.DiGraph):
             modifier = modifiers[i]
             for j in range(i+1,len(modifiers)):
                 modifier2 = modifiers[j]
-                if( modifier.limitScope(modifier2) and 
+                if( modifier.limitScope(modifier2) and
                         modifier2.getRule().lower() == 'terminate'):
                     self.add_edge(modifier2,modifier)
-                if( modifier2.limitScope(modifier) and 
+                if( modifier2.limitScope(modifier) and
                         modifier.getRule().lower() == 'terminate'):
                     self.add_edge(modifier,modifier2)
 
@@ -549,13 +550,13 @@ class ConTextMarkup(nx.DiGraph):
         for item in items:
             self.add_nodes_from(self.markItem(item, ConTextMode=mode), category=mode)
 
-                                
+
     def markItem(self,item, ConTextMode="target", ignoreCase=True ):
         """
         markup the current text with the current item.
         If ignoreCase is True (default), the regular expression is compiled with
         IGNORECASE."""
-            
+
         if( not self.getText() ):
             self.cleanText()
 
@@ -576,9 +577,9 @@ class ConTextMarkup(nx.DiGraph):
         iter = r.finditer(self.getText())
         terms=[]
         for i in iter:
-            tO = tagObject(item,ConTextMode, tagid=self.getNextTagID(), 
+            tO = tagObject(item,ConTextMode, tagid=self.getNextTagID(),
                            scope = self.getScope())
-    
+
             tO.setSpan(i.span())
             tO.setPhrase(i.group())
             if( self.getVerbose() ):
@@ -586,7 +587,7 @@ class ConTextMarkup(nx.DiGraph):
             terms.append(tO)
         return terms
 
-    def pruneMarks(self):    
+    def pruneMarks(self):
         """
         prune Marked objects by deleting any objects that lie within the span of
         another object. Currently modifiers and targets are treated separately
@@ -614,7 +615,7 @@ class ConTextMarkup(nx.DiGraph):
                     print u"deleting relationship",m,minm[1]
                 edgs.remove((m,minm[1]))
                 self.remove_edges_from(edgs)
-        
+
     def __prune_marks(self, marks):
         if( len(marks) < 2 ):
             return
@@ -636,7 +637,7 @@ class ConTextMarkup(nx.DiGraph):
             for n in nodesToRemove:
                 print n
         self.remove_nodes_from(nodesToRemove)
-        
+
     def dropMarks(self,category="exclusion"):
         """Drop any targets that have the category equal to category"""
         dnodes = [n for n in self.nodes() if n.getCategory().lower() == category.lower()]
@@ -644,12 +645,12 @@ class ConTextMarkup(nx.DiGraph):
             print u"droping the following markedItems"
             for n in dnodes:
                 print n
-        self.remove_nodes_from(dnodes)           
+        self.remove_nodes_from(dnodes)
 
     def applyModifiers(self):
         """
         If the scope has not yet been updated, do this first.
-        
+
         Loop through the marked targets and for each target apply the modifiers
         """
         if( not self.getScopeUpdated() ):
@@ -675,7 +676,7 @@ class ConTextMarkup(nx.DiGraph):
         Return the number of marked targets in the current sentence
         """
         return len(self.getConTextModeNodes("target"))
-           
+
     def getModifiers(self, node):
         """
         return immediate predecessorts of node. The returned list is sorted by node span.
@@ -691,7 +692,7 @@ class ConTextMarkup(nx.DiGraph):
         for p in pred:
             if( queryCategory.lower() == p.getCategory().lower() ):
                 return True
-                 
+
         return False
     def isModifiedBy(self, node, query):
         """
