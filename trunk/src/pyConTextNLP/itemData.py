@@ -15,7 +15,6 @@
 """
 A module defining the itemData class. itemData objects are the basis tools for text markup.
 """
-import csv
 import unicodecsv
 import sqlite3
 class contextItem(object):
@@ -115,7 +114,7 @@ def instantiateFromCSV(csvFile, encoding='utf-8'):
     """takes a CSV file of itemdata rules and creates itemData instances.
     Expects first row to be header"""
     items = {} # dictionary of itemData categories to be returned to the user
-    reader = unicodecsv.reader( open(csvFile, 'rU'),encoding=encoding )
+    reader = unicodecsv.reader( open(csvFile, 'rU'),encoding=encoding, delimiter="\t" )
     #reader = csv.reader(open(csvFile, 'rU'))
     rownum=0
     for row in reader:
@@ -146,7 +145,7 @@ def instantiateFromCSVtoitemData(csvFile, encoding='utf-8',headerRows=1,
     """
     items = itemData() # itemData to be returned to the user
     header = []
-    reader = unicodecsv.reader( open(csvFile, 'rU'),encoding=encoding )
+    reader = unicodecsv.reader( open(csvFile, 'rU'),encoding=encoding, delimiter="\t" )
     #reader = csv.reader(open(csvFile, 'rU'))
     # first grab numbe rof specified header rows
     for i in range(headerRows):

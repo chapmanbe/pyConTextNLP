@@ -10,11 +10,11 @@ from setuptools import setup, find_packages
 
 doclines = __doc__.split("\n")
 setup(name='pyConTextNLP',
-      version='0.5.0',
+      version='0.5.1.2',
       description=doclines[0],
       long_description = "\n".join(doclines[1:]),
       author='Brian Chapman',
-      author_email='brchapman@ucsd.edu',
+      author_email='chapmanbe@gmail.com',
       license="http://www.apache.org/licenses/LICENSE-2.0",
       platforms = ["any"],
       url='http://code.google.com/p/negex/',

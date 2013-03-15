@@ -31,9 +31,13 @@ r1 = re.compile(r"""\W""",re.UNICODE)
 r2 = re.compile(r"""\s+""",re.UNICODE)
 r3 = re.compile(r"""\d""",re.UNICODE)
 
+rlt = re.compile(r"""<""",re.UNICODE)
+ramp = re.compile(r"""&""",re.UNICODE)
+
 compiledRegExprs = {}
 
-
+def xmlScrub(tmp):
+    return rlt.sub(r"&lt;",ramp.sub(r"&amp;",u"%s"%tmp))
 tagObjectXMLSkel=\
 u"""
 <tagObject>
@@ -160,9 +164,10 @@ class tagObject(object):
     def getConTextCategory(self):
         return self.__ConTextCategory
     def getXML(self):
-        return   tagObjectXMLSkel%(self.getTagID(),self.getPhrase(),self.getLiteral(),self.getCategory(),
-                                    self.getSpan()[0],self.getSpan()[1],
-                                    self.getScope()[0],self.getScope()[1])
+        return   tagObjectXMLSkel%(self.getTagID(),xmlScrub(self.getPhrase()),
+                                   xmlScrub(self.getLiteral()),xmlScrub(self.getCategory()),
+                                   self.getSpan()[0],self.getSpan()[1],
+                                   self.getScope()[0],self.getScope()[1])
 
     def getBriefDescription(self):
         description = u"""<id> %s </id> """%self.getTagID()
@@ -323,15 +328,25 @@ class ConTextDocument(object):
 
     def getXML(self):
         txt = u""
+# first generate string for all the sentences from the document in order to compute document level offsets
+        documentString = u""
+        sentenceOffsets = {}
+        sections = self.getDocumentSections()
+        for s in sections:
+            markups = self.getSectionMarkups(s)
+            for m in markups:
+                sentenceOffsets[m[0]] = len(documentString)
+                documentString = documentString + m[1].getText()+" "
 
+        txt += xmlScrub(documentString)
         # get children sections of root
 
-        sections = self.getDocumentSections()
+        
         for s in sections:
             txt += u"""<section>\n<sectionLabel> %s </sectionLabel>\n"""%s
             markups = self.getSectionMarkups(s)
             for m in markups:
-                txt += u"<sentence>\n<sentenceNumber> %s </sentenceNumber>\n</sentence>\n%s"%(m[0],m[1].getXML())
+                txt += u"<sentence>\n<sentenceNumber> %s </sentenceNumber>\n<sentenceOffset> %s </sentenceOffset></sentence>\n%s"%(m[0],sentenceOffsets[m[0]],m[1].getXML())
             txt += u"""</section>\n"""
 
         return ConTextDocumentXMLSkel%txt
@@ -480,8 +495,8 @@ class ConTextMarkup(nx.DiGraph):
                 attributeString += """<%s> %s </%s>\n"""%(k,e[2][k],k)
             edgeString += "%s"%edgeXMLSkel%(e[0].getTagID(),e[1].getTagID(),attributeString)
 
-        return ConTextMarkupXMLSkel%(self.getRawText(),self.getText(),
-                                       u"%s"%nodeString,u"%s"%edgeString)
+        return ConTextMarkupXMLSkel%(xmlScrub(self.getRawText()),xmlScrub(self.getText()),
+                                       nodeString,edgeString)
     def __unicode__(self):
         txt = u'_'*42+"\n"
 	txt += 'rawText: %s\n'%self.getRawText()
@@ -564,7 +579,7 @@ class ConTextMarkup(nx.DiGraph):
 
         if(not compiledRegExprs.has_key(item.getLiteral()) ):
             if(not item.getRE()):
-                regExp = item.getLiteral()
+                regExp = ur"\b%s\b"%item.getLiteral()
             else:
                 regExp = item.getRE()
             if( ignoreCase ):

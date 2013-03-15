@@ -80,9 +80,11 @@ class sentenceSplitter(object):
             if( currentWord[-1] in '.?!' ):
                 if( currentWord in  self.exceptionTerms ):
                     wordLoc += 1
-                elif( self.digits.intersection(currentWord) and 
-                        not set('()').intersection(currentWord)): # word doesn't include parentheses. Is this necessary?
-                    wordLoc += 1
+                # per discussion with A.G. dropped this exception, since assuming numbers only use decimal points if there 
+                # are actual decimal point digits expressed and thus the period would not be the last character of the word.
+                #elif( self.digits.intersection(currentWord) and 
+                        #not set('()').intersection(currentWord)): # word doesn't include parentheses. Is this necessary?
+                    #wordLoc += 1
                 else:
                     sentences.append(' '.join(txt[:wordLoc+1])) 
                     txt = txt[wordLoc+1:]
