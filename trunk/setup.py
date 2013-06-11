@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 
 doclines = __doc__.split("\n")
 setup(name='pyConTextNLP',
-      version='0.5.1.2',
+      version='0.5.1.6',
       description=doclines[0],
       long_description = "\n".join(doclines[1:]),
       author='Brian Chapman',

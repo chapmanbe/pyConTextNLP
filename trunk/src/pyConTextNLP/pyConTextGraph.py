@@ -104,7 +104,10 @@ class tagObject(object):
         self.__item = item
         self.__spanStart = 0
         self.__spanEnd = 0
+        self.__foundPhrase = ''
+        self.__foundDict = {}
         self.__ConTextCategory = ConTextCategory
+        self.__category = self.__item.getCategory()
         self.__tagID = tagid
         if( scope == None ):
             self.__scope = []
@@ -179,7 +182,9 @@ class tagObject(object):
         return self.__item.getLiteral()
     def getCategory(self):
         """returns the category (e.g. CONJUNCTION) for this object"""
-        return self.__item.getCategory()
+        return self.__category
+    def setCategory(self,category):
+        self.__category = category
     def setSpan(self,span):
         """set the span within the associated text for this object"""
         self.__spanStart = span[0]
@@ -193,6 +198,12 @@ class tagObject(object):
     def getPhrase(self):
         """return the actual matched phrase used to generate this object"""
         return self.__foundPhrase
+    def setMatchedGroupDictionary(self,mdict):
+        """set the foundDict variable to mdict. This gets the name/value pair for each NAMED group within the regular expression"""
+        self.__foundDict = mdict.copy()
+    def getMatchedGroupDictionary(self):
+        """return a copy of the matched group dictionary"""
+        return self.__foundDict.copy()
     def dist(self,obj):
         """returns the minimum distance from the current object and obj.
         Distance is measured as current start to object end or current end to object start"""
@@ -214,6 +225,37 @@ class tagObject(object):
             return True
         else:
              return False
+    def overlap(self,other):
+        """
+        tests whether other overlaps with self
+        """
+        if( (other.__spanStart >= self.__spanStart and other.__spanStart <= self.__spanEnd ) or 
+             other.__spanEnd >= self.__spanStart and other.__spanEnd <= self.__spanEnd):
+            return True
+        else:
+            return False
+            
+    def leftOverlap(self,other):
+        """
+        tests whether other has partial overlap to the left with self.
+        """
+        if( self.encompasses(other) ):
+            return False
+        if( self.overlap(other) and self.__gt__(other) ):
+            return True
+        else:
+            return False
+    def rightOverlap(self,other):
+        """
+        tests whether other has partial overlap to the right with self
+        """
+        if( self.encompasses(other) ):
+            return False
+        if( self.overlap(other) and self.__lt__(other) ):
+            return True
+        else:
+            return False
+
     def __unicode__(self):
         txt = self.getBriefDescription()
         return txt
@@ -566,7 +608,7 @@ class ConTextMarkup(nx.DiGraph):
             self.add_nodes_from(self.markItem(item, ConTextMode=mode), category=mode)
 
 
-    def markItem(self,item, ConTextMode="target", ignoreCase=True ):
+    def markItem(self,item, ConTextMode="target", ignoreCase=True):
         """
         markup the current text with the current item.
         If ignoreCase is True (default), the regular expression is compiled with
@@ -580,8 +622,12 @@ class ConTextMarkup(nx.DiGraph):
         if(not compiledRegExprs.has_key(item.getLiteral()) ):
             if(not item.getRE()):
                 regExp = ur"\b%s\b"%item.getLiteral()
+                if( self.getVerbose() ):
+                    print "generating regular expression",regExp
             else:
                 regExp = item.getRE()
+                if( self.getVerbose() ):
+                    print "using provided regular expression",regExp
             if( ignoreCase ):
                 r = re.compile(regExp, re.IGNORECASE|re.UNICODE)
             else:
@@ -597,6 +643,7 @@ class ConTextMarkup(nx.DiGraph):
 
             tO.setSpan(i.span())
             tO.setPhrase(i.group())
+            tO.setMatchedGroupDictionary(i.groupdict())
             if( self.getVerbose() ):
                 print u"marked item",tO
             terms.append(tO)
@@ -607,7 +654,7 @@ class ConTextMarkup(nx.DiGraph):
         prune Marked objects by deleting any objects that lie within the span of
         another object. Currently modifiers and targets are treated separately
         """
-        self.__prune_marks(self.nodes())
+        self.__prune_marks(self.nodes(data=True))
     def dropInactiveModifiers(self):
         mnodes = [ n for n in self.getConTextModeNodes("modifier") if self.degree(n) == 0]
         if( self.getVerbose() and mnodes ):
@@ -639,13 +686,13 @@ class ConTextMarkup(nx.DiGraph):
         nodesToRemove = []
         for i in range(len(marks)-1):
             t1 = marks[i]
-            if( t1 not in nodesToRemove ):
+            if( t1[0] not in nodesToRemove ):
                 for j in range(i+1,len(marks)):
                     t2 = marks[j]
-                    if( t1.encompasses(t2) ):
-                        nodesToRemove.append(t2)
-                    elif( t2.encompasses(t1) ):
-                        nodesToRemove.append(t1)
+                    if( t1[0].encompasses(t2[0]) and t1[1]['category'] == t2[1]['category'] ):
+                        nodesToRemove.append(t2[0])
+                    elif( t2[0].encompasses(t1[0]) and t2[1]['category'] == t1[1]['category'] ):
+                        nodesToRemove.append(t1[0])
                         break
         if( self.getVerbose() ):
             print u"pruning the following nodes"
@@ -655,6 +702,10 @@ class ConTextMarkup(nx.DiGraph):
 
     def dropMarks(self,category="exclusion"):
         """Drop any targets that have the category equal to category"""
+        if( self.getVerbose() ):
+            print "in dropMarks"
+            for n in self.nodes():
+                print n.getCategory().lower(),n.getCategory().lower() == category.lower()
         dnodes = [n for n in self.nodes() if n.getCategory().lower() == category.lower()]
         if( self.getVerbose() and dnodes ):
             print u"droping the following markedItems"
