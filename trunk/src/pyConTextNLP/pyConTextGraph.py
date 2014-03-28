@@ -102,12 +102,12 @@ class tagObject(object):
         variants
         """
         self.__item = item
+        self.__category = self.__item.getCategory()
         self.__spanStart = 0
         self.__spanEnd = 0
         self.__foundPhrase = ''
         self.__foundDict = {}
         self.__ConTextCategory = ConTextCategory
-        self.__category = self.__item.getCategory()
         self.__tagID = tagid
         if( scope == None ):
             self.__scope = []
@@ -141,7 +141,7 @@ class tagObject(object):
         update the scope of self
         returns True if a obj modified the scope of self"""
         if( not self.getRule() or self.getRule()== 'terminate' or
-             (self.getCategory() != obj.getCategory() and obj.getRule() != 'terminate')):
+             (not self.isA(obj.getCategory()) and obj.getRule() != 'terminate')):
             return False
         originalScope = copy.copy((self.getScope()))
         if( 'forward' in self.getRule().lower() or
@@ -182,9 +182,23 @@ class tagObject(object):
         return self.__item.getLiteral()
     def getCategory(self):
         """returns the category (e.g. CONJUNCTION) for this object"""
-        return self.__category
+        return self.__category[:]
+    def categoryString(self):
+        return u'_'.join(self.__category)
+    def isA(self,category):
+        return self.__item.isA(category)
     def setCategory(self,category):
         self.__category = category
+    def replaceCategory(self,oldCategory,newCategory):
+        for index, item in enumerate(self.__category):
+            #print index,item,oldCategory
+            if item == oldCategory.lower().strip():
+                try:
+                    self.__category[index] = newCategory.lower().strip()
+                except:
+                    del self.__category[index]
+                    self.__category.extend([nc.lower().strip() for nc in newCategory])
+
     def setSpan(self,span):
         """set the span within the associated text for this object"""
         self.__spanStart = span[0]
@@ -666,18 +680,42 @@ class ConTextMarkup(nx.DiGraph):
     def pruneModifierRelationships(self):
         """Initially modifiers may be applied to multiple targets. This function
         computes the text difference between the modifier and each modified
-        target and keeps only the minimum distance relationship"""
+        target and keeps only the minimum distance relationship
+        
+        Finally, we make sure that tehre are no self modifying modifiers present (e.g. "free" in 
+        the phrase "free air" modifying the target "free air").
+        """
         modifiers = self.getConTextModeNodes("modifier")
         for m in modifiers:
             modifiedBy = self.successors(m)
             if( modifiedBy and len(modifiedBy) > 1 ):
                 minm = min([ (m.dist(mb),mb) for mb in modifiedBy ])
                 edgs = self.edges(m)
-                if( self.getVerbose() ):
-                    print u"deleting relationship",m,minm[1]
                 edgs.remove((m,minm[1]))
+                if( self.getVerbose() ):
+                    print u"deleting relationship(s)",edgs
+
                 self.remove_edges_from(edgs)
 
+    def pruneSelfModifyingRelationships(self):
+        """
+        We make sure that tehre are no self modifying modifiers present (e.g. "free" in 
+        the phrase "free air" modifying the target "free air").
+        modifiers = self.getConTextModeNodes("modifier")
+        """
+        modifiers = self.getConTextModeNodes("modifier")
+        nodesToRemove = []
+        for m in modifiers:
+            modifiedBy = self.successors(m)
+            if( modifiedBy ):
+                for mb in modifiedBy:
+                    if( self.getVerbose() ):
+                        print mb,m,mb.encompasses(m)
+                    if( mb.encompasses(m) ):
+                        nodesToRemove.append(m)
+        if( self.getVerbose() ):
+            print "removing the following self modifying nodes",nodesToRemove
+        self.remove_nodes_from(nodesToRemove)
     def __prune_marks(self, marks):
         if( len(marks) < 2 ):
             return
@@ -705,8 +743,8 @@ class ConTextMarkup(nx.DiGraph):
         if( self.getVerbose() ):
             print "in dropMarks"
             for n in self.nodes():
-                print n.getCategory().lower(),n.getCategory().lower() == category.lower()
-        dnodes = [n for n in self.nodes() if n.getCategory().lower() == category.lower()]
+                print n.getCategory(),n.isA(category.lower())
+        dnodes = [n for n in self.nodes() if n.isA( category )]
         if( self.getVerbose() and dnodes ):
             print u"droping the following markedItems"
             for n in dnodes:
@@ -756,20 +794,21 @@ class ConTextMarkup(nx.DiGraph):
         """
         pred = self.getModifiers(node )
         for p in pred:
-            if( queryCategory.lower() == p.getCategory().lower() ):
+            #if( queryCategory.lower() == p.getCategory().lower() ):
+            if( p.isA(queryCategory) ):
                 return True
 
         return False
-    def isModifiedBy(self, node, query):
-        """
-        Tests whether node in markUp is modified by any tagObjects with category including query. This does not need to be an exact match. Thus "probable" will match "probable_existence" and "probable_negated_existence"
-        """
-        pred = self.getModifiers(node)
-        q = query.lower()
-        for p in pred:
-            if( q in p.getCategory().lower() ):
-                return True
-        return False
+#    def isModifiedBy(self, node, query):
+        #"""
+        #Tests whether node in markUp is modified by any tagObjects with category including query. This does not need to be an exact match. Thus "probable" will match "probable_existence" and "probable_negated_existence"
+        #"""
+        #pred = self.getModifiers(node)
+        #q = query.lower()
+        #for p in pred:
+            #if( q in p.getCategory().lower() ):
+                #return True
+        #return False
 
     def getTokenDistance(self,n1,n2):
         """returns the number of tokens (word) between n1 and n2"""

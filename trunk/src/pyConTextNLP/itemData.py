@@ -21,13 +21,34 @@ class contextItem(object):
     __numEnteries = 4
     def __init__(self,args):
         self.__literal = args[0]
-        self.__category = args[1]
+# now get category(categories)
+        cs = args[1].split(",")
+        self.__category = []
+        for c in cs:
+            self.__category.append(c.lower().strip())
         self.__re = args[2] # I need to figure out how to read this raw string in properly
         self.__rule = args[3]
     def getLiteral(self):
+    	"""return the literal associated with this item"""
         return self.__literal
     def getCategory(self):
-        return self.__category
+    	"""return the list of categories associated with this item"""
+        return self.__category[:]
+    def categoryString(self):
+    	"""return the categories as a string delimited by '_'"""
+        return u'_'.join(self.__category)
+
+
+    def isA(self,testCategory):
+    	"""test whether testCategory is one of the categories associated with self"""
+        try:
+            return testCategory.lower().strip() in self.__category
+        except:
+            for tc in testCategory:
+                if( tc.lower().strip() in self.__category ):
+                    return True
+            return False
+    
     def getRE(self):
         return self.__re
     def getRule(self):
@@ -59,7 +80,7 @@ class itemData(list):
         return isinstance(data,contextItem)
      
     def dropByLiteral(self,value):
-        """drop any contextItems with literal matching value
+        """drop any contextItems with literal matching value. This is deprecated and will be dropped in future release.
         """
         # must be a more functional way to write this
         j = 0
