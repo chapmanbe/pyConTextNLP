@@ -1,0 +1,102 @@
+Lex	Type	Regex	Direction
+abdominal aorta	AORTIC_ANATOMY	abdominal aort(a|ic)	bidirectional
+aorta	AORTIC_ANATOMY	aort(a|ic)	bidirectional
+ascending aorta	AORTIC_ANATOMY	ascending aort(a|ic)	bidirectional
+thoracic aorta	AORTIC_ANATOMY	thoracic aort(a|ic)	bidirectional
+A1	BRAIN_ANATOMY		bidirectional
+intracranial	BRAIN_ANATOMY		bidirectional
+cerebral	BRAIN_ANATOMY		bidirectional
+A2	BRAIN_ANATOMY		bidirectional
+ACA	BRAIN_ANATOMY		bidirectional
+anterior limb	BRAIN_ANATOMY	(anterior limb|crus anterius capsulae internae|capsula interna|pars anterior|crus anterior|capsulae internae)	bidirectional
+posterior limb	BRAIN_ANATOMY	(posterior limb|crus posterius capsulae internae|capsula interna|pars posterior|crus posterior|capsulae internae)	bidirectional
+genu limb	BRAIN_ANATOMY	(genu limb|internal capsule genu|genu capsulae internae)	bidirectional
+brain	BRAIN_ANATOMY		bidirectional
+caudate	BRAIN_ANATOMY	(caudate|caudate nucleus|nucleus caudatus)	bidirectional
+cerebellar	BRAIN_ANATOMY		bidirectional
+cerebellum	BRAIN_ANATOMY	(cerebellum|epencephalon-1|kleinhirn)	bidirectional
+corona radiata	BRAIN_ANATOMY		bidirectional
+cerebral cortex	BRAIN_ANATOMY	(cerebral cortex|cortex of cerebrum|cortex cerebri|pallium|cortex cerebralis)	bidirectional
+encephalo	BRAIN_ANATOMY		bidirectional
+brain lobe	BRAIN_ANATOMY	(frontal|parietal|occipital|temporal|limbic)( lobe(s))?	bidirectional
+ganglia	BRAIN_ANATOMY		bidirectional
+gray matter	BRAIN_ANATOMY	(gray|grey) matter	bidirectional
+white matter	BRAIN_ANATOMY	white matter	bidirectional
+gyrus	BRAIN_ANATOMY		bidirectional
+hemisphere	BRAIN_ANATOMY		bidirectional
+insular	BRAIN_ANATOMY		bidirectional
+internal capsule	BRAIN_ANATOMY	(internal capsule|internal capsule radiations|capsula interna)	bidirectional
+lentiform	BRAIN_ANATOMY		bidirectional
+M1	BRAIN_ANATOMY		bidirectional
+M2	BRAIN_ANATOMY		bidirectional
+MCA	BRAIN_ANATOMY		bidirectional
+nuclei	BRAIN_ANATOMY	nucle(i|us)	bidirectional
+P1	BRAIN_ANATOMY		bidirectional
+P2	BRAIN_ANATOMY		bidirectional
+PCA	BRAIN_ANATOMY		bidirectional
+pons	BRAIN_ANATOMY		bidirectional
+putamen	BRAIN_ANATOMY		bidirectional
+semiovale	BRAIN_ANATOMY	(semiovale center|semiovale|semi-ovale|medullary center|white matter of cerebrum|centrum semiovale|substantia centralis medullaris cerebri|corpus medullare cerebri|centrum ovale)	bidirectional
+sulcus	BRAIN_ANATOMY		bidirectional
+territorial	BRAIN_ANATOMY		bidirectional
+territory	BRAIN_ANATOMY		bidirectional
+measuring X.X cm	SEVERITY	(measuring|diameter of|measured) (?P<value>[0-9]+(\.[0-9]*)?)( )?(?P<unit>(cm|mm))	backward
+measuring XxY cm	SEVERITY	(measuring|diameter of|measured) (?P<value>[0-9]+(\.[0-9]*)?( )?(x|by)( )?[0-9]+(\.[0-9]*)?)( )?(?P<unit>(cm|mm))	backward
+X.Y cm	SEVERITY	(?P<value>[0-9]+(\.[0-9]*)?)( )?(?P<unit>(cm|mm))	forward
+XxY cm	SEVERITY	(?P<value>[0-9]+(\.[0-9]*)?( )?(x|by)( )?[0-9]+(\.[0-9]*)?)( )?(?P<unit>(cm|mm))	forward
+anterior	HEART_ANATOMY		bidirectional
+septal	HEART_ANATOMY		bidirectional
+septum	HEART_ANATOMY	(cardiac septum|septum)	bidirectional
+inferior	HEART_ANATOMY		bidirectional
+apex	HEART_ANATOMY	(apex|apical|cardiac apex|apex of (the )?heart)	bidirectional
+inferolateral	HEART_ANATOMY		bidirectional
+lateral 	HEART_ANATOMY		bidirectional
+anteroseptal 	HEART_ANATOMY		bidirectional
+transmural	HEART_ANATOMY		bidirectional
+wall	HEART_ANATOMY		bidirectional
+left ventricular wall	HEART_ANATOMY	(\blv\b|left ventricular)( wall)?	bidirectional
+right ventricular wall	HEART_ANATOMY	(\brv\b|right ventricular)( wall)?	bidirectional
+myocardial	HEART_ANATOMY	(myocardial|myocardium)	bidirectional
+cardiac	HEART_ANATOMY	(cardiac|heart)	bidirectional
+omental	OTHER_CRITICAL_ANATOMY	(omentum|omental)	bidirectional
+spleen	OTHER_CRITICAL_ANATOMY	(spleen|splenic)	bidirectional
+kidney	OTHER_CRITICAL_ANATOMY	(kidney|\brenal\b)	bidirectional
+testis	OTHER_CRITICAL_ANATOMY	(testis|testicular|testes)	bidirectional
+ovary	OTHER_CRITICAL_ANATOMY	(ovary|ovaries|ovarian)	bidirectional
+azygos vein	AZYGOS_VEIN		bidirectional
+azygos arch	AZYGOS_VEIN		bidirectional
+inferior vena cava	LOWER_DEEP_VEIN		bidirectional
+common iliac vein	LOWER_DEEP_VEIN		bidirectional
+internal iliac vein	LOWER_DEEP_VEIN		bidirectional
+external iliac vein	LOWER_DEEP_VEIN		bidirectional
+common femoral vein	LOWER_DEEP_VEIN		bidirectional
+femoral vein	LOWER_DEEP_VEIN		bidirectional
+popliteal vein	LOWER_DEEP_VEIN		bidirectional
+anterior tibial vein	LOWER_DEEP_VEIN		bidirectional
+peroneal vein	LOWER_DEEP_VEIN		bidirectional
+posterior tibial vein	LOWER_DEEP_VEIN		bidirectional
+superior vena cava	UPPER_DEEP_VEIN		bidirectional
+brachiocephalic vein	UPPER_DEEP_VEIN		bidirectional
+subclavian vein	UPPER_DEEP_VEIN		bidirectional
+axillary vein	UPPER_DEEP_VEIN		bidirectional
+brachial vein	UPPER_DEEP_VEIN		bidirectional
+external jugular vein	UPPER_DEEP_VEIN		bidirectional
+anterior jugular vein	UPPER_DEEP_VEIN		bidirectional
+jugular venous arch	UPPER_DEEP_VEIN		bidirectional
+internal jugular vein	UPPER_DEEP_VEIN		bidirectional
+hepatic vein	HEPATIC_VEIN		bidirectional
+portal vein	PORTAL_SYSTEM_VEIN		bidirectional
+splenic vein	PORTAL_SYSTEM_VEIN		bidirectional
+inferior mesenteric vein	PORTAL_SYSTEM_VEIN		bidirectional
+superior mesenteric vein	PORTAL_SYSTEM_VEIN		bidirectional
+pulmonary vein	PULMONARY_VEIN		bidirectional
+renal vein	RENAL_VEIN		bidirectional
+sigmoid sinus	SINUS_VEIN		bidirectional
+inferior petrosal sinus	SINUS_VEIN		bidirectional
+cavernous sinus	SINUS_VEIN		bidirectional
+greater saphenous vein	LOWER_SUPERFICIAL_VEIN		bidirectional
+lesser saphenous vein	LOWER_SUPERFICIAL_VEIN		bidirectional
+basilic vein	UPPER_SUPERFICIAL_VEIN		bidirectional
+cephalic vein	UPPER_SUPERFICIAL_VEIN		bidirectional
+varicocele	VARICOCELE		bidirectional
+varicous vein	UPPER_SUPERFICIAL_VEIN		bidirectional
