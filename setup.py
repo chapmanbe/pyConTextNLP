@@ -20,7 +20,7 @@ setup(
     long_description=long_description,
 
     # The project's main homepage.
-    url='http://code.google.com/p/negex/',
+    url='https://github.com/chapmanbe/pyConTextNLP',
 
     # Author details
     author='Brian Chapman',
@@ -63,7 +63,7 @@ setup(
     # project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['networkx','nose','unicodecsv'],
+    install_requires=['networkx','nose','unicodecsv','textblob'],
 
     # List additional groups of dependencies here (e.g. development dependencies).
     # You can install these using the following syntax, for example:
