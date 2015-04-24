@@ -17,6 +17,8 @@ A module defining the itemData class. itemData objects are the basis tools for t
 """
 import unicodecsv
 import sqlite3
+import urllib2
+
 class contextItem(object):
     __numEnteries = 4
     def __init__(self,args):
@@ -29,18 +31,18 @@ class contextItem(object):
         self.__re = args[2] # I need to figure out how to read this raw string in properly
         self.__rule = args[3]
     def getLiteral(self):
-    	"""return the literal associated with this item"""
+        """return the literal associated with this item"""
         return self.__literal
     def getCategory(self):
-    	"""return the list of categories associated with this item"""
+        """return the list of categories associated with this item"""
         return self.__category[:]
     def categoryString(self):
-    	"""return the categories as a string delimited by '_'"""
+        """return the categories as a string delimited by '_'"""
         return u'_'.join(self.__category)
 
 
     def isA(self,testCategory):
-    	"""test whether testCategory is one of the categories associated with self"""
+        """test whether testCategory is one of the categories associated with self"""
         try:
             return testCategory.lower().strip() in self.__category
         except:
@@ -64,27 +66,25 @@ class contextItem(object):
    
 class itemData(list):
     def __init__(self,*args):
-        if( args ):
+        if args:
             for a in args:
-                if( self.__validate(a) ):
+                if self.__validate(a):
                     itm = a
                 else:
                     try:
                         itm = contextItem(a)
                     except:
                         itm = None
-                if( itm ):
+                if itm:
                     super(itemData,self).append(itm)
-            
     def __validate(self,data):
         return isinstance(data,contextItem)
-     
     def dropByLiteral(self,value):
         """drop any contextItems with literal matching value. This is deprecated and will be dropped in future release.
         """
         # must be a more functional way to write this
         j = 0
-        while( True ):
+        while True:
             try:
                 itm = self.__getitem__(j)
                 if( itm.getLiteral() == value ):
@@ -93,29 +93,28 @@ class itemData(list):
                     j += 1
             except:
                 break
-            
     def append(self,data):
-        if(self.__validate(data)):
+        if self.__validate(data):
             itm = data
         else:
             itm = contextItem(data)
         super(itemData,self).append(itm)
     def insert(self,index,data):
-        if(self.__validate(data)):
+        if self.__validate(data):
             itm = data
         else:
             itm = contextItem(data)
         super(itemData,self).insert(index,itm)
     def prepend(self,iterable):
         for i in iterable:
-            if( self.__validate(i) ):
+            if self.__validate(i):
                 itm = i
             else:
                 itm = contextItem(i)
             super(itemData,self).insert(0,itm)
     def extend(self,iterable):
         for i in iterable:
-            if( self.__validate(i) ):
+            if self.__validate(i):
                 itm = i
             else:
                 itm = contextItem(i)
@@ -152,7 +151,7 @@ def instantiateFromCSV(csvFile, encoding='utf-8'):
             items[case] = category
         rownum += 1
     return items
-def instantiateFromCSVtoitemData(csvFile, encoding='utf-8',headerRows=1,
+def itemData_from_tsv(csvFile, encoding='utf-8',headerRows=1,
         literalColumn = 0, categoryColumn = 1, regexColumn = 2, ruleColumn = 3):
     """
     takes a CSV file of itemdata rules and creates a single itemData instance.
@@ -164,9 +163,19 @@ def instantiateFromCSVtoitemData(csvFile, encoding='utf-8',headerRows=1,
     regexColumn: column from which to read the regular expression: default = 2
     ruleColumn: column from which to read the rule; default = 3
     """
+
+    # prase csvFile to see if it is a valid url address. If not, assume it is
+    # a local file and prepend "file://"
+
+    p = urllib2.urlparse.urlparse(csvFile)
+
+    if not p.scheme:
+        csvFile = "file://"+csvFile
+
     items = itemData() # itemData to be returned to the user
     header = []
-    reader = unicodecsv.reader( open(csvFile, 'rU'),encoding=encoding, delimiter="\t" )
+    f0 =  urllib2.urlopen(csvFile,'rU')
+    reader = unicodecsv.reader(f0, encoding=encoding, delimiter="\t" )
     #reader = csv.reader(open(csvFile, 'rU'))
     # first grab numbe rof specified header rows
     for i in range(headerRows):
@@ -175,10 +184,11 @@ def instantiateFromCSVtoitemData(csvFile, encoding='utf-8',headerRows=1,
     # now grab each itemData
     for row in reader:
         tmp = [row[literalColumn], row[categoryColumn],
-               row[regexColumn], row[ruleColumn]]
+            row[regexColumn], row[ruleColumn]]
         tmp[2] = ur"%s"%tmp[2] # convert the regular expression string into a raw string
         item = contextItem(tmp)
         items.append(item)
+    f0.close()
     return items
 
 def instantiateFromSQLite(dbPath, label, tableName, literalColumn="literal", 
@@ -189,7 +199,6 @@ def instantiateFromSQLite(dbPath, label, tableName, literalColumn="literal",
     """
     conn = sqlite3.connect(dbPath)
     c = conn.cursor()
-    
     items = itemData()
     ex_cmd = """SELECT %s, %s, %s, %s FROM %s WHERE %s= (?)"""%(literalColumn,
                                                                 categoryColumn, 
@@ -199,7 +208,7 @@ def instantiateFromSQLite(dbPath, label, tableName, literalColumn="literal",
                                                                 labelColumn)
     for row in c.execute(ex_cmd , (label, )):
         tmp = [row[0], row[1], 
-        	   row[2], row[3]]
+               row[2], row[3]]
         tmp[2] = ur"%s"%tmp[2]
         item = contextItem(tmp)
         items.append(item)

@@ -1,12 +1,17 @@
 import unittest
-import itemData
-import pyConTextGraph as pyConText
-import helpers
+import pyConTextNLP.itemData as itemData
+import pyConTextNLP.pyConTextGraph as pyConText
+import pyConTextNLP.helpers as helpers
+import pyConTextNLP.itemData as itemData
+import os
+from textblob import TextBlob
+
 class pyConTextNLP_test(unittest.TestCase):
     def setUp(self):
         # create a sample image in memory
         self.context = pyConText.ConTextMarkup()
         self.splitter = helpers.sentenceSplitter()
+
 
         self.su1 = u'kanso <Diagnosis>**diabetes**</Diagnosis> utesl\xf6t eller diabetes men inte s\xe4kert. Vi siktar p\xe5 en r\xf6ntgenkontroll. kan det vara nej panik\xe5ngesten\n?'
         self.su2 =  u'IMPRESSION: 1. LIMITED STUDY DEMONSTRATING NO GROSS EVIDENCE OF SIGNIFICANT PULMONARY EMBOLISM.'
@@ -23,6 +28,13 @@ class pyConTextNLP_test(unittest.TestCase):
         self.su1 = 0
     #def testSource(self):
         #assert self.context.__file__ == 'pyConTextGraph.pyc'
+    def test_itemData_from_tsv(self):
+        f = "https://github.com/chapmanbe/pyConTextNLP/blob/master/KB/domain_kb_test.tsv"
+        assert True 
+        #assert itemData.itemData_from_tsv(f)
+    def test_itemData_from_tsv2(self):
+        f = "file://"+os.path.join(os.getcwd(),"../KB/criticalfinder_generalized_modifiers.tsv")
+        assert itemData.itemData_from_tsv(f)
     def test_setRawText(self):
         self.context.setRawText(self.su1)
         assert self.context.getRawText() == self.su1
@@ -69,6 +81,9 @@ class pyConTextNLP_test(unittest.TestCase):
         splitter = helpers.sentenceSplitter()
         sentences = splitter.splitSentences(self.su4)
         assert len(sentences) == 1
+    def test_TextBlob_sentenceSplitter(self):
+        blob = TextBlob(self.su3)
+        assert len(blob.sentences) == 3
 
     # add function to test DocumentGraph generation  
 def run():
