@@ -1,0 +1,19 @@
+Lex	Type	Regex	Direction	
+bolus timing	QUALITY_FEATURE	\bbolus[ -]{0,1}timing	bidirectional	 # fixes pedoc #129 dq
+limited exam	QUALITY_FEATURE	(suboptimal|degraded|limited) (exam[a-z]*|study|scan|evaluation|bolus|timing)	bidirectional	
+nondiagnostic exam	QUALITY_FEATURE	nondiagnostic (exam[a-z]*|study|scan|evaluation)	bidirectional	 #fix for pedoc #231
+artifact	ARTIFACT	artifact(ual)?		
+bulk motion	ARTIFACT			
+motion	ARTIFACT			
+patient motion	ARTIFACT			
+respiratory motion	ARTIFACT			
+declot	EXCLUSION			
+detorsion	EXCLUSION			
+embolization	EXCLUSION			
+epiploic appendicitis	EXCLUSION			
+in the setting of	EXCLUSION			
+pe examination	EXCLUSION	(pulmonary )(artery )?(embol[a-z]+)(exam[a-z]*|study|protocol)		
+septic embolism	EXCLUSION	septic\s(emboli|embolus|embolism)		
+thrombectomy	EXCLUSION			
+thrombin	EXCLUSION			
+upstroke	EXCLUSION			

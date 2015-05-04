@@ -2,19 +2,11 @@ Lex	Type	Regex	Direction
 embolism	PULMONARY_EMBOLISM	\b(emboli|embolism|embolus)\b		
 pe	PULMONARY_EMBOLISM	\bpe\b		
 pulmonary embolism	PULMONARY_EMBOLISM	pulmonary\s(artery )?(embol[a-z]+)		
-bolus timing	QUALITY_FEATURE	\bbolus[ -]{0,1}timing	bidirectional	 # fixes pedoc #129 dq
-limited exam	QUALITY_FEATURE	(suboptimal|degraded|limited) (exam[a-z]*|study|scan|evaluation|bolus|timing)	bidirectional	
-nondiagnostic exam	QUALITY_FEATURE	nondiagnostic (exam[a-z]*|study|scan|evaluation)	bidirectional	 #fix for pedoc #231
 aneurysm (target)	ANEURYSM	aneurysm[a-z]*		
 dilation	ANEURYSM			
 aneurysmal dilatation	ANEURYSM	(aneurysmal )?dilatation		
 aortic dissection	AORTIC_DISSECTION	(aortic|aorta)\s(artery\s)? dissection		
 appendicitis	APPENDICITIS			
-artifact	ARTIFACT	artifact(ual)?		
-bulk motion	ARTIFACT			
-motion	ARTIFACT			
-patient motion	ARTIFACT			
-respiratory motion	ARTIFACT			
 bowel obstruction	BOWEL_OBSTRUCTION			
 midline shift	BRAIN_HERNIATION	((subfalcian|subfalcine|tonsillar)\sherniation)|((midline|mid-line)\sshift)		
 carotid dissection	CAROTID_DISSECTION	carotid?\s*?\w*\s*dissection		
@@ -28,16 +20,6 @@ DVT	DVT	((non.?)?occlusive)?\s?(thromb(us|i|osis|osed)\b|DVT|clot\b)	2/28/2013
 ectasia	ECTASIA	(ectasia| ectatic)		
 ectopic pregnancy	ECTOPIC_PREGNANCY			
 epiglottitis	EPIGLOTTITIS			
-declot	EXCLUSION			
-detorsion	EXCLUSION			
-embolization	EXCLUSION			
-epiploic appendicitis	EXCLUSION			
-in the setting of	EXCLUSION			
-pe examination	EXCLUSION	(pulmonary )(artery )?(embol[a-z]+)(exam[a-z]*|study|protocol)		
-septic embolism	EXCLUSION	septic\s(emboli|embolus|embolism)		
-thrombectomy	EXCLUSION			
-thrombin	EXCLUSION			
-upstroke	EXCLUSION			
 fetal demise	FETAL_DEMISE			
 free air	FREE_AIR	(pneumoperitoneum|((intraperitoneal|free)\s(gas|air)))		
 infarct	INFARCT	\b(stroke|infarct|infarction)\b		
