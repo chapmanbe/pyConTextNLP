@@ -6,3 +6,9 @@ def get_document_markups(document):
            e[2].get('category') == 'markup']
     tmp.sort(key=lambda x:x[1])
     return [t[0] for t in tmp]
+
+def conceptInDocument(document, concept):
+    """tests whether concept is in any nodes of document"""
+    pass
+
+

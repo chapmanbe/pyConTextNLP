@@ -4,5 +4,12 @@ pah	PULMONARY_ARTERIAL_HYPERTENSION	\bpah\b
 pulmonary hypertension	PULMONARY_ARTERIAL_ANATOMY	pulmonary\s(arterial )?(hypertension)		
 main pulmonary artery	PULMONARY_ARTERIAL_ANATOMY		 
 pulmonary trunk	PULMONARY_ARTERIAL_ANATOMY		
+pulmonary artery	PULMONARY_ARTERIAL_ANATOMY		
+pulmonary arteries	PULMONARY_ARTERIAL_ANATOMY		
 mosaic	PULMONARY_ARTERIAL_HYPERTENSION		
 right heart	CARDIAC_ANATOMY			
+septum	CARDIAC_ANATOMY			
+enlargement	PULMONARY_ARTERIAL_HYPERTENSION	(tapering|enlargement)		
+tapering	PULMONARY_ARTERIAL_HYPERTENSION			
+pruning	PULMONARY_ARTERIAL_HYPERTENSION			
+right heart strain	PULMONARY_ARTERIAL_HYPERTENSION	right heart (strain|failure)	
