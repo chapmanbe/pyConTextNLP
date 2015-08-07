@@ -3,11 +3,12 @@ pulmonary embolism	PULMONARY_EMBOLISM	pulmonary\s(artery )?(embol[a-z]+)|\bpe\b	
 aneurysm	ANEURYSM	aneurysm[a-z]*|(aneurysmal )?dilatation		Chest, Neuro, ABD/Pel
 aortic dissection	AORTIC_DISSECTION	(aortic|aorta)\s(artery\s)? dissection		Chest, ABD/Pel
 appendicitis	APPENDICITIS			ABD/Pel
+inflamation	INFLAMATION			Spine, Neuro, ABD/Pel, Chest, Extremity
 bowel obstruction	BOWEL_OBSTRUCTION			ABD/Pel
 midline shift	BRAIN_HERNIATION	((subfalcian|subfalcine|tonsillar)\sherniation)|((midline|mid-line)\sshift)		Neuro
 carotid dissection	CAROTID_DISSECTION	carotid?\s*?\w*\s*dissection		Neuro
 cerebral hemorrhage	CEREBRAL_HEMORRHAGE	(cereblal|intracranial|brain)\s(hemorrhage|hematoma|bleed)		Neuro
-cervical fracture	CERVICAL_FRACTURE	(cervical spine|c[1-7]|hangman|jefferson|dens|odontoid)\sfracture		Spine
+fracture	FRACTURE			Spine, Neuro, ABD/Pel, Chest, Extremity
 cholecystitis	CHOLECYSTITIS			ABD/Pel
 cord compression	CORD_COMPRESSION			Extremity, Spine, Neuro
 depressed skull fracture	DEPRESSED_SKULL_FRACTURE			Neuro
@@ -35,4 +36,5 @@ splenic infarct	SPLENIC_INFARCT			Chest, ABD/Pel
 tension pneumothorax	TENSION_PNEUMOTHORAX			Chest
 torsion	TORSION			ABD/Pel
 volvulus	VOLVULUS			ABD/Pel
-NO CRITICAL FINDING				
+pneumonia	PNEUMONIA	(pneumonia|consolidation)		Chest
+NO CRITICAL FINDING	NULL_FINDING			Spine, Neuro, ABD/Pel, Chest, Extremity
