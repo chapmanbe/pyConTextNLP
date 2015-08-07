@@ -38,4 +38,4 @@ volvulus	VOLVULUS			ABD/Pel
 pneumonia	PNEUMONIA	(pneumonia|consolidation)		Chest
 cancer	CANCER			Spine, Neuro, ABD/Pel, Chest, Extremity
 NO CRITICAL FINDING	NULL_FINDING			Spine, Neuro, ABD/Pel, Chest, Extremity
--1	NULL_FINDING			Spine, Neuro, ABD/Pel, Chest, Extremity
+0:UNREVIEWED	NULL_FINDING			Spine, Neuro, ABD/Pel, Chest, Extremity
