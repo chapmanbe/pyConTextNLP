@@ -31,10 +31,11 @@ renal infarct	RENAL_INFARCT			ABD/Pel
 retroperitoneal hemorrhage	RETROPERITONEAL_HEMORRHAGE	(retro|intra)?peritoneal\s(hemorrhage|hematoma|bleed)		ABD/Pel
 retropharyngeal abscess	RETROPHARYNGEAL_ABSCESS			Chest
 ruptured aneurysm	RUPTURED_ANEURYSM	(ruptured aneurysm|aortic rupture)		Chest, Neuro, ABD/Pel
-spinal cord compression	SPINAL_CORD_COMPRESSION			Spine, Neuro
 splenic infarct	SPLENIC_INFARCT			Chest, ABD/Pel
 tension pneumothorax	TENSION_PNEUMOTHORAX			Chest
 torsion	TORSION			ABD/Pel
 volvulus	VOLVULUS			ABD/Pel
 pneumonia	PNEUMONIA	(pneumonia|consolidation)		Chest
+cancer	CANCER			Spine, Neuro, ABD/Pel, Chest, Extremity
 NO CRITICAL FINDING	NULL_FINDING			Spine, Neuro, ABD/Pel, Chest, Extremity
+-1	NULL_FINDING			Spine, Neuro, ABD/Pel, Chest, Extremity
