@@ -191,7 +191,6 @@ class tagObject(object):
         self.__category = category
     def replaceCategory(self,oldCategory,newCategory):
         for index, item in enumerate(self.__category):
-            #print index,item,oldCategory
             if item == oldCategory.lower().strip():
                 try:
                     self.__category[index] = newCategory.lower().strip()
@@ -248,7 +247,7 @@ class tagObject(object):
             return True
         else:
             return False
-            
+
     def leftOverlap(self,other):
         """
         tests whether other has partial overlap to the left with self.
@@ -399,7 +398,7 @@ class ConTextDocument(object):
         txt += xmlScrub(documentString)
         # get children sections of root
 
-        
+
         for s in sections:
             txt += u"""<section>\n<sectionLabel> %s </sectionLabel>\n"""%s
             markups = self.getSectionMarkups(s)
@@ -419,8 +418,8 @@ class ConTextDocument(object):
         """
         Deprecated. This functionality should be accessed via the ConTextMarkup object now returned from getDocumentGraph()
         """
-        print "This function is deprecated and will be eliminated shortly."
-        print "The same functionality can be accessed through the ConTextMarkup object returned from getDocumentGraph()"
+        print("This function is deprecated and will be eliminated shortly.")
+        print("The same functionality can be accessed through the ConTextMarkup object returned from getDocumentGraph()")
         nodes = [n[0] for n in self.__documentGraph.nodes(data=True) if n[1]['category'] == mode]
         nodes.sort()
         return nodes
@@ -434,20 +433,20 @@ class ConTextDocument(object):
         # Maybe this should be changed
         self.__documentGraph = ConTextMarkup()
         if verbose:
-            print "Document markup has %d edges"%self.__document.number_of_edges()
+            print("Document markup has %d edges"%self.__document.number_of_edges())
         markups = [e[1] for e in self.__document.edges(data=True) if e[2].get('category') == 'markup']
         if verbose:
-            print "Document markup has %d conTextMarkup objects"%len(markups)
+            print("Document markup has %d conTextMarkup objects"%len(markups))
         ic = 0
         for i in range(len(markups)):
         #for m in markups:
             m = markups[i]
             if verbose:
-                print "markup %d has %d total items including %d targets"%(i,m.number_of_nodes(),m.getNumMarkedTargets())
+                print("markup %d has %d total items including %d targets"%(i,m.number_of_nodes(),m.getNumMarkedTargets()))
 
             self.__documentGraph = nx.union(m,self.__documentGraph)
             if verbose:
-                print "documentGraph now has %d nodes"%self.__documentGraph.number_of_nodes()
+                print("documentGraph now has %d nodes"%self.__documentGraph.number_of_nodes())
 
 class ConTextMarkup(nx.DiGraph):
     """
@@ -485,7 +484,7 @@ class ConTextMarkup(nx.DiGraph):
         values, but does not modify the object archive
         """
         if self.getVerbose():
-            print "Setting text to",txt
+            print("Setting text to",txt)
         self.graph["__rawTxt"] = txt
         self.graph["__txt"] = None
         self.graph["__scope"] = None
@@ -516,7 +515,7 @@ class ConTextMarkup(nx.DiGraph):
         self.graph["__scope"] = (0,len(txt))
         self.graph["__txt"] = txt
         if self.getVerbose():
-            print u"cleaned text is now",self.getText()
+            print(u"cleaned text is now",self.getText())
     def getXML(self):
         nodes = self.nodes(data=True)
         nodes.sort()
@@ -590,16 +589,16 @@ class ConTextMarkup(nx.DiGraph):
         same category marked in the text, and modifiers with rule 'terminate'.
         """
         if self.getVerbose():
-            print u"updating scopes"
+            print(u"updating scopes")
         self.__SCOPEUPDATED = True
         # make sure each tag has its own self-limited scope
         modifiers = self.getConTextModeNodes("modifier")
         for modifier in modifiers:
             if self.getVerbose():
-                print u"old scope for %s is %s"%(modifier.__str__(),modifier.getScope())
+                print(u"old scope for %s is %s"%(modifier.__str__(),modifier.getScope()))
             modifier.setScope()
             if self.getVerbose():
-                print u"new scope for %s is %s"%(modifier.__str__(),modifier.getScope())
+                print(u"new scope for %s is %s"%(modifier.__str__(),modifier.getScope()))
 
 
         # Now limit scope based on the domains of the spans of the other
@@ -639,11 +638,11 @@ class ConTextMarkup(nx.DiGraph):
             if not item.getRE():
                 regExp = ur"\b%s\b"%item.getLiteral()
                 if self.getVerbose():
-                    print "generating regular expression",regExp
+                    print("generating regular expression",regExp)
             else:
                 regExp = item.getRE()
                 if self.getVerbose():
-                    print "using provided regular expression",regExp
+                    print("using provided regular expression",regExp)
             if ignoreCase:
                 r = re.compile(regExp, re.IGNORECASE|re.UNICODE)
             else:
@@ -661,7 +660,7 @@ class ConTextMarkup(nx.DiGraph):
             tO.setPhrase(i.group())
             tO.setMatchedGroupDictionary(i.groupdict())
             if self.getVerbose():
-                print u"marked item",tO
+                print(u"marked item",tO)
             terms.append(tO)
         return terms
 
@@ -674,17 +673,17 @@ class ConTextMarkup(nx.DiGraph):
     def dropInactiveModifiers(self):
         mnodes = [ n for n in self.getConTextModeNodes("modifier") if self.degree(n) == 0]
         if self.getVerbose() and mnodes:
-            print u"dropping the following inactive modifiers"
+            print(u"dropping the following inactive modifiers")
             for mn in mnodes:
-                print mn
+                print(mn)
 
         self.remove_nodes_from(mnodes)
     def pruneModifierRelationships(self):
         """Initially modifiers may be applied to multiple targets. This function
         computes the text difference between the modifier and each modified
         target and keeps only the minimum distance relationship
-        
-        Finally, we make sure that tehre are no self modifying modifiers present (e.g. "free" in 
+
+        Finally, we make sure that tehre are no self modifying modifiers present (e.g. "free" in
         the phrase "free air" modifying the target "free air").
         """
         modifiers = self.getConTextModeNodes("modifier")
@@ -695,13 +694,13 @@ class ConTextMarkup(nx.DiGraph):
                 edgs = self.edges(m)
                 edgs.remove((m,minm[1]))
                 if self.getVerbose():
-                    print u"deleting relationship(s)",edgs
+                    print(u"deleting relationship(s)",edgs)
 
                 self.remove_edges_from(edgs)
 
     def pruneSelfModifyingRelationships(self):
         """
-        We make sure that tehre are no self modifying modifiers present (e.g. "free" in 
+        We make sure that tehre are no self modifying modifiers present (e.g. "free" in
         the phrase "free air" modifying the target "free air").
         modifiers = self.getConTextModeNodes("modifier")
         """
@@ -712,11 +711,11 @@ class ConTextMarkup(nx.DiGraph):
             if modifiedBy:
                 for mb in modifiedBy:
                     if self.getVerbose():
-                        print mb,m,mb.encompasses(m)
+                        print(mb,m,mb.encompasses(m))
                     if mb.encompasses(m):
                         nodesToRemove.append(m)
         if self.getVerbose():
-            print "removing the following self modifying nodes",nodesToRemove
+            print("removing the following self modifying nodes",nodesToRemove)
         self.remove_nodes_from(nodesToRemove)
     def __prune_marks(self, marks):
         if len(marks) < 2:
@@ -735,22 +734,22 @@ class ConTextMarkup(nx.DiGraph):
                         nodesToRemove.append(t1[0])
                         break
         if self.getVerbose():
-            print u"pruning the following nodes"
+            print(u"pruning the following nodes")
             for n in nodesToRemove:
-                print n
+                print(n)
         self.remove_nodes_from(nodesToRemove)
 
     def dropMarks(self,category="exclusion"):
         """Drop any targets that have the category equal to category"""
         if self.getVerbose():
-            print "in dropMarks"
+            print("in dropMarks")
             for n in self.nodes():
-                print n.getCategory(),n.isA(category.lower())
+                print(n.getCategory(),n.isA(category.lower()))
         dnodes = [n for n in self.nodes() if n.isA( category )]
         if self.getVerbose() and dnodes:
-            print u"droping the following markedItems"
+            print(u"droping the following markedItems")
             for n in dnodes:
-                print n
+                print(n)
         self.remove_nodes_from(dnodes)
 
     def applyModifiers(self):
@@ -767,7 +766,7 @@ class ConTextMarkup(nx.DiGraph):
             for modifier in modifiers:
                 if modifier.applyRule(target):
                     if self.getVerbose():
-                        print u"applying relationship between",modifier,target
+                        print(u"applying relationship between",modifier,target)
 
                     self.add_edge(modifier, target)
     def getMarkedTargets(self):

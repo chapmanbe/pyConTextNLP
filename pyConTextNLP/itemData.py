@@ -19,7 +19,7 @@ import platform
 import sqlite3
 
 if platform.python_version_tuple()[0] == '2':
-    import unicodecsv as csv 
+    import unicodecsv as csv
     import urllib2
     def get_fileobj(csvFile):
         p = urllib2.urlparse.urlparse(csvFile)
@@ -27,9 +27,9 @@ if platform.python_version_tuple()[0] == '2':
             csvFile = "file://"+csvFile
         f0 = urllib2.urlopen(csvFile,'rU')
         return csv.reader(f0, encoding='utf-8', delimiter="\t" ), f0
-    
+
 else:
-    import csv 
+    import csv
     import urllib.request, urllib.error, urllib.parse
     from io import StringIO
     def get_fileobj(csvFile):
@@ -70,7 +70,7 @@ class contextItem(object):
                 if( tc.lower().strip() in self.__category ):
                     return True
             return False
-    
+
     def getRE(self):
         return self.__re
     def getRule(self):
@@ -83,7 +83,7 @@ class contextItem(object):
         return str(self).encode('utf-8')
     def __repr__(self):
         return str(self).encode('utf-8')
-   
+
 class itemData(list):
     def __init__(self,*args):
         if args:
@@ -206,8 +206,8 @@ def itemData_from_tsv(csvFile, headerRows=1,
     f0.close()
     return items
 
-def instantiateFromSQLite(dbPath, label, tableName, literalColumn="literal", 
-        categoryColumn="category", regexColumn="re", ruleColumn="rule", 
+def instantiateFromSQLite(dbPath, label, tableName, literalColumn="literal",
+        categoryColumn="category", regexColumn="re", ruleColumn="rule",
         labelColumn="label"):
     """
     Written from Glenn Dayton, IV
@@ -216,17 +216,17 @@ def instantiateFromSQLite(dbPath, label, tableName, literalColumn="literal",
     c = conn.cursor()
     items = itemData()
     ex_cmd = """SELECT %s, %s, %s, %s FROM %s WHERE %s= (?)"""%(literalColumn,
-                                                                categoryColumn, 
-                                                                regexColumn, 
-                                                                ruleColumn, 
-                                                                tableName, 
+                                                                categoryColumn,
+                                                                regexColumn,
+                                                                ruleColumn,
+                                                                tableName,
                                                                 labelColumn)
     for row in c.execute(ex_cmd , (label, )):
-        tmp = [row[0], row[1], 
+        tmp = [row[0], row[1],
                row[2], row[3]]
         tmp[2] = r"%s"%tmp[2]
         item = contextItem(tmp)
         items.append(item)
-        
+
     c.close()
     return items
