@@ -19,6 +19,7 @@ import platform
 import sqlite3
 
 if platform.python_version_tuple()[0] == '2':
+
     import unicodecsv as csv
     import urllib2
     def get_fileobj(csvFile):
@@ -76,7 +77,7 @@ class contextItem(object):
     def getRule(self):
         return self.__rule
     def __unicode__(self):
-        txt = """literal<<%s>>; category<<%s>>; re<<%s>>; rule<<%s>>"""%(
+        txt = """literal<<{0}>>; category<<{1}>>; re<<{2}>>; rule<<{3}>>""".format(
             self.__literal,self.__category,self.__re, self.__rule)
         return txt
     def __str__(self):
@@ -99,20 +100,7 @@ class itemData(list):
                     super(itemData,self).append(itm)
     def __validate(self,data):
         return isinstance(data,contextItem)
-    def dropByLiteral(self,value):
-        """drop any contextItems with literal matching value. This is deprecated and will be dropped in future release.
-        """
-        # must be a more functional way to write this
-        j = 0
-        while True:
-            try:
-                itm = self.__getitem__(j)
-                if( itm.getLiteral() == value ):
-                    self.__delitem__(j)
-                else:
-                    j += 1
-            except:
-                break
+
     def append(self,data):
         if self.__validate(data):
             itm = data
@@ -140,38 +128,16 @@ class itemData(list):
                 itm = contextItem(i)
             super(itemData,self).append(itm)
     def __unicode__(self):
-        tmp = """itemData: %d items ["""%len(self)
+        tmp = """itemData: {0d} items [""".format(len(self))
         for i in self:
-            tmp = tmp+"%s, "%i.getLiteral()
+            tmp = tmp+"{0d}, ".format(i.getLiteral())
         tmp = tmp+"]"
         return tmp
     def __repr__(self):
         return str(self).encode('utf-8')
     def __str__(self):
         return str(self).encode('utf-8')
-
-def instantiateFromCSV(csvFile, encoding='utf-8'):
-    """takes a CSV file of itemdata rules and creates itemData instances.
-    Expects first row to be header"""
-    items = {} # dictionary of itemData categories to be returned to the user
-    reader = csv.reader( open(csvFile, 'rU'),encoding=encoding, delimiter="\t" )
-    #reader = csv.reader(open(csvFile, 'rU'))
-    rownum=0
-    for row in reader:
-        if rownum == 0:
-            header = row
-        else:
-            case = row[0]
-#        print case
-            category = items.get(case,itemData())
-            tmp = row[1:5]
-            tmp[2] = r"%s"%tmp[2] # convert the regular expression string into a raw string
-            item = contextItem(tmp)
-            category.append(item)
-            items[case] = category
-        rownum += 1
-    return items
-def itemData_from_tsv(csvFile, headerRows=1,
+def instantiateFromCSVtoitemData(csvFile, encoding='utf-8',headerRows=1,
         literalColumn = 0, categoryColumn = 1, regexColumn = 2, ruleColumn = 3):
     """
     takes a CSV file of itemdata rules and creates a single itemData instance.
@@ -183,14 +149,9 @@ def itemData_from_tsv(csvFile, headerRows=1,
     regexColumn: column from which to read the regular expression: default = 2
     ruleColumn: column from which to read the rule; default = 3
     """
-
-    # prase csvFile to see if it is a valid url address. If not, assume it is
-    # a local file and prepend "file://"
-
-
     items = itemData() # itemData to be returned to the user
     header = []
-    reader, f0 =  get_fileobj(csvFile)
+    reader, f0 = get_fileobj(csvFile)
     #reader = csv.reader(open(csvFile, 'rU'))
     # first grab numbe rof specified header rows
     for i in range(headerRows):
@@ -199,34 +160,9 @@ def itemData_from_tsv(csvFile, headerRows=1,
     # now grab each itemData
     for row in reader:
         tmp = [row[literalColumn], row[categoryColumn],
-            row[regexColumn], row[ruleColumn]]
-        tmp[2] = r"%s"%tmp[2] # convert the regular expression string into a raw string
+               row[regexColumn], row[ruleColumn]]
+        tmp[2] = r"{0}".format(tmp[2]) # convert the regular expression string into a raw string
         item = contextItem(tmp)
         items.append(item)
     f0.close()
-    return items
-
-def instantiateFromSQLite(dbPath, label, tableName, literalColumn="literal",
-        categoryColumn="category", regexColumn="re", ruleColumn="rule",
-        labelColumn="label"):
-    """
-    Written from Glenn Dayton, IV
-    """
-    conn = sqlite3.connect(dbPath)
-    c = conn.cursor()
-    items = itemData()
-    ex_cmd = """SELECT %s, %s, %s, %s FROM %s WHERE %s= (?)"""%(literalColumn,
-                                                                categoryColumn,
-                                                                regexColumn,
-                                                                ruleColumn,
-                                                                tableName,
-                                                                labelColumn)
-    for row in c.execute(ex_cmd , (label, )):
-        tmp = [row[0], row[1],
-               row[2], row[3]]
-        tmp[2] = r"%s"%tmp[2]
-        item = contextItem(tmp)
-        items.append(item)
-
-    c.close()
     return items

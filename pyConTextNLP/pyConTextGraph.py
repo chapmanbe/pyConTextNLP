@@ -37,53 +37,53 @@ ramp = re.compile(r"""&""",re.UNICODE)
 compiledRegExprs = {}
 
 def xmlScrub(tmp):
-    return rlt.sub(r"&lt;",ramp.sub(r"&amp;",u"%s"%tmp))
+    return rlt.sub(r"&lt;",ramp.sub(r"&amp;",u"{0}".format(tmp)))
 tagObjectXMLSkel=\
 u"""
 <tagObject>
-<id> %s </id>
-<phrase> %s </phrase>
-<literal> %s </literal>
-<category> %s </category>
-<spanStart> %d </spanStart>
-<spanStop> %d </spanStop>
-<scopeStart> %d </scopeStart>
-<scopeStop> %d </scopeStop>
+<id> {0} </id>
+<phrase> {1} </phrase>
+<literal> {2} </literal>
+<category> {3} </category>
+<spanStart> {4d} </spanStart>
+<spanStop> {5d} </spanStop>
+<scopeStart> {6d} </scopeStart>
+<scopeStop> {7d} </scopeStop>
 </tagObject>
 """
 
 ConTextMarkupXMLSkel = \
 u"""
 <ConTextMarkup>
-<rawText> %s </rawText>
-<cleanText> %s </cleanText>
+<rawText> {0} </rawText>
+<cleanText> {1} </cleanText>
 <nodes>
-%s
+{2}
 </nodes>
 <edges>
-%s
+{3}
 </edges>
 </ConTextMarkup>
 """
 edgeXMLSkel=\
 u"""
 <edge>
-<startNode> %s </startNode>
-<endNode> %s </endNode>
-%s
+<startNode> {0} </startNode>
+<endNode> {1} </endNode>
+{2}
 </edge>
 """
 nodeXMLSkel=\
 u"""
 <node>
-%s
+{0}
 </node>
 """
 
 ConTextDocumentXMLSkel=\
 u"""
 <ConTextDocument>
-%s
+{0}
 </ConTextDocument>
 """
 class tagObject(object):
@@ -173,9 +173,9 @@ class tagObject(object):
                                    self.getScope()[0],self.getScope()[1])
 
     def getBriefDescription(self):
-        description = u"""<id> %s </id> """%self.getTagID()
-        description+= u"""<phrase> %s </phrase> """%self.getPhrase()
-        description+= u"""<category> %s </category> """%self.getCategory()
+        description = u"""<id> {0} </id> """.format(self.getTagID())
+        description+= u"""<phrase> {0} </phrase> """.format(self.getPhrase())
+        description+= u"""<category> {0} </category> """.format(self.getCategory())
         return description
     def getLiteral(self):
         """returns the term defining this object"""
@@ -400,10 +400,11 @@ class ConTextDocument(object):
 
 
         for s in sections:
-            txt += u"""<section>\n<sectionLabel> %s </sectionLabel>\n"""%s
+            txt += u"""<section>\n<sectionLabel> {0} </sectionLabel>\n""".format(s)
             markups = self.getSectionMarkups(s)
             for m in markups:
-                txt += u"<sentence>\n<sentenceNumber> %s </sentenceNumber>\n<sentenceOffset> %s </sentenceOffset></sentence>\n%s"%(m[0],sentenceOffsets[m[0]],m[1].getXML())
+                txt += u"<sentence>\n<sentenceNumber> {0} </sentenceNumber>\n<sentenceOffset> {1} </sentenceOffset></sentence>\n{2}".format(
+                    (m[0],sentenceOffsets[m[0]],m[1].getXML()))
             txt += u"""</section>\n"""
 
         return ConTextDocumentXMLSkel%txt
@@ -433,20 +434,20 @@ class ConTextDocument(object):
         # Maybe this should be changed
         self.__documentGraph = ConTextMarkup()
         if verbose:
-            print("Document markup has %d edges"%self.__document.number_of_edges())
+            print("Document markup has {0d} edges".format(self.__document.number_of_edges()))
         markups = [e[1] for e in self.__document.edges(data=True) if e[2].get('category') == 'markup']
         if verbose:
-            print("Document markup has %d conTextMarkup objects"%len(markups))
+            print("Document markup has {0d} conTextMarkup objects".format(len(markups)))
         ic = 0
         for i in range(len(markups)):
         #for m in markups:
             m = markups[i]
             if verbose:
-                print("markup %d has %d total items including %d targets"%(i,m.number_of_nodes(),m.getNumMarkedTargets()))
+                print("markup {0d} has {1d} total items including {2d} targets".format(i,m.number_of_nodes(),m.getNumMarkedTargets()))
 
             self.__documentGraph = nx.union(m,self.__documentGraph)
             if verbose:
-                print("documentGraph now has %d nodes"%self.__documentGraph.number_of_nodes())
+                print("documentGraph now has {0d} nodes".format(self.__documentGraph.number_of_nodes()))
 
 class ConTextMarkup(nx.DiGraph):
     """
@@ -471,7 +472,7 @@ class ConTextMarkup(nx.DiGraph):
 
     def getNextTagID(self):
         self.__tagID += 1
-        return u"cid%06d"%self.__tagID
+        return u"cid{06d}".format(self.__tagID)
     def toggleVerbose(self):
         """toggles the boolean value for verbose mode"""
         self.__VERBOSE = not self.__VERBOSE
@@ -525,22 +526,22 @@ class ConTextMarkup(nx.DiGraph):
             keys = n[1].keys()
             keys.sort()
             for k in keys:
-                attributeString += """<%s> %s </%s>\n"""%(k,n[1][k],k)
+                attributeString += """<{0}> {1} </{2}>\n""".format(k,n[1][k],k)
             modificationString = u''
             modifiedBy = self.predecessors(n[0])
             if modifiedBy:
                 for m in modifiedBy:
                     modificationString += u"""<modifiedBy>\n"""
-                    modificationString += u"""<modifyingNode> %s </modifyingNode>\n"""%m.getTagID()
-                    modificationString += u"""<modifyingCategory> %s </modifyingCategory>\n"""%m.getCategory()
+                    modificationString += u"""<modifyingNode> {0} </modifyingNode>\n""".format(m.getTagID())
+                    modificationString += u"""<modifyingCategory> {0} </modifyingCategory>\n""".format(m.getCategory())
                     modificationString += u"""</modifiedBy>\n"""
             modifies = self.successors(n[0])
             if modifies:
                 for m in modifies:
                     modificationString += u"""<modifies>\n"""
-                    modificationString += u"""<modifiedNode> %s </modifiedNode>\n"""%m.getTagID()
+                    modificationString += u"""<modifiedNode> {0} </modifiedNode>\n""".format(m.getTagID())
                     modificationString += u"""</modifies>\n"""
-            nodeString += nodeXMLSkel%(attributeString+"%s"%n[0].getXML()+modificationString )
+            nodeString += nodeXMLSkel.format(attributeString+"{0}".format(n[0].getXML())+modificationString )
         edges = self.edges(data=True)
         edges.sort()
         edgeString = u''
@@ -549,28 +550,28 @@ class ConTextMarkup(nx.DiGraph):
             keys.sort()
             attributeString = u''
             for k in keys:
-                attributeString += """<%s> %s </%s>\n"""%(k,e[2][k],k)
-            edgeString += "%s"%edgeXMLSkel%(e[0].getTagID(),e[1].getTagID(),attributeString)
+                attributeString += """<{0}> {1} </{2}>\n""".format(k,e[2][k],k)
+            edgeString += "{0}".format(edgeXMLSkel.format(e[0].getTagID(),e[1].getTagID(),attributeString))
 
-        return ConTextMarkupXMLSkel%(xmlScrub(self.getRawText()),xmlScrub(self.getText()),
+        return ConTextMarkupXMLSkel.format(xmlScrub(self.getRawText()),xmlScrub(self.getText()),
                                        nodeString,edgeString)
     def __unicode__(self):
         txt = u'_'*42+"\n"
-        txt += 'rawText: %s\n'%self.getRawText()
-        txt += 'cleanedText: %s\n'%self.getText()
+        txt += 'rawText: {0}\n'.format(self.getRawText())
+        txt += 'cleanedText: {0}\n'.format(self.getText())
         nodes = [n for n in self.nodes(data=True) if n[1].get('category','') == 'target']
         nodes.sort()
         for n in nodes:
             txt += "*"*32+"\n"
-            txt += "TARGET: %s\n"%n[0].__unicode__()
+            txt += "TARGET: {0}\n".format(n[0].__unicode__())
             modifiers = self.predecessors(n[0])
             modifiers.sort()
             for m in modifiers:
-                txt += "-"*4+"MODIFIED BY: %s\n"%m.__unicode__()
+                txt += "-"*4+"MODIFIED BY: {0}\n".format(m.__unicode__())
                 mms = self.predecessors(m)
                 if mms:
                     for ms in mms:
-                        txt += "-"*8+"MODIFIED BY: %s\n"%ms.__unicode__()
+                        txt += "-"*8+"MODIFIED BY: {0}\n".format(ms.__unicode__())
 
         txt += u"_"*42+"\n"
         return txt
@@ -595,10 +596,10 @@ class ConTextMarkup(nx.DiGraph):
         modifiers = self.getConTextModeNodes("modifier")
         for modifier in modifiers:
             if self.getVerbose():
-                print(u"old scope for %s is %s"%(modifier.__str__(),modifier.getScope()))
+                print(u"old scope for {0} is {1}".format(modifier.__str__(),modifier.getScope()))
             modifier.setScope()
             if self.getVerbose():
-                print(u"new scope for %s is %s"%(modifier.__str__(),modifier.getScope()))
+                print(u"new scope for {0} is {1}".format(modifier.__str__(),modifier.getScope()))
 
 
         # Now limit scope based on the domains of the spans of the other
@@ -636,7 +637,7 @@ class ConTextMarkup(nx.DiGraph):
 
         if not compiledRegExprs.has_key(item.getLiteral()):
             if not item.getRE():
-                regExp = ur"\b%s\b"%item.getLiteral()
+                regExp = r"\b{}\b".format(item.getLiteral())
                 if self.getVerbose():
                     print("generating regular expression",regExp)
             else:

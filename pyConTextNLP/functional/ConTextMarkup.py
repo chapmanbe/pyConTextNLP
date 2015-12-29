@@ -1,8 +1,11 @@
 import re
 import networkx as nx
+import copy
 
-from tagObjects import tagObject
-import tagObjects as TO
+from . import tagItem as TI
+from . import templates as tmplts
+
+import itertools
 
 r1 = re.compile(r"""\W""",re.UNICODE)
 r2 = re.compile(r"""\s+""",re.UNICODE)
@@ -12,71 +15,54 @@ rlt = re.compile(r"""<""",re.UNICODE)
 ramp = re.compile(r"""&""",re.UNICODE)
 
 compiledRegExprs = {}
-ConTextMarkupXMLSkel = u"""
-<ConTextMarkup>
-<rawText> %s </rawText>
-<cleanText> %s </cleanText>
-<nodes>
-%s
-</nodes>
-<edges>
-%s
-</edges>
-</ConTextMarkup>
-"""
-edgeXMLSkel=u"""
-<edge>
-<startNode> %s </startNode>
-<endNode> %s </endNode>
-%s
-</edge>
-"""
-nodeXMLSkel=u"""
-<node>
-%s
-</node>
-"""
+currentID = 0
 
-def modifyforward(tag1,tag2):
-    pass
+def getNextTagID():
+    global currentID
+    currentID += 1
+    return currentID
+def reset_currentID():
+    global currentID
+    currentID = 0
+    return None
 
-
-
+def create_ConTextMarkup():
+    return nx.DiGraph(__rawText = None,
+                      __text = None,
+                      __scope = None,
+                      __SCOPEUPDATED = None )
 def setRawText(markup,txt=u''):
     """
     sets the current txt to txt and resets the current attributes to empty
     values, but does not modify the object archive
     """
-    markupNew = markup.copy() 
-    if( markupNew.getVerbose() ):
-        print "Setting text to",txt
-    markupNew.graph["__rawTxt"] = txt
-    markupNew.graph["__txt"] = None
+    markupNew = markup.copy()
+    markupNew.graph["__rawText"] = txt
+    markupNew.graph["__text"] = None
     markupNew.graph["__scope"] = None
     markupNew.graph["__SCOPEUPDATED"] = False
     return markupNew
-
-
-
+def get_RawText(markup):
+    return markup.graph["__rawText"]
 def cleanText(markup,stripNonAlphaNumeric=False, stripNumbers=False):
     """Need to rename. applies the regular expression scrubbers to rawTxt"""
     markupNew = markup.copy()
-    if( stripNonAlphaNumeric ):
-        txt = r1.sub(" ",markupNew.getRawText() )
+    if stripNonAlphaNumeric:
+        txt = r1.sub(" ",markupNew.graph["__rawText"])
     else:
-        txt = markupNew.getRawText()
+        txt = markupNew.graph["__rawText"]
 
     # clean up white spaces
     txt = r2.sub(" ",txt)
-    if( stripNumbers ):
+
+    # optionally cleanup numbers
+    if stripNumbers:
         txt = r3.sub("",txt)
 
-    markupNew.graph["__txt"] = txt
-    if( markupNew.getVerbose() ):
-        print u"cleaned text is now",markupNew.getText()
+    markupNew.graph["__text"] = txt
     return markupNew
-
-
+def get_cleanText(markup):
+    return markup.graph["__text"]
 
 def updateScopes(markup):
     """
@@ -84,30 +70,11 @@ def updateScopes(markup):
     of a modifier is limited by its own span, the span of modifiers in the
     same category marked in the text, and modifiers with rule 'terminate'.
     """
-    markupNew = markup.copy()
-    if markupNew.getVerbose():
-        print u"updating scopes"
-    modifiers = markupNew.getConTextModeNodes("modifier")
-    for modifier in modifiers:
-        if(markupNew.getVerbose()):
-            print(u"old scope for %s is %s"%(modifier.__str__(),modifier.getScope()))
-            modifier.setScope()
-        if(markupNew.getVerbose()):
-            print(u"new scope for %s is %s"%(modifier.__str__(),modifier.getScope()))
-
-
-    # Now limit scope based on the domains of the spans of the other
-    # modifier
-    for i in range(len(modifiers)-1):
-        modifier = modifiers[i]
-        for j in range(i+1,len(modifiers)):
-            modifier2 = modifiers[j]
-            if( TO.limitScope(modifier,modifier2) and
-                    modifier2.ti.citem.getRule().lower() == 'terminate'):
-                markupNew.add_edge(modifier2,modifier)
-            if( TO.limitScope(modifier2,modifier) and
-                    modifier.ti.citem.getRule().lower() == 'terminate'):
-                markupNew.add_edge(modifier,modifier2)
+    markupNew = nx.DiGraph()
+    modifiers = getConTextModeNodes(markup, "modifier")
+    modifier_pairs = itertools.permutations(modifiers,r=2)
+    modifiers = [TI.limitScope(m1,m2) for m1,m2 in modifier_pairs]
+    markupNew.graph = copy.copy(markup.graph)
     markupNew.graph["__SCOPEUPDATED"] = True
     return markupNew
 
@@ -116,71 +83,67 @@ def updateScopes(markup):
 def pruneMarks(markup):
     """
     prune Marked objects by deleting any objects that lie within the span of
-    another object. Currently modifiers and targets are treated separately
+    another object.
     """
     markupNew = markup.copy()
 
     marks = markupNew.nodes(data=True)
-    if( len(marks) < 2 ):
+    if len(marks) < 2:
         return markupNew
     marks.sort()
     nodesToRemove = []
-    for i in range(len(marks)-1):
-        if( marks[i][0] not in nodesToRemove ):
-            for j in range(i+1,len(marks)):
-                if( TO.encompasses(marks[i][0],marks[j][0]) and marks[i][1]['category'] == marks[j][1]['category'] ):
-                    nodesToRemove.append(marks[j][0])
-                elif( TO.encompasses(marks[j][0],marks[i][0]) and marks[i][1]['category'] == marks[j][1]['category'] ):
-                    nodesToRemove.append(marks[i][0])
-                    break
-    if( markupNew.getVerbose() ):
-        print u"pruning the following nodes"
-        for n in nodesToRemove:
-            print n
+    marks_pairs = itertools.permutations(marks,r=2)
+    nodesToRemove = [m2[0] for m1,m2 in marks_pairs if TI.o1_encompasses_o2(m1[0],m2[0])]
+    #print("%d nodes to be removed"%len(nodesToRemove))
     markupNew.remove_nodes_from(nodesToRemove)
+    markupNew.graph["__pruned"] = True
     return markupNew
 
 
 
-def markItem(markup,item, ConTextMode="target", ignoreCase=True):
+def mark_item_in_text(markup, item, ignoreCase=True):
     """
     markup the current text with the current item.
     If ignoreCase is True (default), the regular expression is compiled with
     IGNORECASE."""
 
+    global compiledRegExprs
 
-    if not compiledRegExprs.has_key(item.getLiteral()):
-        if(not item.getRE()):
-            regExp = ur"\b%s\b"%item.getLiteral()
+    if not (item.literal,item.re) in compiledRegExprs:
+        if not item.re:
+            regExp = r"\b%s\b"%item.getLiteral()
         else:
-            regExp = item.getRE()
+            regExp = item.re
         if ignoreCase:
             r = re.compile(regExp, re.IGNORECASE|re.UNICODE)
         else:
             r = re.compile(regExp,re.UNICODE)
-        compiledRegExprs[item.getLiteral()] = r
+        # I NEED TI FIX THIS SO THAT I CAN HAVE MULTIPLE REGULAR EXPRESSIONS/LITERAL
+        compiledRegExprs[(item.literal,item.re)] = r
     else:
-        r = compiledRegExprs[item.getLiteral()]
-    miter = r.finditer(markup.getText())
+        r = compiledRegExprs[(item.literal,item.re)]
+    miter = r.finditer(markup.graph.get("__text",u''))
     terms=[]
     for i in miter:
         # ci, span, scope,foundPhrase,ConTextCategory,tagid
-        tO = tagObject(item,i.span(),markup.getScope(),i.group(),ConTextMode, markup.getNextTagID())
+        tO = TI.create_tagItem(item,
+                               i.span(),
+                               i.group(),
+                               getNextTagID())
 
         terms.append(tO)
     return terms
 
-
-
-def markItems(markup,items, mode="target"):
+def mark_items_in_text(markup,items, mode="target"):
     """tags the sentence for a list of items
     items: a list of contextItems"""
-    # ??? Why am I adding mode to both the tag object and the markup node graph??? 
+    # ??? Why am I adding mode to both the tag object and the markup node graph???
     markupNew = markup.copy()
-    if( not items ):
+    if not items:
         return markupNew
     for item in items:
-        markupNew.add_nodes_from(markItem(markupNew,item, ConTextMode=mode), category=mode)
+        markupNew.add_nodes_from(mark_item_in_text(markupNew,item), 
+                                                   category=mode)
     return markupNew
 
 
@@ -190,62 +153,18 @@ def keepClosestMarkupRelationships(markup):
     computes the text difference between the modifier and each modified
     target and keeps only the minimum distance relationship
 
-    Finally, we make sure that there are no self modifying modifiers present (e.g. "free" in 
+    Finally, we make sure that there are no self modifying modifiers present (e.g. "free" in
     the phrase "free air" modifying the target "free air").
     """
     markupNew = markup.copy()
     modifiers = markupNew.getConTextModeNodes("modifier")
     for m in modifiers:
         modifiedBy = markupNew.successors(m)
-        if( modifiedBy and len(modifiedBy) > 1 ):
-            minm = min([ (m.dist(mb),mb) for mb in modifiedBy ])
-            edgs = self.edges(m)
-            edgs.remove((m,minm[1]))
-            if( self.getVerbose() ):
-                print u"deleting relationship(s)",edgs
-
-            self.remove_edges_from(edgs)
-
-
-
-def getXML(self):
-    nodes = self.nodes(data=True)
-    nodes.sort()
-    nodeString = u''
-    for n in nodes:
-        attributeString = u''
-        keys = n[1].keys()
-        keys.sort()
-        for k in keys:
-            attributeString += """<%s> %s </%s>\n"""%(k,n[1][k],k)
-        modificationString = u''
-        modifiedBy = self.predecessors(n[0])
-        if( modifiedBy ):
-            for m in modifiedBy:
-                modificationString += u"""<modifiedBy>\n"""
-                modificationString += u"""<modifyingNode> %s </modifyingNode>\n"""%m.getTagID()
-                modificationString += u"""<modifyingCategory> %s </modifyingCategory>\n"""%m.getCategory()
-                modificationString += u"""</modifiedBy>\n"""
-        modifies = self.successors(n[0])
-        if( modifies ):
-            for m in modifies:
-                modificationString += u"""<modifies>\n"""
-                modificationString += u"""<modifiedNode> %s </modifiedNode>\n"""%m.getTagID()
-                modificationString += u"""</modifies>\n"""
-        nodeString += nodeXMLSkel%(attributeString+"%s"%n[0].getXML()+modificationString )
-    edges = self.edges(data=True)
-    edges.sort()
-    edgeString = u''
-    for e in edges:
-        keys = e[2].keys()
-        keys.sort()
-        attributeString = u''
-        for k in keys:
-            attributeString += """<%s> %s </%s>\n"""%(k,e[2][k],k)
-        edgeString += "%s"%edgeXMLSkel%(e[0].getTagID(),e[1].getTagID(),attributeString)
-
-    return ConTextMarkupXMLSkel%(xmlScrub(self.getRawText()),xmlScrub(self.getText()),
-                                   nodeString,edgeString)
+        if modifiedBy and len(modifiedBy) > 1:
+            mdist = [(TI.dist(m,mb),mb) for mb in modifiedBy]
+            mdist.sort()
+            markup.remove_edges_from([(m,mb[1]) for mb in mdist[1:]])
+    return markupNew
 
 
 
@@ -260,48 +179,19 @@ def getMarkedTargets(markup):
     """
     Return the list of marked targets in the current sentence. List is sorted by span
     """
-    targets = markup.getConTextModeNodes("target")
+    targets = getConTextModeNodes(markup, "target")
     targets.sort()
     return targets
 
-
-
-def getTokenDistance(markup,n1,n2):
-    """returns the number of tokens (word) between n1 and n2"""
-    txt = markup.getText()
-    if( n1 < n2 ):
-        start = n1.getSpan()[1]+1
-        end = n2.getSpan()[0]
-        direction = 1
-    else:
-        start = n2.getSpan()[1]+1
-        end = n1.getSpan()[0]
-        direction = -1
-
-    subTxt = txt[start:end]
-    tokens = subTxt.split()
-    return len(tokens)*direction
-
-
-
 def applyModifiers(markup):
     """
-    If the scope has not yet been updated, do this first.
-
     Loop through the marked targets and for each target apply the modifiers
     """
-    if( not markup.getScopeUpdated() ):
-        markupNew = updateScopes(markup)
-    else:
-        markupNew = markup.copy()
-    targets = markupNew.getConTextModeNodes("target")
-    modifiers = markupNew.getConTextModeNodes("modifier")
-    for target in targets:
-        for modifier in modifiers:
-            if( TO.applyRule(modifier,target) ):
-                if( markupNew.getVerbose() ):
-                    print u"applying relationship between",modifier,target
-                markupNew.add_edge(modifier, target)
+    markupNew = markup.copy()
+    targets = getConTextModeNodes(markupNew, "target")
+    modifiers = getConTextModeNodes(markupNew, "modifier")
+    new_edges = [(m,t) for t,m in itertools.product(targets,modifiers) if TI.applyRule(m,t) ]
+    markupNew.add_edge_from(new_edges)
     return markupNew
 
 
@@ -309,155 +199,91 @@ def applyModifiers(markup):
 def dropMarks(markup, category="exclusion"):
     """Drop any targets that have the category equal to category"""
     markupNew = markup.copy()
-    dnodes = [n for n in markupNew.nodes() if n.isA( category )]
+    dnodes = [n for n in markupNew.nodes() if TI.isA_tag(n, category )]
     markupNew.remove_nodes_from(dnodes)
     return markupNew
 
+def create_sentence_conTextMarkup(s, targets, modifiers, ):
+    markup = create_ConTextMarkup()
+    markup = setRawText(markup, s)
+    markup = cleanText(markup)
+    markup = mark_items_in_text(markup, modifiers, mode="modifier")
+    markup = mark_items_in_text(markup, targets, mode="target")
+    markup = pruneMarks(markup)
+    markup = dropMarks(markup, category='Exclusion')
+    # apply modifiers to any targets within the modifiers scope
+    markup = applyModifiers(markup)
 
+    #markup.pruneSelfModifyingRelationships()
+    return markup
 
-def pruneSelfModifyingRelationships(markup):
-    """
-    We make sure that there are no self modifying modifiers present (e.g. "free" in 
-    the phrase "free air" modifying the target "free air").
-    modifiers = self.getConTextModeNodes("modifier")
-    """
-    markupNew = markup.copy()
-    modifiers = markup.getConTextModeNodes("modifier")
-    nodesToRemove = []
-    for m in modifiers:
-        modifiedBy = markup.successors(m)
-        if( modifiedBy ):
-            for mb in modifiedBy:
-                if( TO.encompasses(mb,m) ):
-                    nodesToRemove.append(m)
-    markupNew.remove_nodes_from(nodesToRemove)
-    return markupNew
+def mark_sentence(s, items, mode="target"):
+    markup = create_ConTextMarkup()
+    markup = setRawText(markup, s)
+    markup = cleanText(markup)
+    markup = mark_items_in_text(markup, items, mode=mode)
+    markup = pruneMarks(markup)
+    markup = dropMarks(markup, category='Exclusion')
 
+    return markup
 
+def getXML(mu):
+    nodes = mu.nodes(data=True)
+    nodes.sort()
+    nodeString = u''
+    for n in nodes:
+        attributeString = u''
+        keys = n[1].keys()
+        keys.sort()
+        for k in keys:
+            attributeString += """<{0}> {1} </{2}>\n""".format(k,n[1][k],k)
+        modificationString = u''
+        modifiedBy = mu.predecessors(n[0])
+        if modifiedBy:
+            for m in modifiedBy:
+                modificationString += u"""<modifiedBy>\n"""
+                modificationString += u"""<modifyingNode> {0} </modifyingNode>\n""".format(m.getTagID())
+                modificationString += u"""<modifyingCategory> {0} </modifyingCategory>\n""".format(m.getCategory())
+                modificationString += u"""</modifiedBy>\n"""
+        modifies = mu.successors(n[0])
+        if modifies:
+            for m in modifies:
+                modificationString += u"""<modifies>\n"""
+                modificationString += u"""<modifiedNode> {0} </modifiedNode>\n""".format(m.getTagID())
+                modificationString += u"""</modifies>\n"""
+        nodeString += tmplts.nodeXMLSkel.format(attributeString+"{0}".format(n[0].getXML())+modificationString )
+    edges = mu.edges(data=True)
+    edges.sort()
+    edgeString = u''
+    for e in edges:
+        keys = e[2].keys()
+        keys.sort()
+        attributeString = u''
+        for k in keys:
+            attributeString += """<{0}> {1} </{2}>\n""".format(k,e[2][k],k)
+        edgeString += "{0}".format(tmplts.edgeXMLSkel.format(e[0].getTagID(),e[1].getTagID(),attributeString))
 
-class ConTextMarkup(nx.DiGraph):
-    """
-    base class for context document.
-    build around markedTargets a list of termObjects representing desired terms
-    found in text and markedModifiers, tagObjects found in the text
-    """
-    def __init__(self,txt=u'',unicodeEncoding='utf-8',verbose=False,tagID=0):
-        """txt is the string to parse"""
-        # __document capture the document level structure
-        # for each sentence and then put in the archives when the next sentence
-        # is processed
-        super(ConTextMarkup,self).__init__(__txt=None,__rawTxt=txt,
-                                           __SCOPEUPDATED=False,__VERBOSE=verbose,
-                                           __tagID=tagID,
-                                           __unicodeEncoding=unicodeEncoding)
-        self.__cleanText()
-
-    def __cleanText(self,stripNonAlphaNumeric=False, stripNumbers=False):
-        """Need to rename. applies the regular expression scrubbers to rawTxt"""
-        if stripNonAlphaNumeric:
-            txt = r1.sub(" ",self.getRawText() )
-        else:
-            txt = self.getRawText()
-        # clean up white spaces
-        txt = r2.sub(" ",txt)
-        if stripNumbers:
-            txt = r3.sub("",txt)
-        self.graph["__txt"] = txt
-        self.graph["__scope"] = (0,len(txt))
-
-    def getUnicodeEncoding(self):
-        return self.graph["__unicodeEncoding"]
-
-    def getNextTagID(self):
-        """???"""
-        self.graph["__tagID"] += 1
-        return u"cid%02d"%self.graph["__tagID"]
-
-    def getVerbose(self):
-        return self.graph["__VERBOSE"]
-    def getText(self):
-        return self.graph.get("__txt",u'')
-    def getScope(self):
-        return self.graph.get("__scope",u'')
-    def getScopeUpdated(self):
-        return self.graph.get("__SCOPEUPDATED")
-    def getRawText(self):
-        return self.graph.get("__rawTxt",u'')
-    def __unicode__(self):
-        txt = u'_'*42+"\n"
-        txt += 'rawText: %s\n'%self.getRawText()
-        txt += 'cleanedText: %s\n'%self.getText()
-        nodes = [n for n in self.nodes(data=True) if n[1].get('category','') == 'target']
-        nodes.sort()
-        for n in nodes:
-            txt += "*"*32+"\n"
-            txt += "TARGET: %s\n"%n[0].__unicode__()
-            modifiers = self.predecessors(n[0])
-            modifiers.sort()
-            for m in modifiers:
-                txt += "-"*4+"MODIFIED BY: %s\n"%m.__unicode__()
-                mms = self.predecessors(m)
-                if( mms ):
-                    for ms in mms:
-                        txt += "-"*8+"MODIFIED BY: %s\n"%ms.__unicode__()
-
-        txt += u"_"*42+"\n"
-        return txt
-    def __str__(self):
-        return unicode(self).encode('utf-8')
-    def __repr__(self):
-        return unicode(self).encode('utf-8')
-    def getConTextModeNodes(self,mode):
-        nodes = [n[0] for n in self.nodes(data=True) if n[1]['category'] == mode]
-        nodes.sort()
-        return nodes
-
-    def getMarkedTargets(self):
-        """
-        Return the list of marked targets in the current sentence. List is sorted by span
-        """
-        targets = self.getConTextModeNodes("target")
-        targets.sort()
-        return targets
-    def getNumMarkedTargets(self):
-        """
-        Return the number of marked targets in the current sentence
-        """
-        return len(self.getConTextModeNodes("target"))
-
-    def getModifiers(self, node):
-        """
-        return immediate predecessorts of node. The returned list is sorted by node span.
-        """
-        modifiers = self.predecessors(node)
+    return tmplts.ConTextMarkupXMLSkel.format(tmplts.xmlScrub(get_RawText(mu)),
+                                              tmplts.xmlScrub(get_cleanText(mu)),
+                                              nodeString,edgeString)
+def markup2string(mu):
+    txt = u'_'*42+"\n"
+    txt += 'rawText: {0}\n'.format(get_RawText(mu))
+    txt += 'cleanedText: {0}\n'.format(get_cleanText(mu))
+    nodes = [n for n in mu.nodes(data=True) if n[1].get('category','') == 'target']
+    nodes.sort()
+    for n in nodes:
+        txt += "*"*32+"\n"
+        txt += "TARGET: {0}\n".format(TI.tagItem2string(n[0]))
+        modifiers = mu.predecessors(n[0])
         modifiers.sort()
-        return modifiers
-    def isModifiedByCategory(self,node, queryCategory):
-        """
-        tests whether node in markUp is modified by a tagObject with category equal to queryCategory. Return modifier if True
-        """
-        pred = self.getModifiers(node )
-        for p in pred:
-            #if( queryCategory.lower() == p.getCategory().lower() ):
-            if( p.isA(queryCategory) ):
-                return True
+        for m in modifiers:
+            txt += "-"*4+"MODIFIED BY: {0}\n".format(TI.tagItem2string(m))
+            mms = mu.predecessors(m)
+            if mms:
+                for ms in mms:
+                    txt += "-"*8+"MODIFIED BY: {0}\n".format(TI.tagItem2string(ms))
 
-        return False
-
-
-    def getTokenDistance(self,n1,n2):
-        """returns the number of tokens (word) between n1 and n2"""
-        txt = self.getText()
-        if( n1 < n2 ):
-            start = n1.getSpan()[1]+1
-            end = n2.getSpan()[0]
-            direction = 1
-        else:
-            start = n2.getSpan()[1]+1
-            end = n1.getSpan()[0]
-            direction = -1
-
-        subTxt = txt[start:end]
-        tokens = subTxt.split()
-        return len(tokens)*direction
+    txt += u"_"*42+"\n"
+    return txt
 

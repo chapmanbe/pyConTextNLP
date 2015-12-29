@@ -14,7 +14,7 @@
 
 """
 The module defines a class sentenceSplitter that defines how sentence splitting is to be done including
-exception terms that include sentence termination terms but do not indicate a termination (e.g. Mrs.). 
+exception terms that include sentence termination terms but do not indicate a termination (e.g. Mrs.).
 The exception terms are contained in the attribute exceptionTerms. Terms can be added or deleted
 through the class methods addExceptionTerms and deleteExceptionTerms. A short list of default terms
 common in English texts are included in the attribute defaultExceptions. By default these are
@@ -35,15 +35,15 @@ class sentenceSplitter(object):
         self.exceptionTerms = set(())
 
         self.digits = set('0123456789')
-        if( useDefaults ):
+        if useDefaults:
             for term in self.defaultExceptions:
                 try:
                     self.exceptionTerms.add(term)
-                    if( useCaseVariants ):
+                    if useCaseVariants:
                         self.exceptionTerms.add(term.lower())
                         self.exceptionTerms.add(term.upper())
                 except TypeError:
-                    print "Terms must be of type string. You provided %s which is a %s"%(term,type(term))
+                    print("Terms must be of type string. You provided {0} which is a {1}".format(term,type(term)))
 
     def addExceptionTerms(self, *terms, **kwargs): #addCaseVariants=True):
         """add exception terms to list of terms not to terminate sentence at.
@@ -51,7 +51,7 @@ class sentenceSplitter(object):
         addCaseVariants = kwargs.pop('addCaseVariants', False)
         for t in terms:
             self.exceptionTerms.add(t)
-            if( addCaseVariants ):
+            if addCaseVariants:
                 self.exceptionTerms.add(t.lower())
                 self.exceptionTerms.add(t.upper())
 
@@ -63,7 +63,7 @@ class sentenceSplitter(object):
         deleteCaseVariants = kwargs.pop('deleteCaseVariants', False)
         for t in terms:
             self.exceptionTerms.discard(t)
-            if( deleteCaseVariants ):
+            if deleteCaseVariants:
                 self.exceptionTerms.discard(t.lower())
                 self.exceptionTerms.discard(t.upper())
 
@@ -74,19 +74,19 @@ class sentenceSplitter(object):
         txt = txt.split()
         sentences = []
         wordLoc = 0
-        
-        while(wordLoc < len(txt) ):
+
+        while wordLoc < len(txt):
             currentWord = txt[wordLoc]
-            if( currentWord[-1] in '.?!' ):
-                if( currentWord in  self.exceptionTerms ):
+            if currentWord[-1] in '.?!':
+                if currentWord in  self.exceptionTerms:
                     wordLoc += 1
-                # per discussion with A.G. dropped this exception, since assuming numbers only use decimal points if there 
+                # per discussion with A.G. dropped this exception, since assuming numbers only use decimal points if there
                 # are actual decimal point digits expressed and thus the period would not be the last character of the word.
-                #elif( self.digits.intersection(currentWord) and 
+                #elif( self.digits.intersection(currentWord) and
                         #not set('()').intersection(currentWord)): # word doesn't include parentheses. Is this necessary?
                     #wordLoc += 1
                 else:
-                    sentences.append(' '.join(txt[:wordLoc+1])) 
+                    sentences.append(' '.join(txt[:wordLoc+1]))
                     txt = txt[wordLoc+1:]
                     wordLoc = 0
             else:
@@ -94,7 +94,7 @@ class sentenceSplitter(object):
 
         # if any texts remains (due to failure to identify a final sentence termination,
         # then take all remaining text and put into a sentence
-        if( txt ):
+        if txt:
             sentences.append(' '.join(txt) )
 
         return sentences
