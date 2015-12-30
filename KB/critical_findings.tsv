@@ -1,41 +1,1 @@
-Lex	Type	Regex	Direction	
-embolism	PULMONARY_EMBOLISM	\b(emboli|embolism|embolus)\b		
-pe	PULMONARY_EMBOLISM	\bpe\b		
-pulmonary embolism	PULMONARY_EMBOLISM	pulmonary\s(artery )?(embol[a-z]+)		
-aneurysm (target)	ANEURYSM	aneurysm[a-z]*		
-dilation	ANEURYSM			
-aneurysmal dilatation	ANEURYSM	(aneurysmal )?dilatation		
-aortic dissection	AORTIC_DISSECTION	(aortic|aorta)\s(artery\s)? dissection		
-appendicitis	APPENDICITIS			
-bowel obstruction	BOWEL_OBSTRUCTION			
-midline shift	BRAIN_HERNIATION	((subfalcian|subfalcine|tonsillar)\sherniation)|((midline|mid-line)\sshift)		
-carotid dissection	CAROTID_DISSECTION	carotid?\s*?\w*\s*dissection		
-cerebral hemorrhage	CEREBRAL_HEMORRHAGE	(cereblal|intracranial|brain)\s(hemorrhage|hematoma|bleed)		
-cervical fracture	CERVICAL_FRACTURE	(cervical spine|c[1-7]|hangman|jefferson|dens|odontoid)\sfracture		
-cholecystitis	CHOLECYSTITIS			
-cord compression	CORD_COMPRESSION			
-depressed skull fracture	DEPRESSED_SKULL_FRACTURE			
-diverticulitis	DIVERTICULITIS			
-DVT	DVT	((non.?)?occlusive)?\s?(thromb(us|i|osis|osed)\b|DVT|clot\b)	2/28/2013	
-ectasia	ECTASIA	(ectasia| ectatic)		
-ectopic pregnancy	ECTOPIC_PREGNANCY			
-epiglottitis	EPIGLOTTITIS			
-fetal demise	FETAL_DEMISE			
-free air	FREE_AIR	(pneumoperitoneum|((intraperitoneal|free)\s(gas|air)))		
-infarct	INFARCT	\b(stroke|infarct|infarction)\b		
-ischemic bowel	ISCHEMIC_BOWEL			
-lacunar infarct	LACUNAR_INFARCT			
-mediastinal emphysema	MEDIASTINAL_EMPHYSEMA			
-omental infarct	OMENTAL_INFARCT			
-bone infarct	OSTEONECROSIS	(bone infarct|osteonecrosis)		
-pneumothorax	PNEUMOTHORAX			
-portal venous air	PORTAL_VENOUS_AIR	portal\b(venous\b)?(gas|air)		
-renal infarct	RENAL_INFARCT			
-retroperitoneal hemorrhage	RETROPERITONEAL_HEMORRHAGE	(retro|intra)?peritoneal\s(hemorrhage|hematoma|bleed)		
-retropharyngeal abscess	RETROPHARYNGEAL_ABSCESS			
-ruptured aneurysm	RUPTURED_ANEURYSM	(ruptured aneurysm|aortic rupture)		
-spinal cord compression	SPINAL_CORD_COMPRESSION			
-splenic infarct	SPLENIC_INFARCT			
-tension pneumothorax	TENSION_PNEUMOTHORAX			
-torsion	TORSION			
-volvulus	VOLVULUS			
+Lex	Type	Regex	Directionembolism	PULMONARY_EMBOLISM	\b(emboli|embolism|embolus)\b	pe	PULMONARY_EMBOLISM	\bpe\b	pulmonary embolism	PULMONARY_EMBOLISM	pulmonary\s(artery )?(embol[a-z]+)	aneurysm (target)	ANEURYSM	aneurysm[a-z]*	dilation	ANEURYSM		aneurysmal dilatation	ANEURYSM	(aneurysmal )?dilatation	aortic dissection	AORTIC_DISSECTION	(aortic|aorta)\s(artery\s)? dissection	appendicitis	APPENDICITIS		bowel obstruction	BOWEL_OBSTRUCTION		midline shift	BRAIN_HERNIATION	((subfalcian|subfalcine|tonsillar)\sherniation)|((midline|mid-line)\sshift)	carotid dissection	CAROTID_DISSECTION	carotid?\s*?\w*\s*dissection	cerebral hemorrhage	CEREBRAL_HEMORRHAGE	(cereblal|intracranial|brain)\s(hemorrhage|hematoma|bleed)	cervical fracture	CERVICAL_FRACTURE	(cervical spine|c[1-7]|hangman|jefferson|dens|odontoid)\sfracture	cholecystitis	CHOLECYSTITIS		cord compression	CORD_COMPRESSION		depressed skull fracture	DEPRESSED_SKULL_FRACTURE		diverticulitis	DIVERTICULITIS		DVT	DVT	((non.?)?occlusive)?\s?(thromb(us|i|osis|osed)\b|DVT|clot\b)	2/28/13ectasia	ECTASIA	(ectasia| ectatic)	ectopic pregnancy	ECTOPIC_PREGNANCY		epiglottitis	EPIGLOTTITIS		fetal demise	FETAL_DEMISE		free air	FREE_AIR	(pneumoperitoneum|((intraperitoneal|free)\s(gas|air)))	infarct	INFARCT	\b(stroke|infarct|infarction)\b	ischemic bowel	ISCHEMIC_BOWEL		lacunar infarct	LACUNAR_INFARCT		mediastinal emphysema	MEDIASTINAL_EMPHYSEMA		omental infarct	OMENTAL_INFARCT		bone infarct	OSTEONECROSIS	(bone infarct|osteonecrosis)	pneumonia	PNEUMONIA	pneumoni*	aspiration	PNEUMONIA	aspirat*	consolidation	PNEUMONIA	consolidat*	pneumothorax	PNEUMOTHORAX		portal venous air	PORTAL_VENOUS_AIR	portal\b(venous\b)?(gas|air)	renal infarct	RENAL_INFARCT		retroperitoneal hemorrhage	RETROPERITONEAL_HEMORRHAGE	(retro|intra)?peritoneal\s(hemorrhage|hematoma|bleed)	retropharyngeal abscess	RETROPHARYNGEAL_ABSCESS		ruptured aneurysm	RUPTURED_ANEURYSM	(ruptured aneurysm|aortic rupture)	spinal cord compression	SPINAL_CORD_COMPRESSION		splenic infarct	SPLENIC_INFARCT		tension pneumothorax	TENSION_PNEUMOTHORAX		torsion	TORSION		volvulus	VOLVULUS		
