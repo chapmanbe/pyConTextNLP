@@ -1,6 +1,13 @@
 pyConTextNLP
 ============
 
+IMPORTANT NOTES:
+----------------
+
+I'm currently working on two major rewrites. First, I'm trying to port pyConTextNLP to work in both 3.x and 2.x. this is proving to be difficult and I keep discovering errors. The main pyConTextNLP suffers from not having a good unit testing base.
+
+The second  major project is rewriting pyConTextNLP in a more functional form. It is hoped that this will make the code more robust, easier to maintain, and more amendable to parallelization. This code is contained in the ``functional`` subpackage. This rewrite includes a better unit testing base.
+
 pyConTextNLP is a Python implementation/extension/modification of the
 ConText algorithm described in `CITE <>`__ which is itself a
 generalization of the NegEx algorithm described in `CITE <>`__.
@@ -120,7 +127,7 @@ were defined in a file named critfindingItemData.py
 ::
 
     critItems = itemData(
-    ['pulmonary embolism','PULMONARY_EMBOLISM',r'''pulmonary\s(artery )?(embol[a-z]+)''',''], 
+    ['pulmonary embolism','PULMONARY_EMBOLISM',r'''pulmonary\s(artery )?(embol[a-z]+)''',''],
     ['pe','PULMONARY_EMBOLISM',r'''\bpe\b''',''],
     ['embolism','PULMONARY_EMBOLISM',r'''\b(emboli|embolism|embolus)\b''',''],
     ['aortic dissection','AORTIC_DISSECTION','',''])
@@ -161,7 +168,7 @@ the report
 
             # process each sentence in the report
             for s in sentences:
-                context.setTxt(s) 
+                context.setTxt(s)
                 context.markItems(modifiers, mode="modifier")
                 context.markItems(targets, mode="target")
 
@@ -175,7 +182,7 @@ the report
 
                 # match modifiers to targets
                 context.applyModifiers()
-               
+
                 # Drop any modifiers that didn't get hooked up with a target
                 context.dropInactiveModifiers()
 
