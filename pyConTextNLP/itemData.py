@@ -37,8 +37,8 @@ else:
         p = urllib.parse.urlparse(csvFile)
         if not p.scheme:
             csvFile = "file://"+csvFile
-        f0 = urllib.request.urlopen(csvFile,'rt')
-        return csv.reader(StringIO(f0.read().decode()), delimiter="\t" ), f0
+        f0 = urllib.request.urlopen(csvFile, data=None)
+        return csv.reader(StringIO(f0.read().decode(), newline=None), delimiter="\t" ), f0
 
 class contextItem(object):
     __numEnteries = 4
@@ -128,15 +128,15 @@ class itemData(list):
                 itm = contextItem(i)
             super(itemData,self).append(itm)
     def __unicode__(self):
-        tmp = """itemData: {0d} items [""".format(len(self))
+        tmp = """itemData: {0:d} items [""".format(len(self))
         for i in self:
-            tmp = tmp+"{0d}, ".format(i.getLiteral())
+            tmp = tmp+"{0}, ".format(i.getLiteral())
         tmp = tmp+"]"
         return tmp
     def __repr__(self):
-        return str(self).encode('utf-8')
+        return self.__unicode__().encode('utf-8')
     def __str__(self):
-        return str(self).encode('utf-8')
+        return self.__repr__()
 def instantiateFromCSVtoitemData(csvFile, encoding='utf-8',headerRows=1,
         literalColumn = 0, categoryColumn = 1, regexColumn = 2, ruleColumn = 3):
     """

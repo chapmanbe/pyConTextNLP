@@ -26,6 +26,7 @@ import copy
 import networkx as nx
 import platform
 import copy
+import uuid
 
 r1 = re.compile(r"""\W""",re.UNICODE)
 r2 = re.compile(r"""\s+""",re.UNICODE)
@@ -45,10 +46,10 @@ u"""
 <phrase> {1} </phrase>
 <literal> {2} </literal>
 <category> {3} </category>
-<spanStart> {4d} </spanStart>
-<spanStop> {5d} </spanStop>
-<scopeStart> {6d} </scopeStart>
-<scopeStop> {7d} </scopeStop>
+<spanStart> {4:d} </spanStart>
+<spanStop> {5:d} </spanStop>
+<scopeStart> {6:d} </scopeStart>
+<scopeStop> {7:d} </scopeStop>
 </tagObject>
 """
 
@@ -94,7 +95,7 @@ class tagObject(object):
     3) The location of the tag within the text being parsed
 
     """
-    def __init__(self, item, ConTextCategory,scope=None, tagid='', **kwargs):
+    def __init__(self, item, ConTextCategory,scope=None, tagid=None, **kwargs):
         """
         item: contextItem used to generate term
         ConTextCategory: category this term is being used for in pyConText
@@ -108,6 +109,8 @@ class tagObject(object):
         self.__foundPhrase = ''
         self.__foundDict = {}
         self.__ConTextCategory = ConTextCategory
+        if not tagid:
+            tagid = uuid.uid1().int
         self.__tagID = tagid
         if scope == None:
             self.__scope = []
@@ -167,7 +170,7 @@ class tagObject(object):
     def getConTextCategory(self):
         return self.__ConTextCategory
     def getXML(self):
-        return   tagObjectXMLSkel%(self.getTagID(),xmlScrub(self.getPhrase()),
+        return   tagObjectXMLSkel.format(self.getTagID(),xmlScrub(self.getPhrase()),
                                    xmlScrub(self.getLiteral()),xmlScrub(self.getCategory()),
                                    self.getSpan()[0],self.getSpan()[1],
                                    self.getScope()[0],self.getScope()[1])
@@ -230,6 +233,9 @@ class tagObject(object):
     def __ne__(self,other): return self.__spanStart != other.__spanStart
     def __gt__(self,other): return self.__spanStart > other.__spanStart
     def __ge__(self,other): return self.__spanStart >= other.__spanStart
+
+    def __hash__(self):
+        return hash(repr(self))
     def encompasses(self,other):
         """tests whether other is completely encompassed with the current object
            ??? should we not prune identical span tagObjects???"""
@@ -273,9 +279,9 @@ class tagObject(object):
         txt = self.getBriefDescription()
         return txt
     def __str__(self):
-        return unicode(self).encode('utf-8')
+        return self.__unicode__()#.encode('utf-8')
     def __repr__(self):
-        return unicode(self).encode('utf-8')
+        return self.__unicode__()#.encode('utf-8')
 class ConTextDocument(object):
     """
     base class for context.
@@ -344,7 +350,7 @@ class ConTextDocument(object):
         successors = [(e[2]['__sectionNumber'],e[1]) for e in self.__document.out_edges(sectionLabel, data=True)
                                                             if e[2].get("category") == category]
         successors.sort()
-        tmp = zip(*successors)
+        tmp = list(zip(*successors))
         return tmp[1]
 
     def getSectionMarkups(self, sectionLabel = None, returnSentenceNumbers=True ):
@@ -357,13 +363,13 @@ class ConTextDocument(object):
         if returnSentenceNumbers:
             return successors
         else:
-            tmp = zip(*successors)
+            tmp = list(zip(*successors))
             return tmp[1]
 
     def getDocumentSections(self):
         edges = [ (e[2]['sectionNumber'],e[1]) for e in self.__document.edges(data=True) if e[2].get("category") == "section"]
         edges.sort()
-        tmp = zip(*edges)
+        tmp = list(zip(*edges))
         try:
             tmp = tmp[1]
             tmp.insert(0,self.__root)
@@ -403,18 +409,18 @@ class ConTextDocument(object):
             txt += u"""<section>\n<sectionLabel> {0} </sectionLabel>\n""".format(s)
             markups = self.getSectionMarkups(s)
             for m in markups:
-                txt += u"<sentence>\n<sentenceNumber> {0} </sentenceNumber>\n<sentenceOffset> {1} </sentenceOffset></sentence>\n{2}".format(
+                txt += u"<sentence>\n<sentenceNumber> %d </sentenceNumber>\n<sentenceOffset> %d </sentenceOffset></sentence>\n%s"%(
                     (m[0],sentenceOffsets[m[0]],m[1].getXML()))
             txt += u"""</section>\n"""
 
-        return ConTextDocumentXMLSkel%txt
+        return ConTextDocumentXMLSkel.format(txt)
     def __unicode__(self):
         txt = u'_'*42+"\n"
         return txt
     def __str__(self):
-        return unicode(self).encode('utf-8')
+        return self.__unicode__()
     def __repr__(self):
-        return unicode(self).encode('utf-8')
+        return self.__unicode__()#.encode('utf-8')
     def getConTextModeNodes(self,mode):
         """
         Deprecated. This functionality should be accessed via the ConTextMarkup object now returned from getDocumentGraph()
@@ -471,8 +477,8 @@ class ConTextMarkup(nx.DiGraph):
         return self.__unicodeEncoding
 
     def getNextTagID(self):
-        self.__tagID += 1
-        return u"cid{06d}".format(self.__tagID)
+        return uuid.uuid1().int
+        return u"%06d"%self.__tagID
     def toggleVerbose(self):
         """toggles the boolean value for verbose mode"""
         self.__VERBOSE = not self.__VERBOSE
@@ -523,7 +529,7 @@ class ConTextMarkup(nx.DiGraph):
         nodeString = u''
         for n in nodes:
             attributeString = u''
-            keys = n[1].keys()
+            keys = list(n[1].keys())
             keys.sort()
             for k in keys:
                 attributeString += """<{0}> {1} </{2}>\n""".format(k,n[1][k],k)
@@ -546,7 +552,7 @@ class ConTextMarkup(nx.DiGraph):
         edges.sort()
         edgeString = u''
         for e in edges:
-            keys = e[2].keys()
+            keys = list(e[2].keys())
             keys.sort()
             attributeString = u''
             for k in keys:
@@ -576,9 +582,9 @@ class ConTextMarkup(nx.DiGraph):
         txt += u"_"*42+"\n"
         return txt
     def __str__(self):
-        return unicode(self).encode('utf-8')
+        return self.__unicode__()#.encode('utf-8')
     def __repr__(self):
-        return unicode(self).encode('utf-8')
+        return self.__unicode__()#.encode('utf-8')
     def getConTextModeNodes(self,mode):
         nodes = [n[0] for n in self.nodes(data=True) if n[1]['category'] == mode]
         nodes.sort()
@@ -635,7 +641,7 @@ class ConTextMarkup(nx.DiGraph):
 
         # See if we have already created a regular expression
 
-        if not compiledRegExprs.has_key(item.getLiteral()):
+        if not item.getLiteral() in compiledRegExprs:
             if not item.getRE():
                 regExp = r"\b{}\b".format(item.getLiteral())
                 if self.getVerbose():
