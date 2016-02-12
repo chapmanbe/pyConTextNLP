@@ -227,10 +227,10 @@ def mark_sentence(s, items, mode="target", numcpu = 1):
     markup = create_ConTextMarkup()
     markup = setRawText(markup, s)
     markup = cleanText(markup)
-    if numcpu >=0:
-        if numcpu == 0:
-            numcpu = mp.cpu_count()
-        with Pool(processes=numcpu) as pool:
+    #if numcpu >=0:
+        #if numcpu == 0:
+            #numcpu = mp.cpu_count()
+        #with Pool(processes=numcpu) as pool:
     markup = mark_items_in_text(markup, items, mode=mode)
     markup = pruneMarks(markup)
     markup = dropMarks(markup, category='Exclusion')
