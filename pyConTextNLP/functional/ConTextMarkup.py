@@ -1,11 +1,12 @@
 import re
 import networkx as nx
 import copy
-
+import uuid
 from . import tagItem as TI
 from . import templates as tmplts
 
 import itertools
+import multiprocessing as mp
 
 r1 = re.compile(r"""\W""",re.UNICODE)
 r2 = re.compile(r"""\s+""",re.UNICODE)
@@ -17,10 +18,9 @@ ramp = re.compile(r"""&""",re.UNICODE)
 compiledRegExprs = {}
 currentID = 0
 
-def getNextTagID():
-    global currentID
-    currentID += 1
-    return currentID
+def getTagID():
+    return uuid.uuid1().int
+
 def reset_currentID():
     global currentID
     currentID = 0
@@ -46,21 +46,27 @@ def get_RawText(markup):
     return markup.graph["__rawText"]
 def cleanText(markup,stripNonAlphaNumeric=False, stripNumbers=False):
     """Need to rename. applies the regular expression scrubbers to rawTxt"""
-    markupNew = markup.copy()
-    if stripNonAlphaNumeric:
-        txt = r1.sub(" ",markupNew.graph["__rawText"])
-    else:
-        txt = markupNew.graph["__rawText"]
+    try:
+        markupNew = markup.copy()
+        if stripNonAlphaNumeric:
+            txt = r1.sub(" ",markupNew.graph["__rawText"])
+        else:
+            txt = markupNew.graph["__rawText"]
 
-    # clean up white spaces
-    txt = r2.sub(" ",txt)
+        # clean up white spaces
+        txt = r2.sub(" ",txt)
 
-    # optionally cleanup numbers
-    if stripNumbers:
-        txt = r3.sub("",txt)
+        # optionally cleanup numbers
+        if stripNumbers:
+            txt = r3.sub("",txt)
 
-    markupNew.graph["__text"] = txt
-    return markupNew
+        markupNew.graph["__text"] = txt
+        return markupNew
+    except Exception as error:
+        print(error)
+        print(txt)
+        print(type(txt))
+        return ""
 def get_cleanText(markup):
     return markup.graph["__text"]
 
@@ -129,7 +135,7 @@ def mark_item_in_text(markup, item, ignoreCase=True):
         tO = TI.create_tagItem(item,
                                i.span(),
                                i.group(),
-                               getNextTagID())
+                               getTagID())
 
         terms.append(tO)
     return terms
@@ -142,7 +148,7 @@ def mark_items_in_text(markup,items, mode="target"):
     if not items:
         return markupNew
     for item in items:
-        markupNew.add_nodes_from(mark_item_in_text(markupNew,item), 
+        markupNew.add_nodes_from(mark_item_in_text(markupNew,item),
                                                    category=mode)
     return markupNew
 
@@ -217,10 +223,14 @@ def create_sentence_conTextMarkup(s, targets, modifiers, ):
     #markup.pruneSelfModifyingRelationships()
     return markup
 
-def mark_sentence(s, items, mode="target"):
+def mark_sentence(s, items, mode="target", numcpu = 1):
     markup = create_ConTextMarkup()
     markup = setRawText(markup, s)
     markup = cleanText(markup)
+    if numcpu >=0:
+        if numcpu == 0:
+            numcpu = mp.cpu_count()
+        with Pool(processes=numcpu) as pool:
     markup = mark_items_in_text(markup, items, mode=mode)
     markup = pruneMarks(markup)
     markup = dropMarks(markup, category='Exclusion')
@@ -286,4 +296,3 @@ def markup2string(mu):
 
     txt += u"_"*42+"\n"
     return txt
-

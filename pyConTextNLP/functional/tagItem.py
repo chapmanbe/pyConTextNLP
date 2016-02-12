@@ -17,6 +17,20 @@ class tagItem(collections.namedtuple('tagItem',
     def __ne__(self,other): return self.span[0] != other.span[0]
     def __gt__(self,other): return self.span[0] >  other.span[0]
     def __ge__(self,other): return self.span[0] >= other.span[0]
+    def __hash__(self):
+        return hash(repr(self))
+
+    def __str__(self):
+        description = u"""<id> {0} </id> """.format(self.id)
+        description+= u"""<phrase> {0} </phrase> """.format(self.foundPhrase)
+        return description
+    def __repr__(self):
+        description  = u"""<id> {0} </id> """.format(self.id)
+        description += u"""<phrase> {0} </phrase> """.format(self.foundPhrase)
+        description +=u"""<span> {0} </span>""".format(self.span)
+        description +=u"""<scope> {0} </scope>""".format(self.scope)
+        description +=u"""<conTextItem> {0} </conTextItem>""".format(self.conTextItem.__repr__()) 
+        return description
 
 
 def _autoSetScope(rule,span):
