@@ -18,7 +18,7 @@ ramp = re.compile(r"""&""",re.UNICODE)
 compiledRegExprs = {}
 currentID = 0
 
-def getTagID():
+def get_tagID():
     return uuid.uuid1().int
 
 def reset_currentID():
@@ -70,23 +70,26 @@ def cleanText(markup,stripNonAlphaNumeric=False, stripNumbers=False):
 def get_cleanText(markup):
     return markup.graph["__text"]
 
-def updateScopes(markup):
+def update_scopes(markup):
     """
     update the scopes of all the marked modifiers in the txt. The scope
     of a modifier is limited by its own span, the span of modifiers in the
     same category marked in the text, and modifiers with rule 'terminate'.
     """
     markupNew = nx.DiGraph()
+    targets = getConTextModeNodes(markup,"targets")
     modifiers = getConTextModeNodes(markup, "modifier")
     modifier_pairs = itertools.permutations(modifiers,r=2)
     modifiers = [TI.limitScope(m1,m2) for m1,m2 in modifier_pairs]
     markupNew.graph = copy.copy(markup.graph)
     markupNew.graph["__SCOPEUPDATED"] = True
+    markupNew.add_nodes_from(modifiers)
+    markupNew.add_nodes_from(targets)
     return markupNew
 
 
 
-def pruneMarks(markup):
+def prune_marks(markup):
     """
     prune Marked objects by deleting any objects that lie within the span of
     another object.
@@ -135,7 +138,7 @@ def mark_item_in_text(markup, item, ignoreCase=True):
         tO = TI.create_tagItem(item,
                                i.span(),
                                i.group(),
-                               getTagID())
+                               get_tagID())
 
         terms.append(tO)
     return terms
@@ -189,7 +192,7 @@ def getMarkedTargets(markup):
     targets.sort()
     return targets
 
-def applyModifiers(markup):
+def apply_modifiers(markup):
     """
     Loop through the marked targets and for each target apply the modifiers
     """
@@ -223,20 +226,46 @@ def create_sentence_conTextMarkup(s, targets, modifiers, ):
     #markup.pruneSelfModifyingRelationships()
     return markup
 
-def mark_sentence(s, items, mode="target", numcpu = 1):
+def mark_sentence(s, items_dict):
+    """
+    s: string assumed to be sentence
+    items_dict: a dictionary of conTextItems.
+        keys are the ConText mode (e.g. "target", "modifier")
+        values are the ConTextItems
+
+    This function does the following steps:
+
+    1. Creates a ConTextMarkup item.
+    2. Sets the text to the sentence.
+    3. Cleans the text.
+    4. Marks the text with each item in items_dict
+    5. Prune the marks
+    6. Drop marks with category 'Exclusion'
+    7. Applies the modifiers to the targets
+
+    Function returns the markup which is a NetworkX directed graph.
+    """
     markup = create_ConTextMarkup()
     markup = setRawText(markup, s)
     markup = cleanText(markup)
-    if numcpu >=0:
-        if numcpu == 0:
-            numcpu = mp.cpu_count()
-        with Pool(processes=numcpu) as pool:
-    markup = mark_items_in_text(markup, items, mode=mode)
+
+    for mode, items in items_dict:
+        markup = mark_items_in_text(markup, items, mode=mode)
     markup = pruneMarks(markup)
     markup = dropMarks(markup, category='Exclusion')
+    markup = applyModifiers(markup)
 
     return markup
 
+def mark_sentences_all(sentences,items_dict):
+    """
+    sentences: a list of strings, each string representing a distinct sentence
+    items_dict: a dictionary of conTextItems
+
+    calls mark_sentence on each sentence in sentence and returns
+        results ina list
+    """
+    return [mark_sentence(s,items) for s in sentences]
 def getXML(mu):
     nodes = mu.nodes(data=True)
     nodes.sort()
