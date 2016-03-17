@@ -15,7 +15,7 @@ class ConTextDocument(nx.DiGraph):
         # for each sentence and then put in the archives when the next sentence
         # is processed
         super(ConTextDocument,self).__init__(__unicodeEncoding=unicodeEncoding,
-                                   __currentSentenceNum=currentSentenceNum)
+                                             __currentSentenceNum=currentSentenceNum)
 
         self.graph["__currentParent"] = "document"
         self.graph["__documentGraph"] = None
@@ -49,7 +49,7 @@ def getCurrentSentenceNumber(cd):
 def setParent(cd, label=None):
     cd_new = copy.copy(cd)
     cd_new.graph["__currentParent"] = label
-    return cd_new 
+    return cd_new
 
 def getCurrentparent(cd):
     return cd.graph["__currentParent"]
@@ -77,7 +77,7 @@ def retrieveMarkup(cd,sentenceNumber):
     """
     retrieve the markup corresponding to sentenceNumber
     """
-    edge = [e for e in cd.edges(data=True) if e[2]['category'] == "markup" and 
+    edge = [e for e in cd.edges(data=True) if e[2]['category'] == "markup" and
                                               e[2]['sentenceNumber'] == sentenceNumber]
     if edge:
         return edge[0]
@@ -85,7 +85,7 @@ def retrieveMarkup(cd,sentenceNumber):
 def getSectionNodes(cd, sectionLabel = None, category="markup"):
     if not sectionLabel:
         sectionLabel = cd.graph["__currentParent"]
-    successors = [(e[2]['__sectionNumber'],e[1]) for e in cd.out_edges(sectionLabel, 
+    successors = [(e[2]['__sectionNumber'],e[1]) for e in cd.out_edges(sectionLabel,
                                                                        data=True)
                                                      if e[2].get("category") == category]
     successors.sort()
@@ -96,7 +96,7 @@ def getSectionMarkups(cd, sectionLabel = None, returnSentenceNumbers=True ):
     """return the markup graphs for the section ordered by sentence number"""
     if not sectionLabel:
         sectionLabel = cd.graph["__currentParent"]
-    successors = [(e[2]['sentenceNumber'],e[1]) for e in cd.out_edges(sectionLabel, 
+    successors = [(e[2]['sentenceNumber'],e[1]) for e in cd.out_edges(sectionLabel,
                                                                       data=True)
                                                     if e[2].get("category") == "markup"]
     successors.sort()
@@ -133,17 +133,16 @@ def getDocumentGraph(cd):
 def set_documentGraph(cd):
     cd_new = copy.copy(cd)
     cd_new.graph["__documentGraph"] = computeDocumentGraph(cd)
-    return cd_new 
+    return cd_new
 
 
-def computeDocumentGraph(cd):
+def compute_documentGraph(cd):
     """Create a single document graph from the union of the graphs created
         for each sentence in the archive. Note that the algorithm in NetworkX
         is different based on whether the Python version is greater than or
         equal to 2.6"""
     # Note that this as written does not include the currentGraph in the DocumentGraph
-    # Maybe this should be changed
-    documentGraph = ConTextMarkup()
+    documentGraph = nx.DiGraph()
     markups = [e[1] for e in cd.edges(data=True) if e[2].get('category') == 'markup']
     for i in range(len(markups)):
         m = markups[i]
