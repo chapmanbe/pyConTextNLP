@@ -41,9 +41,6 @@ def insertSection(cd,sectionLabel,setToParent=False, setToRoot=False):
 
 def getCurrentSentenceNumber(cd):
     """
-    >>> cd = ConTextDocument()
-    >>> cd.getCurrentSentenceNumber()
-    0
     """
     return cd.graph["__currentSentenceNum"]
 def setParent(cd, label=None):
