@@ -6,6 +6,7 @@ The package is maintained by Brian Chapman at the University of Utah. Other acti
 
 * Wendy W. Chapman
 * Glenn Dayton
+* Danielle Mowery
 
 
 ## Introduction
@@ -25,20 +26,20 @@ Note: we changed the package name from pyConText to pyConTextNLP because of a na
 
 pyConTextNLP can be downloaded from the Downloads page here on the negex Google Code project. Alternatively, it can be downloaded from the pypi repository http://pypi.python.org/pypi/pyConTextNLP. Since pyConTextNLP is registered with pypi, it can be installed with easy_install or pip:
 
-easy_install pyConTextNLP 
+easy_install pyConTextNLP
 pip install pyConTextNLP
 
 The only listed dependency is NetworkX and easy_install should also install this for you, if it is not already installed. However, there is optional functionality that is dependent on pygraphviz. I do not yet have this worked into the setuptools script.
 
 ## Code Structure
 
-The original code used in the JBI is in the top level pyConTextNLP package. A simplification of this original algorithm that uses [http://networkx.lanl.gov/ NetworkX] is in the subpackage pyConTextNLP.pyConTextGraph. pyConTextGraph is what is currently being developed by us and is what is described here.
+The code has been modified substantially since the code base used for the JBI publication. In the current version, pyConTextNLP corresponds to pyConTextGraph in previous versions. This code uses [http://networkx.lanl.gov/ NetworkX] to structure the relationship between targets and modifiers in the markup.
 
 The package has three files:
 
 * *itemData.py*. This is where the essential domain knowledge is stored in 4-tuples as described in the paper. For a new application, this is where the user will encapsulate the domain knowledge for their application.
 * *pyConTextGraph.py*. This module defines the algorithm
-* *pyConTextSql.py*. 
+* *pyConTextSql.py*.
 
 ## How to Use
 
@@ -46,13 +47,13 @@ I am working on improving the documentation and (hopefully) adding some testing 
 
 Some preliminary comments:
 
- * pyConTextNLP works marks up text on a sentence by sentence level. 
+ * pyConTextNLP works marks up text on a sentence by sentence level.
  * pyConTextNLP facilitates reasoning from multi-sentence documents, but the markup (e.g. negation is all limited within the scope of a sentence.
  * pyConTextNLP assumes the sentence is a string not a list of words
 
 ### The Skeleton of an Example
 
-To illustrate how to use pyConTextNLP, i've taken some code excerpts from a simple application that was written to identify critical finders in radiology reports. 
+To illustrate how to use pyConTextNLP, i've taken some code excerpts from a simple application that was written to identify critical finders in radiology reports.
 
 The first step in building an application is to define _itemData_ objects for your problem. The package contains _itemData_ objects defined in pyConTextNLP.pyConTextGraph.itemData. Common negation terms, conjunctions, pseudo-negations, etc. are defined in here. An itemData instance consists of a 4-tuple. Here is an excerpt
 
@@ -63,7 +64,7 @@ probableNegations = itemData(
 ["cannot be excluded","PROBABLE_NEGATED_EXISTENCE",r"""cannot\sbe\s((entirely|completely)\s)?(excluded|ruled out)""","backward"])
 ~~~~~~
 
-The four parts are 
+The four parts are
 1.  The _literal_ "can rule out", "cannot be excluded"
 2.  The _Category_ "PROBABLE_NEGATED_EXISTENCE"
 3.  An optional regular expression used to capture the literal in the text. If no regular expression is provided, a regular expression is generated literally from the literal.
@@ -73,7 +74,7 @@ For the criticalFinderGraph.py application, we defined _itemData_ for the critic
 
 ~~~~~
 critItems = itemData(
-['pulmonary embolism','PULMONARY_EMBOLISM',r'''pulmonary\s(artery )?(embol[a-z]+)''',''], 
+['pulmonary embolism','PULMONARY_EMBOLISM',r'''pulmonary\s(artery )?(embol[a-z]+)''',''],
 ['pe','PULMONARY_EMBOLISM',r'''\bpe\b''',''],
 ['embolism','PULMONARY_EMBOLISM',r'''\b(emboli|embolism|embolus)\b''',''],
 ['aortic dissection','AORTIC_DISSECTION','',''])
@@ -109,7 +110,7 @@ Assuming we have read in our documents to process and that the basic document un
 
         # process each sentence in the report
         for s in sentences:
-            context.setTxt(s) 
+            context.setTxt(s)
             context.markItems(modifiers, mode="modifier")
             context.markItems(targets, mode="target")
 
@@ -123,7 +124,7 @@ Assuming we have read in our documents to process and that the basic document un
 
             # match modifiers to targets
             context.applyModifiers()
-           
+
             # Drop any modifiers that didn't get hooked up with a target
             context.dropInactiveModifiers()
 
@@ -133,7 +134,7 @@ Assuming we have read in our documents to process and that the basic document un
         return context
 ~~~~~~
 
-The markup is stored as a directed graph, so determining whether a target is, for example, negated, you simply check to see if an immediate predecessor of the target node is a negation. This is all done with NetworkX commands. 
+The markup is stored as a directed graph, so determining whether a target is, for example, negated, you simply check to see if an immediate predecessor of the target node is a negation. This is all done with NetworkX commands.
 
 To access the underlying graph from the context object evoke the getCurrentGraph() method
 
@@ -162,5 +163,3 @@ def modifies(g,n,modifiers):
     pcats = [n.getCategory().lower() for n in pred]
     return bool(set(pcats).intersection([m.lower() for m in modifiers]))
 ~~~~~~
-
-
