@@ -10,14 +10,14 @@ class functional_test_conTextItem(unittest.TestCase):
     def setUp(self):
         # create a sample image in memory
 
-        self.items = [ [u"pulmonary embolism",
-                        u"PULMONARY_EMBOLISM",
-                        r"""pulmonary\s(artery )?(embol[a-z]+)""",""],
-                       ["no gross evidence of",
-                        "PROBABLE_NEGATED_EXISTENCE,HEDGE_TERM","","forward"]]
+        self.items = {"targets":[ ["pulmonary embolism",
+                        "PULMONARY_EMBOLISM",
+                        r"""pulmonary\s(artery )?(embol[a-z]+)""",""]],
+                       "modifiers":[["no gross evidence of",
+                        "PROBABLE_NEGATED_EXISTENCE,HEDGE_TERM","","forward"]]}
         self.files = {}
         #options['infile'] = os.path.join(UTAHDATA,"CTPA PHI - main data set, 2015-04-19.xls")
-        self.files['lexical_kb'] = ["https://raw.githubusercontent.com/chapmanbe/pyConTextNLP/master/KB/lexical_kb_04292013.tsv", 
+        self.files['lexical_kb'] = ["https://raw.githubusercontent.com/chapmanbe/pyConTextNLP/master/KB/lexical_kb_04292013.tsv",
                                 "https://raw.githubusercontent.com/chapmanbe/pyConTextNLP/master/KB/criticalfinder_generalized_modifiers.tsv",
                                 "https://raw.githubusercontent.com/chapmanbe/pyConTextNLP/master/KB/critical_modifiers.tsv"]
         self.files['domain_kb'] = ["https://raw.githubusercontent.com/chapmanbe/pyConTextNLP/master/KB/utah_crit.tsv"]#[os.path.join(DATADIR2,"pe_kb.tsv")]
@@ -26,23 +26,21 @@ class functional_test_conTextItem(unittest.TestCase):
     def tearDown(self):
         self.items = 0
     def test_create_conTextItem(self):
-        ci = CI.create_ConTextItem(self.items[0])
-        assert ci.re == self.items[0][2]
-        print(ci.category)
-        assert ci.category == (self.items[0][1].lower().strip(),)
+        ci = CI.create_ConTextItem(self.items['targets'][0])
+        assert ci.re == self.items['targets'][0][2]
+        assert ci.category == (self.items['targets'][0][1].lower().strip(),)
 
     def test_create_conTextItem2(self):
-        ci = CI.create_ConTextItem(self.items[1])
-        assert ci.re == self.items[1][0].lower().strip()
-        print(ci.category)
+        ci = CI.create_ConTextItem(self.items['modifiers'][0])
+        assert ci.re == self.items['modifiers'][0][0].lower().strip()
         assert len(ci.category) == 2
 
     def test_isA(self):
-        ci = CI.create_ConTextItem(self.items[1])
+        ci = CI.create_ConTextItem(self.items["modifiers"][0])
         assert CI.isA(ci,"HEART_DISEASE") == False
         assert CI.isA(ci,"HEDGE_TERM") == True
     def test_test_rule(self):
-        ci = CI.create_ConTextItem(self.items[1])
+        ci = CI.create_ConTextItem(self.items["modifiers"][0])
         assert CI.test_rule(ci,"Forward") == True
         assert CI.test_rule(ci,"forward") == True
         assert CI.test_rule(ci,"bidirection") == False
@@ -50,7 +48,7 @@ class functional_test_conTextItem(unittest.TestCase):
     def test_read_conTextItem0(self):
         items, headers = CI.readConTextItems(self.files['lexical_kb'][0])
         assert items
-        
+
     def test_read_conTextItem1(self):
         items, headers = CI.readConTextItems(self.files['lexical_kb'][1])
         assert items
@@ -59,13 +57,13 @@ class functional_test_tagItem(unittest.TestCase):
     def setUp(self):
         # create a sample image in memory
 
-        self.items = [ [u"pulmonary embolism",
+        self.items = {"targets":[ CI.create_ConTextItem([u"pulmonary embolism",
                         u"PULMONARY_EMBOLISM",
-                        r"""pulmonary\s(artery )?(embol[a-z]+)""",""],
-                       ["no gross evidence of",
-                        "PROBABLE_NEGATED_EXISTENCE,HEDGE_TERM","","forward"]]
-        self.ci0 = CI.create_ConTextItem(self.items[0])
-        self.ci1 = CI.create_ConTextItem(self.items[1])
+                        r"""pulmonary\s(artery )?(embol[a-z]+)""",""])],
+                      "modifiers":[CI.create_ConTextItem(["no gross evidence of",
+                        "PROBABLE_NEGATED_EXISTENCE,HEDGE_TERM","","forward"])]}
+        self.ci0 = self.items['targets'][0]
+        self.ci1 = self.items['modifiers'][0]
 
     def tearDown(self):
         self.items = 0
@@ -86,7 +84,7 @@ class functional_test_tagItem(unittest.TestCase):
         assert TI.o1_encompasses_o2(ti1,ti0)
         assert not TI.o1_encompasses_o2(ti0,ti1)
 
-    # add function to test DocumentGraph generation  
+    # add function to test DocumentGraph generation
 
 
 class functional_test_ConTextMarkup(unittest.TestCase):
@@ -98,16 +96,20 @@ class functional_test_ConTextMarkup(unittest.TestCase):
         self.su2 =  u'IMPRESSION: 1. LIMITED STUDY DEMONSTRATING NO GROSS EVIDENCE OF SIGNIFICANT PULMONARY EMBOLISM.'
         self.su3 = u'This is a sentence that does not end with a number. But this sentence ends with 1. So this should be recognized as a third sentence.'
         self.su4 = u'This is a sentence with a numeric value equal to 1.43 and should not be split into two parts.'
-        self.items = [ [u"pulmonary embolism",
-                        u"PULMONARY_EMBOLISM",
-                        r"""pulmonary\s(artery )?(embol[a-z]+)""",""],
-                       ["no gross evidence of",
-                        "PROBABLE_NEGATED_EXISTENCE","","forward"]]
+        self.items = {"targets":[ CI.create_ConTextItem([u"pulmonary embolism",
+                                   u"PULMONARY_EMBOLISM",
+                                   r"""pulmonary\s(artery )?(embol[a-z]+)""",
+                                   ""]),
+                                   ],
+                       "modifiers":[CI.create_ConTextItem(["no gross evidence of",
+                                     "PROBABLE_NEGATED_EXISTENCE",
+                                     "",
+                                     "forward"])]}
 
 
 
-        self.ci0 = CI.create_ConTextItem(self.items[0])
-        self.ci1 = CI.create_ConTextItem(self.items[1])
+        self.ci0 = self.items['targets'][0]
+        self.ci1 = self.items['modifiers'][0]
         self.ti0 = TI.create_tagItem(self.ci0,(20,25),"Brian Chapman",0)
         self.ti1 = TI.create_tagItem(self.ci0,( 5,30),"Wendy Chapman",1)
         self.markup = nx.DiGraph()
@@ -140,12 +142,13 @@ class functional_test_ConTextMarkup(unittest.TestCase):
         self.markup = CM.cleanText( self.markup, stripNonAlphaNumeric=True)
         assert self.markup.graph["__text"].rfind(u'.') == -1
 
-    def test_pruneMarks(self):
-        print(len(self.markup))
-        markup_new = CM.pruneMarks(self.markup)
-        print(len(markup_new))
+    def test_prune_marks(self):
+        markup_new = CM.prune_marks(self.markup)
         assert len(markup_new) == 1
         assert markup_new.nodes()[0].id == 1
+    def test_mark_sentence(self):
+        mu = CM.mark_sentence(self.su2,self.items)
+        assert mu
 
 class functional_test_ConTextDocument(unittest.TestCase):
     def setUp(self):
@@ -156,22 +159,22 @@ class functional_test_ConTextDocument(unittest.TestCase):
         self.su2 =  u'IMPRESSION: 1. LIMITED STUDY DEMONSTRATING NO GROSS EVIDENCE OF SIGNIFICANT PULMONARY EMBOLISM.'
         self.su3 = u'This is a sentence that does not end with a number. But this sentence ends with 1. So this should be recognized as a third sentence.'
         self.su4 = u'This is a sentence with a numeric value equal to 1.43 and should not be split into two parts.'
-        self.items = [ [u"pulmonary embolism",
+        self.items = {"targets":[ CI.create_ConTextItem([u"pulmonary embolism",
                         u"PULMONARY_EMBOLISM",
-                        r"""pulmonary\s(artery )?(embol[a-z]+)""",""],
-                       ["no gross evidence of",
-                        "PROBABLE_NEGATED_EXISTENCE","","forward"]]
+                        r"""pulmonary\s(artery )?(embol[a-z]+)""",""])],
+                       "modifiers":[CI.create_ConTextItem(["no gross evidence of",
+                        "PROBABLE_NEGATED_EXISTENCE","","forward"])]}
 
 
 
-        self.ci0 = CI.create_ConTextItem(self.items[0])
-        self.ci1 = CI.create_ConTextItem(self.items[1])
+        self.ci0 = self.items['targets'][0]
+        self.ci1 = self.items['modifiers'][0]
         self.ti0 = TI.create_tagItem(self.ci0,(20,25),"Brian Chapman",0)
         self.ti1 = TI.create_tagItem(self.ci0,( 5,30),"Wendy Chapman",1)
         self.markup = nx.DiGraph()
         self.markup.add_nodes_from([self.ti0,self.ti1])
         self.cd = CD.ConTextDocument()
-        
+
 
 
     def tearDown(self):
@@ -187,7 +190,7 @@ class functional_test_ConTextDocument(unittest.TestCase):
         self.markup = 0
         self.cd = 0
 
-# 
+#
 
 
     def test_create_ConTextDocument(self):
@@ -208,10 +211,12 @@ class functional_test_ConTextDocument(unittest.TestCase):
         assert len(blob.sentences) == 1
 
     def test_insertSection(self):
-        cd2 = CD.insertSection(self.cd,"report", setToParent=True, setToRoot = True)
+        cd2 = CD.insertSection(self.cd,
+                               "report",
+                               setToParent=True,
+                               setToRoot = True)
         assert CD.getCurrentparent(cd2) == "report"
 
 
 def run():
     pass
-    
