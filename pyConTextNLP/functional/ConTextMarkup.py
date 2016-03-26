@@ -200,7 +200,7 @@ def apply_modifiers(markup):
     targets = getConTextModeNodes(markupNew, "target")
     modifiers = getConTextModeNodes(markupNew, "modifier")
     new_edges = [(m,t) for t,m in itertools.product(targets,modifiers) if TI.applyRule(m,t) ]
-    markupNew.add_edge_from(new_edges)
+    markupNew.add_edges_from(new_edges)
     return markupNew
 
 
@@ -218,7 +218,7 @@ def create_sentence_conTextMarkup(s, targets, modifiers, ):
     markup = cleanText(markup)
     markup = mark_items_in_text(markup, modifiers, mode="modifier")
     markup = mark_items_in_text(markup, targets, mode="target")
-    markup = pruneMarks(markup)
+    markup = prune_marks(markup)
     markup = dropMarks(markup, category='Exclusion')
     # apply modifiers to any targets within the modifiers scope
     markup = applyModifiers(markup)
@@ -249,11 +249,11 @@ def mark_sentence(s, items_dict):
     markup = setRawText(markup, s)
     markup = cleanText(markup)
 
-    for mode, items in items_dict:
+    for mode, items in items_dict.items():
         markup = mark_items_in_text(markup, items, mode=mode)
-    markup = pruneMarks(markup)
+    markup = prune_marks(markup)
     markup = dropMarks(markup, category='Exclusion')
-    markup = applyModifiers(markup)
+    markup = apply_modifiers(markup)
 
     return markup
 
