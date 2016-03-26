@@ -14,10 +14,10 @@
 import platform
 import collections
 
-class conTextItem(collections.namedtuple('conTextItem',
+class ConTextItem(collections.namedtuple('ConTextItem',
                   ['literal', 'category','re','rule'])):
-    def __unicode__(self):
-        return u"""literal<<{0}>>; category<<{1}>>; re<<{2}>>; rule<<{3}>>""".format(
+    def __str__(self):
+        return """literal<<{0}>>; category<<{1}>>; re<<{2}>>; rule<<{3}>>""".format(
                         self.literal,
                         get_ConTextItem_category_string(self),
                         self.re,
@@ -37,7 +37,7 @@ def _assign_regex(r1,r2):
 def get_ConTextItem_category_string(ci):
     return "_".join(ci.category)
 def create_ConTextItem(args):
-    return conTextItem(literal = args[0].lower().strip(),
+    return ConTextItem(literal = args[0].lower().strip(),
                        category = _get_categories(args[1]),
                        re = _assign_regex(args[0],args[2]),
                        rule = args[3]
@@ -46,7 +46,7 @@ def test_rule(ci,rule_query):
     return rule_query.lower() in ci.rule
 
 def isA(citem,testCategory):
-    """test whether testCategory is one of the categories associated with self"""
+    """test whether testCategory is one of the categories associated with citem"""
     try:
         return testCategory.lower().strip() in citem.category
     except:
@@ -55,7 +55,7 @@ def isA(citem,testCategory):
                 return True
         return False
 
-def conTextItem2string(ci):
+def ConTextItem2string(ci):
     return ci.__unicode__()
 
 if platform.python_version_tuple()[0] == '2':
@@ -83,7 +83,7 @@ else:
 def readConTextItems(csvFile, encoding='utf-8',headerRows=1,
         literalColumn = 0, categoryColumn = 1, regexColumn = 2, ruleColumn = 3):
     """
-    takes a CSV file of itemdata rules and creates a list of conTextItem instances.
+    takes a CSV file of itemdata rules and creates a list of ConTextItem instances.
     csvFile: name of file to read items from
     encoding: unicode enocidng to use; default = 'utf-8'
     headerRows: number of header rows in file; default = 1
@@ -96,7 +96,7 @@ def readConTextItems(csvFile, encoding='utf-8',headerRows=1,
     header = []
     reader, f0 = get_fileobj(csvFile)
     #reader = csv.reader(open(csvFile, 'rU'))
-    # first grab numbe rof specified header rows
+    # first grab number of specified header rows
     for i in range(headerRows):
         row = next(reader)
         header.append(row)
@@ -109,3 +109,15 @@ def readConTextItems(csvFile, encoding='utf-8',headerRows=1,
         items.append(item)
     f0.close()
     return items, header
+def writeConTextItems(items,fname):
+    """
+    Write the ConTextItems as a tab delimited file to the file specified
+    in fname
+    """
+    with open(fname,'w') as f0:
+        f0.write("Lex\tType\tRegex\tRule\n")
+        for i in items:
+            f0.write("%s\t%s\t%s\t%s\n"%(i.literal,
+                                         i.category,
+                                         i.re,
+                                         i.rule))
