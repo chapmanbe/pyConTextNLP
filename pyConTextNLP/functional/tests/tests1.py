@@ -1,12 +1,12 @@
 import unittest
-import pyConTextNLP.functional.conTextItem as CI
+import pyConTextNLP.functional.ConTextItem as CI
 import pyConTextNLP.functional.tagItem as TI
 import pyConTextNLP.functional.ConTextMarkup as CM
 import pyConTextNLP.functional.ConTextDocument as CD
 from textblob import TextBlob
 import networkx as nx
 
-class functional_test_conTextItem(unittest.TestCase):
+class functional_test_ConTextItem(unittest.TestCase):
     def setUp(self):
         # create a sample image in memory
 
@@ -25,12 +25,12 @@ class functional_test_conTextItem(unittest.TestCase):
 
     def tearDown(self):
         self.items = 0
-    def test_create_conTextItem(self):
+    def test_create_ConTextItem(self):
         ci = CI.create_ConTextItem(self.items['targets'][0])
         assert ci.re == self.items['targets'][0][2]
         assert ci.category == (self.items['targets'][0][1].lower().strip(),)
 
-    def test_create_conTextItem2(self):
+    def test_create_ConTextItem2(self):
         ci = CI.create_ConTextItem(self.items['modifiers'][0])
         assert ci.re == self.items['modifiers'][0][0].lower().strip()
         assert len(ci.category) == 2
@@ -45,11 +45,11 @@ class functional_test_conTextItem(unittest.TestCase):
         assert CI.test_rule(ci,"forward") == True
         assert CI.test_rule(ci,"bidirection") == False
 
-    def test_read_conTextItem0(self):
+    def test_read_ConTextItem0(self):
         items, headers = CI.readConTextItems(self.files['lexical_kb'][0])
         assert items
 
-    def test_read_conTextItem1(self):
+    def test_read_ConTextItem1(self):
         items, headers = CI.readConTextItems(self.files['lexical_kb'][1])
         assert items
 

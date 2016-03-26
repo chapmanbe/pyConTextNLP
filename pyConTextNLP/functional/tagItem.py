@@ -1,6 +1,5 @@
 import collections
-from . import conTextItem
-#import conTextItem
+from . import ConTextItem
 import copy
 
 #from utils import xmlScrub
@@ -29,7 +28,7 @@ class tagItem(collections.namedtuple('tagItem',
         description += u"""<phrase> {0} </phrase> """.format(self.foundPhrase)
         description +=u"""<span> {0} </span>""".format(self.span)
         description +=u"""<scope> {0} </scope>""".format(self.scope)
-        description +=u"""<conTextItem> {0} </conTextItem>""".format(self.conTextItem.__repr__()) 
+        description +=u"""<conTextItem> {0} </conTextItem>""".format(self.conTextItem.__repr__())
         return description
 
 
@@ -55,7 +54,7 @@ def limitCategoryScopeForward(obj1,obj2):
     """
 
     # If objects are not of the same category then they don't interact
-    if not conTextItem.isA(obj1.conTextItem,
+    if not ConTextItem.isA(obj1.conTextItem,
                            obj2.conTextItem):
         return copy.copy(obj1)
     if lessthan(obj1,obj2):
@@ -74,7 +73,7 @@ def limitCategoryScopeBackward(obj1,obj2):
     """If obj1 and obj2 are of the same category
     modify the scope of
     """
-    if not conTextItem.isA(obj1.conTextItem,obj2.conTextItem):
+    if not ConTextItem.isA(obj1.conTextItem,obj2.conTextItem):
         return copy.copy(obj1)
     if lessthan(obj2, obj1):
         return create_tagItem(obj1.conTextItem,
@@ -98,16 +97,16 @@ def limitScope(obj1,obj2):
     """
     if not scope_modifiable(obj1):
         return copy.copy(obj1)
-    if not conTextItem.isA(obj1.conTextItem,obj2.conTextItem):
+    if not ConTextItem.isA(obj1.conTextItem,obj2.conTextItem):
         return copy.copy(obj1)
-    if not conTextItem.test_rule(obj2.conTextItem, 'terminate'):
+    if not ConTextItem.test_rule(obj2.conTextItem, 'terminate'):
         return copy.copy(obj1)
 
-    if conTextItem.test_rule(obj1,'forward'):
+    if ConTextItem.test_rule(obj1,'forward'):
         return limitCategoryScopeForward(obj1,obj2)
-    if conTextItem.test_rule(obj1,'bidirectional'):
+    if ConTextItem.test_rule(obj1,'bidirectional'):
         return limitCategoryScopeBidirectional(obj1,obj2)
-    if conTextItem.test_rule(obj1,'backward'):
+    if ConTextItem.test_rule(obj1,'backward'):
           return limitCategoryScopeBackward(obj1,obj2)
 
 def applyRule(rule, target):
@@ -120,7 +119,7 @@ def applyRule(rule, target):
 def replaceCategory(obj,oldCategory,newCategory):
     categories = tuple([c if c != oldCategory.lower().strip() else newCategory \
                             for c in obj.conTextItem.categories])
-    ci = conTextItem.conTextItem(literal=obj.literal,
+    ci = ConTextItem.ConTextItem(literal=obj.literal,
                                  category=categories,
                                  re=obj.re,
                                  rule=obj.rule)
@@ -137,9 +136,9 @@ def o1_encompasses_o2(obj1,obj2):
 
 def isA_tag(obj1,obj2):
     try:
-        return conTextItem.isA(obj1.conTextItem,obj2.conTextItem.category)
+        return ConTextItem.isA(obj1.conTextItem,obj2.conTextItem.category)
     except AttributeError:
-        return conTextItem.isA(obj1.conTextItem, obj2)
+        return ConTextItem.isA(obj1.conTextItem, obj2)
 
 def dist(obj1,obj2):
     """returns the minimum distance from the current object and obj.

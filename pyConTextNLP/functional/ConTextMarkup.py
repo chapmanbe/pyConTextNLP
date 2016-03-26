@@ -212,7 +212,7 @@ def dropMarks(markup, category="exclusion"):
     markupNew.remove_nodes_from(dnodes)
     return markupNew
 
-def create_sentence_conTextMarkup(s, targets, modifiers, ):
+def create_sentence_ConTextMarkup(s, targets, modifiers, ):
     markup = create_ConTextMarkup()
     markup = setRawText(markup, s)
     markup = cleanText(markup)
@@ -229,7 +229,7 @@ def create_sentence_conTextMarkup(s, targets, modifiers, ):
 def mark_sentence(s, items_dict):
     """
     s: string assumed to be sentence
-    items_dict: a dictionary of conTextItems.
+    items_dict: a dictionary of ConTextItems.
         keys are the ConText mode (e.g. "target", "modifier")
         values are the ConTextItems
 
@@ -260,7 +260,7 @@ def mark_sentence(s, items_dict):
 def mark_sentences_all(sentences,items_dict):
     """
     sentences: a list of strings, each string representing a distinct sentence
-    items_dict: a dictionary of conTextItems
+    items_dict: a dictionary of ConTextItems
 
     calls mark_sentence on each sentence in sentence and returns
         results ina list
