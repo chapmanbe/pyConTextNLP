@@ -1,7 +1,7 @@
 Lex	Type	Regex	Direction	Codes
 pulmonary embolism	PULMONARY_EMBOLISM	pulmonary\s(artery )?(embol[a-z]+)|\bpe\b		Chest
 aneurysm	ANEURYSM	aneurysm[a-z]*|(aneurysmal )?dilatation		"Chest, Neuro, ABD/Pel"
-aortic dissection	AORTIC_DISSECTION	(aortic|aorta)\s(artery\s)? dissection		"Chest, ABD/Pel"
+aortic dissection	AORTIC_DISSECTION	(aortic|aorta)\s(artery\s)?dissection		"Chest, ABD/Pel"
 appendicitis	APPENDICITIS			ABD/Pel
 inflammation	INFLAMMATION			"Spine, Neuro, ABD/Pel, Chest, Extremity"
 bowel obstruction	BOWEL_OBSTRUCTION			ABD/Pel
