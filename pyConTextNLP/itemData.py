@@ -81,9 +81,9 @@ class contextItem(object):
             self.__literal,self.__category,self.__re, self.__rule)
         return txt
     def __str__(self):
-        return str(self).encode('utf-8')
+        return self.__unicode__()#.encode('utf-8')
     def __repr__(self):
-        return str(self).encode('utf-8')
+        return self.__str__()
 
 class itemData(list):
     def __init__(self,*args):
@@ -134,7 +134,7 @@ class itemData(list):
         tmp = tmp+"]"
         return tmp
     def __repr__(self):
-        return self.__unicode__().encode('utf-8')
+        return self.__unicode__()#.encode('utf-8')
     def __str__(self):
         return self.__repr__()
 def instantiateFromCSVtoitemData(csvFile, encoding='utf-8',headerRows=1,
