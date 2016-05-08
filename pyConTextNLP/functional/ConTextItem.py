@@ -11,6 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""
+ConTextItem---DOCSTRING
+"""
 import platform
 import collections
 
@@ -36,7 +39,7 @@ def _assign_regex(r1, r2):
     if r2:
         return r2.lower().strip()
     else:
-        return r'%s'%r1.lower().strip()
+        return r'\b%s\b'%r1.lower().strip()
 
 
 def get_ConTextItem_category_string(ci):
@@ -86,14 +89,16 @@ if platform.python_version_tuple()[0] == '2':
 
 else:
     import csv
-    import urllib.request, urllib.error, urllib.parse
+    import urllib.request
+    import urllib.error
+    import urllib.parse
     from io import StringIO
 
     def get_fileobj(csvFile):
         p = urllib.parse.urlparse(csvFile)
         if not p.scheme:
             csvFile = "file://"+csvFile
-        f0 = urllib.request.urlopen(csvFile)
+        f0 = urllib.request.urlopen(csvFile, mode="rU", newline=None)
         return csv.reader(StringIO(f0.read().decode()), delimiter="\t"), f0
 
 
