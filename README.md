@@ -47,30 +47,30 @@ I am working on improving the documentation and (hopefully) adding some testing 
 
 Some preliminary comments:
 
- * pyConTextNLP works marks up text on a sentence by sentence level.
- * pyConTextNLP facilitates reasoning from multi-sentence documents, but the markup (e.g. negation is all limited within the scope of a sentence.
- * pyConTextNLP assumes the sentence is a string not a list of words
+* pyConTextNLP works marks up text on a sentence by sentence level.
+* pyConTextNLP facilitates reasoning from multi-sentence documents, but the markup (e.g. negation is all limited within the scope of a sentence.
+* pyConTextNLP assumes the sentence is a string not a list of words
 
 ### The Skeleton of an Example
 
-To illustrate how to use pyConTextNLP, i've taken some code excerpts from a simple application that was written to identify critical finders in radiology reports.
+To illustrate how to use pyConTextNLP, I've taken some code excerpts from a simple application that was written to identify critical finders in radiology reports.
 
-The first step in building an application is to define _itemData_ objects for your problem. The package contains _itemData_ objects defined in pyConTextNLP.pyConTextGraph.itemData. Common negation terms, conjunctions, pseudo-negations, etc. are defined in here. An itemData instance consists of a 4-tuple. Here is an excerpt
+The first step in building an application is to define ``itemData`` objects for your problem. The package contains ``itemData`` objects defined in pyConTextNLP.pyConText.itemData. Common negation terms, conjunctions, pseudo-negations, etc. are defined in here. An itemData instance consists of a 4-tuple. Here is an excerpt
 
 ~~~~~
 
 probableNegations = itemData(
 ["can rule out","PROBABLE_NEGATED_EXISTENCE","","forward"],
 ["cannot be excluded","PROBABLE_NEGATED_EXISTENCE",r"""cannot\sbe\s((entirely|completely)\s)?(excluded|ruled out)""","backward"])
-~~~~~~
+~~~~~
 
 The four parts are
-1.  The _literal_ "can rule out", "cannot be excluded"
-2.  The _Category_ "PROBABLE_NEGATED_EXISTENCE"
-3.  An optional regular expression used to capture the literal in the text. If no regular expression is provided, a regular expression is generated literally from the literal.
-4.  An optional rule. If the itemData is being used as a modifier, the rule states what direction the modifier operates in the sentence: current valid values are: "forward", the item can modify objects following it in the sentence; "backward", the item can modify objects preceding it in the sentence; or "bidirectional", the item can modify objects preceding and following it in the sentence.
+1.  The ``literal`` "can rule out", "cannot be excluded"
+2.  The ``category`` "PROBABLE_NEGATED_EXISTENCE"
+3.  The ``regular expression`` (optional) used to capture the literal in the text. If no regular expression is provided, a regular expression is generated literally from the literal.
+4.  The ``rule`` (optional). If the ``itemData`` is being used as a modifier, the rule states what direction the modifier operates in the sentence: current valid values are: "forward", the item can modify objects following it in the sentence; "backward", the item can modify objects preceding it in the sentence; or "bidirectional", the item can modify objects preceding and following it in the sentence.
 
-For the criticalFinderGraph.py application, we defined _itemData_ for the critical findings we wanted to identify in the text, for example pulmonary emboli and aortic dissections. These new _itemData_ objects were defined in a file named critfindingItemData.py
+For the criticalFinderGraph.py application, we defined ``itemData`` for the critical findings we wanted to identify in the text, for example pulmonary emboli and aortic dissections. These new ``itemData`` objects were defined in a file named critfindingItemData.py
 
 ~~~~~
 critItems = itemData(
@@ -78,25 +78,25 @@ critItems = itemData(
 ['pe','PULMONARY_EMBOLISM',r'''\bpe\b''',''],
 ['embolism','PULMONARY_EMBOLISM',r'''\b(emboli|embolism|embolus)\b''',''],
 ['aortic dissection','AORTIC_DISSECTION','',''])
-~~~~~~
+~~~~~
 
 We also added negation terms that were not originally defined in pyConTextNLP:
 
 ~~~~
 definiteNegations.prepend([["nor","DEFINITE_NEGATED_EXISTENCE","","forward"],])
-~~~~~
+~~~~
 
-Once we have all our _itemData_ defined, we're now ready to start processing text.
+Once we have all our ``itemData`` defined, we're now ready to start processing text.
 
-In our application we need to import the relevant modules from pyConTextNLP as well as our own _itemData_ definitions:
+In our application we need to import the relevant modules from pyConTextNLP as well as our own ``itemData`` definitions:
 
 ~~~~
 import pyConTextNLP.pyConTextGraph.pyConTextGraph as pyConText
 import pyConText.helpers as helpers
 from critfindingItemData import *
-~~~~~
+~~~~
 
-Assuming we have read in our documents to process and that the basic document unit is a _report_ we can write a simple function to process the report
+Assuming we have read in our documents to process and that the basic document unit is a ``report`` we can write a simple function to process the report
 
 ~~~~~
     def analyzeReport(report, targets, modifiers ):
@@ -132,7 +132,7 @@ Assuming we have read in our documents to process and that the basic document un
 
 
         return context
-~~~~~~
+~~~~~
 
 The markup is stored as a directed graph, so determining whether a target is, for example, negated, you simply check to see if an immediate predecessor of the target node is a negation. This is all done with NetworkX commands.
 
@@ -146,7 +146,7 @@ Here is some code to get a list of all the target nodes in the markup:
 
 ~~~~
 targets = [n[0] for n in g.nodes(data = True) if n[1].get("category","") == 'target']
-~~~~~
+~~~~
 
 Here is a function to test whether a node is modified by any of the categories in a list
 
@@ -162,4 +162,4 @@ def modifies(g,n,modifiers):
         return False
     pcats = [n.getCategory().lower() for n in pred]
     return bool(set(pcats).intersection([m.lower() for m in modifiers]))
-~~~~~~
+~~~~~

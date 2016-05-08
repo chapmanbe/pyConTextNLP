@@ -1,13 +1,6 @@
 pyConTextNLP
 ============
 
-IMPORTANT NOTES:
-----------------
-
-I'm currently working on two major rewrites. First, I'm trying to port pyConTextNLP to work in both 3.x and 2.x. this is proving to be difficult and I keep discovering errors. The main pyConTextNLP suffers from not having a good unit testing base.
-
-The second  major project is rewriting pyConTextNLP in a more functional form. It is hoped that this will make the code more robust, easier to maintain, and more amendable to parallelization. This code is contained in the ``functional`` subpackage. This rewrite includes a better unit testing base.
-
 pyConTextNLP is a Python implementation/extension/modification of the
 ConText algorithm described in `CITE <>`__ which is itself a
 generalization of the NegEx algorithm described in `CITE <>`__.
@@ -17,6 +10,7 @@ Other active and past developers include:
 
 -  Wendy W. Chapman
 -  Glenn Dayton
+-  Danielle Mowery
 
 Introduction
 ------------
@@ -59,11 +53,11 @@ have this worked into the setuptools script.
 Code Structure
 --------------
 
-The original code used in the JBI is in the top level pyConTextNLP
-package. A simplification of this original algorithm that uses
-[http://networkx.lanl.gov/ NetworkX] is in the subpackage
-pyConTextNLP.pyConTextGraph. pyConTextGraph is what is currently being
-developed by us and is what is described here.
+The code has been modified substantially since the code base used for
+the JBI publication. In the current version, pyConTextNLP corresponds to
+pyConTextGraph in previous versions. This code uses
+[http://networkx.lanl.gov/ NetworkX] to structure the relationship
+between targets and modifiers in the markup.
 
 The package has three files:
 
@@ -91,13 +85,13 @@ Some preliminary comments:
 The Skeleton of an Example
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To illustrate how to use pyConTextNLP, i've taken some code excerpts
+To illustrate how to use pyConTextNLP, I've taken some code excerpts
 from a simple application that was written to identify critical finders
 in radiology reports.
 
-The first step in building an application is to define *itemData*
-objects for your problem. The package contains *itemData* objects
-defined in pyConTextNLP.pyConTextGraph.itemData. Common negation terms,
+The first step in building an application is to define ``itemData``
+objects for your problem. The package contains ``itemData`` objects
+defined in pyConTextNLP.pyConText.itemData. Common negation terms,
 conjunctions, pseudo-negations, etc. are defined in here. An itemData
 instance consists of a 4-tuple. Here is an excerpt
 
@@ -108,20 +102,21 @@ instance consists of a 4-tuple. Here is an excerpt
     ["can rule out","PROBABLE_NEGATED_EXISTENCE","","forward"],
     ["cannot be excluded","PROBABLE_NEGATED_EXISTENCE",r"""cannot\sbe\s((entirely|completely)\s)?(excluded|ruled out)""","backward"])
 
-The four parts are 1. The *literal* "can rule out", "cannot be excluded"
-2. The *Category* "PROBABLE\_NEGATED\_EXISTENCE" 3. An optional regular
-expression used to capture the literal in the text. If no regular
-expression is provided, a regular expression is generated literally from
-the literal. 4. An optional rule. If the itemData is being used as a
-modifier, the rule states what direction the modifier operates in the
-sentence: current valid values are: "forward", the item can modify
-objects following it in the sentence; "backward", the item can modify
-objects preceding it in the sentence; or "bidirectional", the item can
-modify objects preceding and following it in the sentence.
+The four parts are 1. The ``literal`` "can rule out", "cannot be
+excluded" 2. The ``category`` "PROBABLE\_NEGATED\_EXISTENCE" 3. The
+``regular expression`` (optional) used to capture the literal in the
+text. If no regular expression is provided, a regular expression is
+generated literally from the literal. 4. The ``rule`` (optional). If the
+``itemData`` is being used as a modifier, the rule states what direction
+the modifier operates in the sentence: current valid values are:
+"forward", the item can modify objects following it in the sentence;
+"backward", the item can modify objects preceding it in the sentence; or
+"bidirectional", the item can modify objects preceding and following it
+in the sentence.
 
-For the criticalFinderGraph.py application, we defined *itemData* for
+For the criticalFinderGraph.py application, we defined ``itemData`` for
 the critical findings we wanted to identify in the text, for example
-pulmonary emboli and aortic dissections. These new *itemData* objects
+pulmonary emboli and aortic dissections. These new ``itemData`` objects
 were defined in a file named critfindingItemData.py
 
 ::
@@ -139,11 +134,11 @@ pyConTextNLP:
 
     definiteNegations.prepend([["nor","DEFINITE_NEGATED_EXISTENCE","","forward"],])
 
-Once we have all our *itemData* defined, we're now ready to start
+Once we have all our ``itemData`` defined, we're now ready to start
 processing text.
 
 In our application we need to import the relevant modules from
-pyConTextNLP as well as our own *itemData* definitions:
+pyConTextNLP as well as our own ``itemData`` definitions:
 
 ::
 
@@ -152,7 +147,7 @@ pyConTextNLP as well as our own *itemData* definitions:
     from critfindingItemData import *
 
 Assuming we have read in our documents to process and that the basic
-document unit is a *report* we can write a simple function to process
+document unit is a ``report`` we can write a simple function to process
 the report
 
 ::
