@@ -32,7 +32,7 @@ retroperitoneal hemorrhage	RETROPERITONEAL_HEMORRHAGE	(retro|intra)?peritoneal\s
 retropharyngeal abscess	RETROPHARYNGEAL_ABSCESS			Chest
 ruptured aneurysm	RUPTURED_ANEURYSM	(ruptured aneurysm|aortic rupture)		"Chest, Neuro, ABD/Pel"
 splenic infarct	SPLENIC_INFARCT			"Chest, ABD/Pel"
-tension pneumothorax	TENSION_PNEUMOTHORAX			Chest
+pneumothorax	PNEUMOTHORAX			Chest
 torsion	TORSION			ABD/Pel
 volvulus	VOLVULUS			ABD/Pel
 pneumonia	PNEUMONIA	(pneumonia|consolidation)		Chest
