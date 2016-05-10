@@ -14,12 +14,12 @@ cord compression	CORD_COMPRESSION	cord compression		Extremity, Spine, Neuro
 depressed skull fracture	DEPRESSED_SKULL_FRACTURE			Neuro
 diverticulitis	DIVERTICULITIS			ABD/Pel
 dvt	DVT	((non.?)?occlusive)?\s?(thromb(us|i|osis|osed)\b|DVT|clot\b)	2/28/13	ABD/Pel
-ectasia	ECTASIA	(ectasia| ectatic)		Chest, ABD/Pel
+ectasia	ECTASIA	(ectasia| ectatic)		ABD/Pel
 ectopic pregnancy	ECTOPIC_PREGNANCY			ABD/Pel
 epiglottitis	EPIGLOTTITIS			Chest
 fetal demise	FETAL_DEMISE			ABD/Pel
 free air	FREE_AIR	(pneumoperitoneum|((intraperitoneal|free)\s(gas|air)))		Chest, ABD/Pel
-infarct	INFARCT	\b(stroke|infarct|infarction)\b		Chest, Neuro, ABD/Pel
+infarct	INFARCT	\b(stroke|infarct|infarction)\b		Neuro, ABD/Pel
 ischemic bowel	ISCHEMIC_BOWEL			ABD/Pel
 lacunar infarct	LACUNAR_INFARCT			Neuro
 mediastinal emphysema	MEDIASTINAL_EMPHYSEMA	(mediastinal emphysema|pneumomediastinum)		Chest
