@@ -1,373 +1,380 @@
-Lex	Type	Regex	Direction			
-are ruled out	DEFINITE_NEGATED_EXISTENCE		backward			
-be ruled out	INDICATION		backward			
-being ruled out	INDICATION		backward			
-can be ruled out	DEFINITE_NEGATED_EXISTENCE		backward			
-cannot be excluded	AMBIVALENT_EXISTENCE		backward			
-cannot totally be excluded	PROBABLE_NEGATED_EXISTENCE		backward			
-could be ruled out	DEFINITE_NEGATED_EXISTENCE		backward			
-examination	INDICATION	\b(examination|exam|study)\b	backward			
-free	DEFINITE_NEGATED_EXISTENCE		backward			
-has been ruled out	DEFINITE_NEGATED_EXISTENCE		backward			
-have been ruled out	DEFINITE_NEGATED_EXISTENCE		backward			
-is in the differential	AMBIVALENT_EXISTENCE	is\sin\sthe\sdifferential	backward			
-is negative	DEFINITE_NEGATED_EXISTENCE	(is|was) negative	backward			
-is not excluded	AMBIVALENT_EXISTENCE	(is|was|are|were)\snot\sexcluded	backward			
-is not entirely excluded	PROBABLE_NEGATED_EXISTENCE	(is|was|are|were|does)\snot\s(entirely|totally|definitely|completely\s) excluded	backward	2/28/2013	added definitely	removed ed
-is present	DEFINITE_EXISTENCE	(is|are) present	backward	4/29/2013		
-is ruled out	DEFINITE_NEGATED_EXISTENCE		backward			
-is to be ruled out	INDICATION		backward			
-is ruled out	DEFINITE_NEGATED_EXISTENCE		backward			
-might be ruled out	PROBABLE_NEGATED_EXISTENCE		backward			
-must be ruled out	DEFINITE_NEGATED_EXISTENCE		backward			
-not been ruled out	INDICATION		backward			
-not definitively seen	PROBABLE_NEGATED_EXISTENCE	not definitively (seen|visualized)	backward	3/22/2013		
-not excluded	AMBIVALENT_EXISTENCE	not\s(excluded|ruled\sout)	backward			
-now measuring	HISTORICAL		backward			
-ought to be ruled out	INDICATION		backward			
-progressed	HISTORICAL		backward	3/22/2013		
-protocol	INDICATION		backward			
-resolved	DEFINITE_NEGATED_EXISTENCE		backward			
-resolved	HISTORICAL		backward			
-should be ruled out	INDICATION		backward			
-suspected	PROBABLE_EXISTENCE		backward	4/29/2013		
-unlikely	DEFINITE_NEGATED_EXISTENCE		backward			
-varying ages	HISTORICAL		backward			
-was ruled out	DEFINITE_NEGATED_EXISTENCE		backward			
-will be ruled out	INDICATION		backward			
-would not be expected	PROBABLE_NEGATED_EXISTENCE		backward	2/28/2013		
-acute	ACUTE		bidirectional			
-again	HISTORICAL		bidirectional			
-age indeterminate	HISTORICAL		bidirectional			
-appear	PROBABLE_EXISTENCE	(\bappear\b|\bappears\b)	bidirectional			
-cannot be completely excluded	PROBABLE_NEGATED_EXISTENCE	cannot\sbe\s((entirely|completely|totally)\s)?(excluded|ruled out)	bidirectional	2/28/2013		
-cannot be evaluated	AMBIVALENT_EXISTENCE		bidirectional	2/28/2013		
-chronic	HISTORICAL	\bchronic[a-z]*\b	bidirectional	2/28/2013	chronicity: make regular expression to capture variations	
-clear	PROBABLE_NEGATED_EXISTENCE		bidirectional			
-diminished	HISTORICAL		bidirectional			
-equivocal	PROBABLE_EXISTENCE		bidirectional			
-evaluation	INDICATION		bidirectional			
-evolving	HISTORICAL		bidirectional			
-healing	HISTORICAL	\b(healing|healed)\b	bidirectional			
-improved	HISTORICAL		bidirectional			4/2013
-incompletely evaluated	AMBIVALENT_EXISTENCE		bidirectional	4/29/2013		
-interval change	HISTORICAL		bidirectional			
-interval increase	HISTORICAL	(interval)\b[\d\D\s]*increase	bidirectional	4/29/2013		
-less likely	AMBIVALENT_EXISTENCE		bidirectional	4/29/2013		
-likely	PROBABLE_EXISTENCE		bidirectional			
-likely chronic	HISTORICAL		bidirectional	2/28/2013	thought of just changing chronic to bidirectional	 but also capture likely
-may be ruled out	DEFINITE_NEGATED_EXISTENCE		bidirectional			
-new	ACUTE		bidirectional			
-new from prior exam	ACUTE		bidirectional			
-no change in	HISTORICAL	(no(t)? ([a-zA-z] )?change(d)?( in)?)	bidirectional	2/28/2013		4/15/2013
-no longer noted	DEFINITE_NEGATED_EXISTENCE	no longer (seen|noted|visualized)	bidirectional			
-not	DEFINITE_NEGATED_EXISTENCE	\bnot\b	bidirectional	3/23/2013		
-not significantly changed	HISTORICAL		bidirectional			
-old	HISTORICAL		bidirectional			
-on previous exam	HISTORICAL	(on |from )?(previous|prior) exam	bidirectional	need regular expression		
-persistent	HISTORICAL		bidirectional			
-possible	PROBABLE_EXISTENCE		bidirectional	2/28/2013		
-previous	HISTORICAL		bidirectional	3/21/2013	changed to bidirectional	
-previously described	HISTORICAL	previously (described|suspected)	bidirectional	3/21/2013		3/22/2013
-prior	HISTORICAL		bidirectional			
-prior study	HISTORICAL		bidirectional			
-probable	PROBABLE_EXISTENCE		bidirectional	3/21/2013		
-questionable	PROBABLE_NEGATED_EXISTENCE		bidirectional	4/29/2013		
-ruled out	DEFINITE_NEGATED_EXISTENCE		bidirectional			
-should be considered	PROBABLE_EXISTENCE		bidirectional			
-stable	HISTORICAL		bidirectional			
-still evident	HISTORICAL		bidirectional	4/29/2013		
-subacute	HISTORICAL		bidirectional			
-suggest	PROBABLE_EXISTENCE	\bsuggest(ed|ive)?\b	bidirectional			
-unchanged	HISTORICAL		bidirectional			
-versus	AMBIVALENT_EXISTENCE		bidirectional			
-absence of	DEFINITE_NEGATED_EXISTENCE		forward			
-adequate to rule the patient out	DEFINITE_NEGATED_EXISTENCE		forward			
-appears to be	DEFINITE_EXISTENCE		forward			
-assessment for	INDICATION		forward			
-at risk for	FUTURE	(at\s)?risk\s(in\sthe\sfuture\s)?(for|of)	forward	4/29/2013		
-atypical for	PROBABLE_NEGATED_EXISTENCE		forward	4/29/2013		
-be ruled out for	INDICATION		forward			
-can be ruled out for	DEFINITE_NEGATED_EXISTENCE		forward			
-can rule the patient out	DEFINITE_NEGATED_EXISTENCE	can rule (her|him|the patient) out	forward			
-cannot	AMBIVALENT_EXISTENCE		forward			
-cannot exclude	AMBIVALENT_EXISTENCE	cannot\sexclude	forward			
-cannot see	AMBIVALENT_EXISTENCE		forward			
-cannot totally exclude	PROBABLE_NEGATED_EXISTENCE		forward			
-change in	HISTORICAL		forward			
-changing	HISTORICAL		forward			
-checked for	PROBABLE_EXISTENCE		forward			
-clinical concern 	FUTURE	clinical\s(concern|suspicion)\b	forward	2/28/2013	simplified expression 	
-clinical history	HISTORICAL		forward			
-compatible with	DEFINITE_EXISTENCE		forward			
-concerning for	PROBABLE_EXISTENCE		forward			
-consistent with	DEFINITE_EXISTENCE		forward	2/14/2013		
-convincing	DEFINITE_EXISTENCE		forward			
-could be ruled out for	DEFINITE_NEGATED_EXISTENCE		forward			
-declined	DEFINITE_NEGATED_EXISTENCE		forward			
-declines	PROBABLE_NEGATED_EXISTENCE		forward			
-decrease in	HISTORICAL		forward		make regular expression to capture variations	
-decrease in	HISTORICAL		forward			
-definite	DEFINITE_EXISTENCE		forward			
-denied	PROBABLE_NEGATED_EXISTENCE		forward			
-denies	PROBABLE_NEGATED_EXISTENCE		forward			
-deny	PROBABLE_NEGATED_EXISTENCE		forward			
-denying	PROBABLE_NEGATED_EXISTENCE		forward			
-did rule (the patient|him|her) out	DEFINITE_NEGATED_EXISTENCE		forward			
-did rule out	DEFINITE_NEGATED_EXISTENCE		forward			
-differential diagnosis would include	AMBIVALENT_EXISTENCE	differential\s((diagnosis|considerations)\s)?((would|could)\sinclud[a-z]*)?	forward			
-documented	HISTORICAL		forward			
-evaluate for	INDICATION		forward			
-evaluation of	INDICATION	evaluation\s(of|for)	forward			
-evidence	DEFINITE_EXISTENCE		forward			
-did rule her out against	DEFINITE_NEGATED_EXISTENCE		forward			
-examination for	INDICATION	(study|exam|examination) for	forward			
-fails to reveal	DEFINITE_NEGATED_EXISTENCE		forward			
-free of	DEFINITE_NEGATED_EXISTENCE		forward			
-gram negative	PSEUDONEG		forward			
-higher sensitivity for	INDICATION		forward	2/28/2013		
-highly suggestive	DEFINITE_EXISTENCE		forward	4/29/2013		
-history of	HISTORICAL		forward			
-if there are	FUTURE		forward	2/28/2013		
-if there is concern for	FUTURE		forward			
-is to be ruled out for	INDICATION		forward			
-is more sensitive	INDICATION	is more sensitive	forward			
-known	HISTORICAL	\bknown\b	forward			
-low probability	PROBABLE_NEGATED_EXISTENCE		forward			
-may be related	PROBABLE_EXISTENCE		forward	2/28/2013		
-may represent	PROBABLE_EXISTENCE	(may|might)\srepresent	forward			
-might be ruled out for	PROBABLE_NEGATED_EXISTENCE		forward			
-mimicking	PROBABLE_NEGATED_EXISTENCE		forward	3/22/2013		
-must be ruled out for	DEFINITE_NEGATED_EXISTENCE		forward			
-negative examination for	DEFINITE_NEGATED_EXISTENCE	negative (examination|study|exam|evaluation) for	forward			
-negative for	DEFINITE_NEGATED_EXISTENCE		forward			
-never developed	PROBABLE_NEGATED_EXISTENCE		forward			
-never had	DEFINITE_NEGATED_EXISTENCE		forward			
-no	DEFINITE_NEGATED_EXISTENCE	\bno\b	forward			
-no abnormal	DEFINITE_NEGATED_EXISTENCE		forward	2/28/2013	changed from probable to definite	
-no cause of	PROBABLE_NEGATED_EXISTENCE		forward			
-no complaints of	AMBIVALENT_EXISTENCE		forward			
-no convincing	PROBABLE_NEGATED_EXISTENCE		forward			
-no definite	DEFINITE_NEGATED_EXISTENCE	no[\s]*definite	forward			
-no definite change	HISTORICAL		forward	need regular expression		
-no evidence of	DEFINITE_NEGATED_EXISTENCE	(no|without)\s((definite|other|definitive|secondary|indirect)\s)?((radiographic|sonographic|CT)\s)?evidence\s(of|for)	forward	2/28/2013	added other probably consider simplifying re as XYZ	
-no findings of	PROBABLE_NEGATED_EXISTENCE		forward			
-no findings to indicate	DEFINITE_NEGATED_EXISTENCE		forward			
-no increase	HISTORICAL		forward	4/16/2013		
-no new	DEFINITE_NEGATED_EXISTENCE		forward			
-no obvious	PROBABLE_NEGATED_EXISTENCE		forward			
-no other	PROBABLE_NEGATED_EXISTENCE		forward			
-no sign of	PROBABLE_NEGATED_EXISTENCE		forward			
-no significant	PROBABLE_NEGATED_EXISTENCE		forward			
-no significant change	HISTORICAL		forward			
-no significant interval change	HISTORICAL		forward			
-no signs	DEFINITE_NEGATED_EXISTENCE	no sign(s)?	forward			
-no definite signs of	PROBABLE_NEGATED_EXISTENCE	(no|without) (definite|definitive|secondary|indirect) ((radiographic|sonographic|CT)\s)?signs\s(of|for)	forward			
-no suggestion	DEFINITE_NEGATED_EXISTENCE		forward			
-no suspicious change	HISTORICAL		forward	4/16/2013		
-no XYZ to suggest	DEFINITE_NEGATED_EXISTENCE	(\b(without|no)\b[\d\D\s]*to suggest)	forward	2/14/2013		
-nor	PROBABLE_NEGATED_EXISTENCE	\bnor\b	forward			
-not appreciate	PROBABLE_NEGATED_EXISTENCE		forward			
-not associated with	PROBABLE_NEGATED_EXISTENCE		forward			
-not cause	PSEUDONEG		forward			
-not certain whether	PSEUDONEG		forward			
-not clearly evident	PROBABLE_NEGATED_EXISTENCE		forward	3/22/2013		
-not complain of	PROBABLE_NEGATED_EXISTENCE		forward			
-not demonstrate	DEFINITE_NEGATED_EXISTENCE		forward			
-not drain	PSEUDONEG		forward			
-not exhibit	DEFINITE_NEGATED_EXISTENCE		forward			
-not extend	PSEUDONEG		forward			
-not feel	PROBABLE_NEGATED_EXISTENCE		forward			
-not had	DEFINITE_NEGATED_EXISTENCE		forward			
-not have	DEFINITE_NEGATED_EXISTENCE		forward			
-not know of	AMBIVALENT_EXISTENCE		forward			
-not known to have	AMBIVALENT_EXISTENCE		forward			
-not necessarily	PSEUDONEG		forward			
-not reveal	DEFINITE_NEGATED_EXISTENCE		forward			
-not see	DEFINITE_NEGATED_EXISTENCE		forward			
-not to be	PROBABLE_NEGATED_EXISTENCE		forward			
-nothing	PROBABLE_NEGATED_EXISTENCE		forward			
-obvious	DEFINITE_EXISTENCE		forward			
-ought to be ruled out for	INDICATION		forward			
-patient was not	DEFINITE_NEGATED_EXISTENCE		forward			
-positive study for	DEFINITE_EXISTENCE	positive (study|exam|examination)( for)	forward			
-predispose to 	FUTURE		forward	2/14/2013		
-progression of	HISTORICAL	progression\s(of|in)	forward			
-rather than	PROBABLE_EXISTENCE		forward			
-redemonstration	HISTORICAL	(re-demonstrat[a-z]*|redemonstrat[a-z]*)	forward			
-remote	HISTORICAL		forward	2/28/2013	added for Ami's 19649	
-represents	DEFINITE_EXISTENCE		forward			
-residual	HISTORICAL		forward			
-resolution of	HISTORICAL		forward			
-resolving	HISTORICAL		forward			
-rule her out	INDICATION		forward			
-rule him out	INDICATION		forward			
-rule him out for	INDICATION		forward			
-rule out	INDICATION	(r/o|rule out|\br o\b|r\.o\.|\bro\b)	forward			
-rule out for	INDICATION		forward			
-rule patient out for	INDICATION	rule (him|her|patient|the patient|subject) out for	forward			
-rule the patient out	INDICATION		forward			
-rule the patient out for	INDICATION		forward			
-ruled her out against	DEFINITE_NEGATED_EXISTENCE	ruled\s(him|her|the subject|the patient|subject|patient)\sout( against| for)?	forward	4/16/2013		
-ruled out against	DEFINITE_NEGATED_EXISTENCE		forward			
-ruled out for	DEFINITE_NEGATED_EXISTENCE		forward			
-rules her out	DEFINITE_NEGATED_EXISTENCE		forward			
-rules her out for	DEFINITE_NEGATED_EXISTENCE	rules\s(him|her)\sout\sfor	forward			
-rules him out	DEFINITE_NEGATED_EXISTENCE	rules\s(him|her)\sout	forward			
-rules him out for	DEFINITE_NEGATED_EXISTENCE	rules\s(him|her)\sout\sfor	forward			
-rules out	DEFINITE_NEGATED_EXISTENCE		forward			
-rules out for	DEFINITE_NEGATED_EXISTENCE		forward			
-rules the patient out	DEFINITE_NEGATED_EXISTENCE		forward			
-rules the patient out for	DEFINITE_NEGATED_EXISTENCE		forward			
-sequelae of	HISTORICAL		forward			
-should be ruled out for	INDICATION		forward			
-simulating	PROBABLE_NEGATED_EXISTENCE		forward	3/22/2013		
-study for detection	INDICATION		forward			
-subacute	HISTORICAL		forward			
-sufficient to rule out	DEFINITE_NEGATED_EXISTENCE	sufficient\sto\srule\s((her|him|the patient|the subject)\s)?out	forward			
-suspicious	PROBABLE_EXISTENCE		forward			
-suspicous	PROBABLE_EXISTENCE		forward			
-test for	AMBIVALENT_EXISTENCE		forward			
-to exclude	PROBABLE_NEGATED_EXISTENCE		forward			
-unable to adequately assess	AMBIVALENT_EXISTENCE		forward			
-unable to assess	AMBIVALENT_EXISTENCE		forward			
-unremarkable for	DEFINITE_NEGATED_EXISTENCE		forward			
-warned of	FUTURE		forward	3/22/2013		
-were warned	FUTURE		forward			
-what must be ruled out is	INDICATION		forward			
-will be ruled out for	INDICATION		forward			
-with no	DEFINITE_NEGATED_EXISTENCE		forward			
-without	DEFINITE_NEGATED_EXISTENCE		forward			
-without difficulty	PSEUDONEG		forward			
-without indication	PROBABLE_NEGATED_EXISTENCE		forward			
-without sign	DEFINITE_NEGATED_EXISTENCE	without sign(s)?	forward			
-worrisome	PROBABLE_EXISTENCE		forward			
-#NAME?	DEFINITE_NEGATED_EXISTENCE		forward			
-although	CONJ		terminate			
-apart from	CONJ		terminate			
-as a cause for	CONJ		terminate			
-as a cause of	CONJ		terminate			
-as a etiology for	CONJ		terminate			
-as a etiology of	CONJ		terminate			
-as a reason for	CONJ		terminate			
-as a reason of	CONJ		terminate			
-as a secondary cause for	CONJ		terminate			
-as a secondary cause of	CONJ		terminate			
-as a secondary etiology for	CONJ		terminate			
-as a secondary etiology of	CONJ		terminate			
-as a secondary origin for	CONJ		terminate			
-as a secondary origin of	CONJ		terminate			
-as a secondary reason for	CONJ		terminate			
-as a secondary reason of	CONJ		terminate			
-as a secondary source for	CONJ		terminate			
-as a secondary source of	CONJ		terminate			
-as a source for	CONJ		terminate			
-as a source of	CONJ		terminate			
-as an cause for	CONJ		terminate			
-as an cause of	CONJ		terminate			
-as an etiology for	CONJ		terminate			
-as an etiology of	CONJ		terminate			
-as an origin for	CONJ		terminate			
-as an origin of	CONJ		terminate			
-as an reason for	CONJ		terminate			
-as an reason of	CONJ		terminate			
-as an secondary cause for	CONJ		terminate			
-as an secondary cause of	CONJ		terminate			
-as an secondary etiology for	CONJ		terminate			
-as an secondary etiology of	CONJ		terminate			
-as an secondary origin for	CONJ		terminate			
-as an secondary origin of	CONJ		terminate			
-as an secondary reason for	CONJ		terminate			
-as an secondary reason of	CONJ		terminate			
-as an secondary source for	CONJ		terminate			
-as an secondary source of	CONJ		terminate			
-as an source for	CONJ		terminate			
-as an source of	CONJ		terminate			
-as the cause for	CONJ		terminate			
-as the cause of	CONJ		terminate			
-as the etiology for	CONJ		terminate			
-as the etiology of	CONJ		terminate			
-as the origin for	CONJ		terminate			
-as the origin of	CONJ		terminate			
-as the reason for	CONJ		terminate			
-as the reason of	CONJ		terminate			
-as the secondary cause for	CONJ		terminate			
-as the secondary cause of	CONJ		terminate			
-as the secondary etiology for	CONJ		terminate			
-as the secondary etiology of	CONJ		terminate			
-as the secondary origin for	CONJ		terminate			
-as the secondary origin of	CONJ		terminate			
-as the secondary reason for	CONJ		terminate			
-as the secondary reason of	CONJ		terminate			
-as the secondary source for	CONJ		terminate			
-as the secondary source of	CONJ		terminate			
-as the source for	CONJ		terminate			
-as the source of	CONJ		terminate			
-as there are 	CONJ		terminate	2/14/2013		
-aside from	CONJ		terminate			
-but	CONJ		terminate			
-cause for	CONJ		terminate			
-cause of	CONJ		terminate			
-causes for	CONJ		terminate			
-causes of	CONJ		terminate			
-etiology for	CONJ		terminate			
-etiology of	CONJ		terminate			
-except	CONJ		terminate			
-however	CONJ		terminate			
-involving	CONJ		terminate			
-nevertheless	CONJ		terminate			
-origin for	CONJ		terminate			
-origin of	CONJ		terminate			
-origins for	CONJ		terminate			
-origins of	CONJ		terminate			
-other possibilities of	CONJ		terminate			
-reason for	CONJ		terminate			
-reason of	CONJ		terminate			
-reasons for	CONJ		terminate			
-reasons of	CONJ		terminate			
-secondary to	CONJ		terminate			
-source for	CONJ		terminate			
-source of	CONJ		terminate			
-sources for	CONJ		terminate			
-sources of	CONJ		terminate			
-still	CONJ		terminate			
-though	CONJ		terminate			
-trigger event for	CONJ		terminate			
-which	CONJ		terminate			
-yet	CONJ		terminate			
-(no|nothing) convincing	DEFINITE_NEGATED_EXISTENCE		forward			
-(the patient|him|her) was not	DEFINITE_NEGATED_EXISTENCE		forward			
-as a suggestion	PROBABLE_EXISTENCE		bidirectional			
-associated with	PROBABLE_EXISTENCE		forward			
-believe	DEFINITE_EXISTENCE		bidirectional			
-borderline	AMBIVALENT_EXISTENCE		bidirectional			
-can rule out	DEFINITE_NEGATED_EXISTENCE		forward			
-can rule out against	DEFINITE_NEGATED_EXISTENCE		forward			
-can rule out for	DEFINITE_NEGATED_EXISTENCE		forward			
-can see	DEFINITE_EXISTENCE		forward			
-cannot rule out	AMBIVALENT_EXISTENCE	cannot rule (the patient |him |her )?out	forward			
-completely excluded	DEFINITE_NEGATED_EXISTENCE	(completely|entirely)? excluded	backward			
-construed as	PROBABLE_EXISTENCE		bidirectional			
-could be	PROBABLE_EXISTENCE		forward			
-could not be ruled	AMBIVALENT_EXISTENCE		bidirectional			
-could represent	PROBABLE_EXISTENCE		forward			
-equivocal	AMBIVALENT_EXISTENCE		bidirectional			
-every indication	PROBABLE_EXISTENCE		forward			
-excluded	DEFINITE_NEGATED_EXISTENCE		backward			
-exhibit	PROBABLE_EXISTENCE		bidirectional			
-gross evidence	DEFINITE_EXISTENCE		forward			
-high probability	DEFINITE_EXISTENCE		bidirectional			
-highly hesitant	AMBIVALENT_EXISTENCE		bidirectional			
-indication	AMBIVALENT_EXISTENCE		bidirectional			
-insufficient to rule (the patient|him|her) out for	AMBIVALENT_EXISTENCE		forward			
-is positive	DEFINITE_EXISTENCE		bidirectional			
-no other (CT|radiographic|sonographic|MR|etc) evidence	PROBABLE_NEGATED_EXISTENCE		forward			
-no secondary (CT|radiographic|sonographic|MR|etc) signs	PROBABLE_NEGATED_EXISTENCE		forward			
-no suspicious	PROBABLE_NEGATED_EXISTENCE		forward			
-not adequate to rule out	AMBIVALENT_EXISTENCE	not adequate to rule ((the patient|him|her)\s)?out	forward			
-not likely	DEFINITE_NEGATED_EXISTENCE		bidirectional			
-not only	PSEUDONEG		forward			
-reveals	DEFINITE_EXISTENCE		forward			
-seen best	PROBABLE_EXISTENCE		backward			
-signs of	PROBABLE_EXISTENCE		bidirectional			
-was not excluded	AMBIVALENT_EXISTENCE	(was|were) not excluded	backward			
+Lex	Type	Regex	Direction	Unnamed: 4	Unnamed: 5	Unnamed: 6	Codes
+are ruled out	DEFINITE_NEGATED_EXISTENCE		backward				
+be ruled out	INDICATION		backward				
+being ruled out	INDICATION		backward				
+can be ruled out	DEFINITE_NEGATED_EXISTENCE		backward				
+cannot be excluded	AMBIVALENT_EXISTENCE		backward				
+cannot totally be excluded	PROBABLE_NEGATED_EXISTENCE		backward				
+could be ruled out	DEFINITE_NEGATED_EXISTENCE		backward				
+examination	INDICATION	\b(examination|exam|study)\b	backward				
+free	DEFINITE_NEGATED_EXISTENCE		backward				
+has been ruled out	DEFINITE_NEGATED_EXISTENCE		backward				
+have been ruled out	DEFINITE_NEGATED_EXISTENCE		backward				
+is in the differential	AMBIVALENT_EXISTENCE	is\sin\sthe\sdifferential	backward				
+is negative	DEFINITE_NEGATED_EXISTENCE	(is|was) negative	backward				
+is not excluded	AMBIVALENT_EXISTENCE	(is|was|are|were)\snot\sexcluded	backward				
+is not entirely excluded	PROBABLE_NEGATED_EXISTENCE	(is|was|are|were|does)\snot\s(entirely|totally|definitely|completely\s) excluded	backward	2/28/2013	added definitely	removed ed	
+is present	DEFINITE_EXISTENCE	(is|are) present	backward	4/29/2013			
+is ruled out	DEFINITE_NEGATED_EXISTENCE		backward				
+is to be ruled out	INDICATION		backward				
+is ruled out	DEFINITE_NEGATED_EXISTENCE		backward				
+might be ruled out	PROBABLE_NEGATED_EXISTENCE		backward				
+must be ruled out	DEFINITE_NEGATED_EXISTENCE		backward				
+not been ruled out	INDICATION		backward				
+not definitively seen	PROBABLE_NEGATED_EXISTENCE	not definitively (seen|visualized)	backward	3/22/2013			
+not excluded	AMBIVALENT_EXISTENCE	not\s(excluded|ruled\sout)	backward				
+now measuring	HISTORICAL		backward				
+ought to be ruled out	INDICATION		backward				
+progressed	HISTORICAL		backward	3/22/2013			
+protocol	INDICATION		backward				
+resolved	DEFINITE_NEGATED_EXISTENCE		backward				
+resolved	HISTORICAL		backward				
+should be ruled out	INDICATION		backward				
+suspected	PROBABLE_EXISTENCE		backward	4/29/2013			
+unlikely	DEFINITE_NEGATED_EXISTENCE		bidirectional				
+varying ages	HISTORICAL		backward				
+was ruled out	DEFINITE_NEGATED_EXISTENCE		backward				
+will be ruled out	INDICATION		backward				
+would not be expected	PROBABLE_NEGATED_EXISTENCE		backward	2/28/2013			
+acute	ACUTE		bidirectional				
+again	HISTORICAL		bidirectional				
+age indeterminate	HISTORICAL		bidirectional				
+appear	PROBABLE_EXISTENCE	(\bappear\b|\bappears\b)	bidirectional				
+cannot be completely excluded	PROBABLE_NEGATED_EXISTENCE	cannot\sbe\s((entirely|completely|totally)\s)?(excluded|ruled out)	bidirectional	2/28/2013			
+cannot be evaluated	AMBIVALENT_EXISTENCE		bidirectional	2/28/2013			
+chronic	HISTORICAL	\bchronic[a-z]*\b	bidirectional	2/28/2013	chronicity: make regular expression to capture variations		
+clear	PROBABLE_NEGATED_EXISTENCE		bidirectional				
+diminished	HISTORICAL		bidirectional				
+equivocal	PROBABLE_EXISTENCE		bidirectional				
+evaluation	INDICATION		bidirectional				
+evolving	HISTORICAL		bidirectional				
+healing	HISTORICAL	\b(healing|healed)\b	bidirectional				
+improved	HISTORICAL	improv(ed|ing|ement)	bidirectional			4/2013	
+incompletely evaluated	AMBIVALENT_EXISTENCE		bidirectional	4/29/2013			
+interval change	HISTORICAL		bidirectional				
+interval increase	HISTORICAL	(interval)\b[\d\D\s]*increase	bidirectional	4/29/2013			
+less likely	AMBIVALENT_EXISTENCE		bidirectional	4/29/2013			
+likely	PROBABLE_EXISTENCE		bidirectional				
+likely chronic	HISTORICAL		bidirectional	2/28/2013	thought of just changing chronic to bidirectional	 but also capture likely	
+may be ruled out	DEFINITE_NEGATED_EXISTENCE		bidirectional				
+new	ACUTE		bidirectional				
+new from prior exam	ACUTE	new from(\sthe) prior (exam|study)	bidirectional				
+no change in	HISTORICAL	(no(t)? ([a-zA-z] )?change(d)?( in)?)	bidirectional	2/28/2013		4/15/2013	
+no longer noted	DEFINITE_NEGATED_EXISTENCE	no longer (seen|noted|visualized)	bidirectional				
+not	DEFINITE_NEGATED_EXISTENCE	\bnot\b	bidirectional	3/23/2013			
+not significantly changed	HISTORICAL		bidirectional				
+old	HISTORICAL		bidirectional				
+on previous exam	HISTORICAL	(on |from )?(previous|prior) exam	bidirectional	need regular expression			
+persistent	HISTORICAL		bidirectional				
+possible	PROBABLE_EXISTENCE		bidirectional	2/28/2013			
+previous	HISTORICAL		bidirectional	3/21/2013	changed to bidirectional		
+previously described	HISTORICAL	previously (described|suspected)	bidirectional	3/21/2013		3/22/2013	
+prior	HISTORICAL		bidirectional				
+prior study	HISTORICAL		bidirectional				
+probable	PROBABLE_EXISTENCE		bidirectional	3/21/2013			
+questionable	PROBABLE_NEGATED_EXISTENCE		bidirectional	4/29/2013			
+ruled out	DEFINITE_NEGATED_EXISTENCE		bidirectional				
+should be considered	PROBABLE_EXISTENCE		bidirectional				
+stable	HISTORICAL		bidirectional				
+still evident	HISTORICAL		bidirectional	4/29/2013			
+subacute	HISTORICAL		bidirectional				
+suggest	PROBABLE_EXISTENCE	\bsuggest(ed|ive)?\b	bidirectional				
+unchanged	HISTORICAL	unchang(ed|ing)	bidirectional				
+versus	AMBIVALENT_EXISTENCE		bidirectional				
+absence of	DEFINITE_NEGATED_EXISTENCE		forward				
+adequate to rule the patient out	DEFINITE_NEGATED_EXISTENCE		forward				
+appears to be	DEFINITE_EXISTENCE		forward				
+assessment for	INDICATION		forward				
+at risk for	FUTURE	(at\s)?risk\s(in\sthe\sfuture\s)?(for|of)	forward	4/29/2013			
+atypical for	PROBABLE_NEGATED_EXISTENCE		forward	4/29/2013			
+be ruled out for	INDICATION		forward				
+can be ruled out for	DEFINITE_NEGATED_EXISTENCE		forward				
+can rule the patient out	DEFINITE_NEGATED_EXISTENCE	can rule (her|him|the patient) out	forward				
+cannot	AMBIVALENT_EXISTENCE		forward				
+cannot exclude	AMBIVALENT_EXISTENCE	cannot\sexclude	forward				
+cannot see	AMBIVALENT_EXISTENCE		forward				
+cannot totally exclude	PROBABLE_NEGATED_EXISTENCE		forward				
+change in	HISTORICAL		forward				
+changing	HISTORICAL		forward				
+checked for	PROBABLE_EXISTENCE		forward				
+clinical concern 	FUTURE	clinical\s(concern|suspicion)\b	forward	2/28/2013	simplified expression 		
+clinical history	HISTORICAL		forward				
+compatible with	DEFINITE_EXISTENCE		forward				
+concerning for	PROBABLE_EXISTENCE		forward				
+consistent with	DEFINITE_EXISTENCE		forward	2/14/2013			
+convincing	DEFINITE_EXISTENCE		forward				
+could be ruled out for	DEFINITE_NEGATED_EXISTENCE		forward				
+declined	DEFINITE_NEGATED_EXISTENCE		forward				
+declines	PROBABLE_NEGATED_EXISTENCE		forward				
+decrease in	HISTORICAL		forward		make regular expression to capture variations		
+decrease in	HISTORICAL		forward				
+definite	DEFINITE_EXISTENCE		forward				
+denied	PROBABLE_NEGATED_EXISTENCE		forward				
+denies	PROBABLE_NEGATED_EXISTENCE		forward				
+deny	PROBABLE_NEGATED_EXISTENCE		forward				
+denying	PROBABLE_NEGATED_EXISTENCE		forward				
+did rule (the patient|him|her) out	DEFINITE_NEGATED_EXISTENCE		forward				
+did rule out	DEFINITE_NEGATED_EXISTENCE		forward				
+differential diagnosis would include	AMBIVALENT_EXISTENCE	differential\s((diagnosis|considerations)\s)?((would|could)\sinclud[a-z]*)?	forward				
+documented	HISTORICAL		forward				
+evaluate for	INDICATION		forward				
+evaluation of	INDICATION	evaluation\s(of|for)	forward				
+evidence	DEFINITE_EXISTENCE		forward				
+did rule her out against	DEFINITE_NEGATED_EXISTENCE		forward				
+examination for	INDICATION	(study|exam|examination) for	forward				
+fails to reveal	DEFINITE_NEGATED_EXISTENCE		forward				
+free of	DEFINITE_NEGATED_EXISTENCE		forward				
+gram negative	PSEUDONEG		forward				
+higher sensitivity for	INDICATION		forward	2/28/2013			
+highly suggestive	DEFINITE_EXISTENCE		forward	4/29/2013			
+history of	HISTORICAL		forward				
+if there are	FUTURE		forward	2/28/2013			
+if there is concern for	FUTURE		forward				
+is to be ruled out for	INDICATION		forward				
+is more sensitive	INDICATION	is more sensitive	forward				
+known	HISTORICAL	\bknown\b	forward				
+low probability	PROBABLE_NEGATED_EXISTENCE		forward				
+may be related	PROBABLE_EXISTENCE		forward	2/28/2013			
+may represent	PROBABLE_EXISTENCE	(may|might)\s(represent|reflect)	forward				
+might be ruled out for	PROBABLE_NEGATED_EXISTENCE		forward				
+mimicking	PROBABLE_NEGATED_EXISTENCE		forward	3/22/2013			
+must be ruled out for	DEFINITE_NEGATED_EXISTENCE		forward				
+negative examination for	DEFINITE_NEGATED_EXISTENCE	negative (examination|study|exam|evaluation) for	forward				
+negative for	DEFINITE_NEGATED_EXISTENCE		forward				
+never developed	PROBABLE_NEGATED_EXISTENCE		forward				
+never had	DEFINITE_NEGATED_EXISTENCE		forward				
+no	DEFINITE_NEGATED_EXISTENCE	\bno\b	forward				
+no abnormal	DEFINITE_NEGATED_EXISTENCE		forward	2/28/2013	changed from probable to definite		
+no cause of	PROBABLE_NEGATED_EXISTENCE		forward				
+no complaints of	AMBIVALENT_EXISTENCE		forward				
+no convincing	PROBABLE_NEGATED_EXISTENCE		forward				
+no definite	DEFINITE_NEGATED_EXISTENCE	no[\s]*definite	forward				
+no definite change	HISTORICAL		forward	need regular expression			
+no evidence of	DEFINITE_NEGATED_EXISTENCE	(no|without)\s((definite|other|definitive|secondary|indirect)\s)?((radiographic|sonographic|CT)\s)?evidence\s(of|for)	forward	2/28/2013	added other probably consider simplifying re as XYZ		
+no findings of	PROBABLE_NEGATED_EXISTENCE		forward				
+no findings to indicate	DEFINITE_NEGATED_EXISTENCE		forward				
+no increase	HISTORICAL		forward	4/16/2013			
+no new	DEFINITE_NEGATED_EXISTENCE		forward				
+no obvious	PROBABLE_NEGATED_EXISTENCE		forward				
+no other	PROBABLE_NEGATED_EXISTENCE		forward				
+no sign of	PROBABLE_NEGATED_EXISTENCE		forward				
+no significant	PROBABLE_NEGATED_EXISTENCE		forward				
+no significant change	HISTORICAL		forward				
+no significant interval change	HISTORICAL		forward				
+no signs	DEFINITE_NEGATED_EXISTENCE	no sign(s)?	forward				
+no definite signs of	PROBABLE_NEGATED_EXISTENCE	(no|without) (definite|definitive|secondary|indirect) ((radiographic|sonographic|CT)\s)?signs\s(of|for)	forward				
+no suggestion	DEFINITE_NEGATED_EXISTENCE		forward				
+no suspicious change	HISTORICAL		forward	4/16/2013			
+no XYZ to suggest	DEFINITE_NEGATED_EXISTENCE	(\b(without|no)\b[\d\D\s]*to suggest)	forward	2/14/2013			
+nor	PROBABLE_NEGATED_EXISTENCE	\bnor\b	forward				
+not appreciate	PROBABLE_NEGATED_EXISTENCE		forward				
+not associated with	PROBABLE_NEGATED_EXISTENCE		forward				
+not cause	PSEUDONEG		forward				
+not certain whether	PSEUDONEG		forward				
+not clearly evident	PROBABLE_NEGATED_EXISTENCE		forward	3/22/2013			
+not complain of	PROBABLE_NEGATED_EXISTENCE		forward				
+not demonstrate	DEFINITE_NEGATED_EXISTENCE		forward				
+not drain	PSEUDONEG		forward				
+not exhibit	DEFINITE_NEGATED_EXISTENCE		forward				
+not extend	PSEUDONEG		forward				
+not feel	PROBABLE_NEGATED_EXISTENCE		forward				
+not had	DEFINITE_NEGATED_EXISTENCE		forward				
+not have	DEFINITE_NEGATED_EXISTENCE		forward				
+not know of	AMBIVALENT_EXISTENCE		forward				
+not known to have	AMBIVALENT_EXISTENCE		forward				
+not necessarily	PSEUDONEG		forward				
+not reveal	DEFINITE_NEGATED_EXISTENCE		forward				
+not see	DEFINITE_NEGATED_EXISTENCE		forward				
+not to be	PROBABLE_NEGATED_EXISTENCE		forward				
+nothing	PROBABLE_NEGATED_EXISTENCE		forward				
+obvious	DEFINITE_EXISTENCE		forward				
+ought to be ruled out for	INDICATION		forward				
+patient was not	DEFINITE_NEGATED_EXISTENCE		forward				
+positive study for	DEFINITE_EXISTENCE	positive (study|exam|examination)( for)	forward				
+predispose to 	FUTURE		forward	2/14/2013			
+progression of	HISTORICAL	progression\s(of|in)	forward				
+rather than	PROBABLE_EXISTENCE		forward				
+redemonstration	HISTORICAL	(re-demonstrat[a-z]*|redemonstrat[a-z]*)	forward				
+remote	HISTORICAL		forward	2/28/2013	added for Ami's 19649		
+represents	DEFINITE_EXISTENCE		forward				
+residual	HISTORICAL		forward				
+resolution of	HISTORICAL		forward				
+resolving	HISTORICAL		forward				
+rule her out	INDICATION		forward				
+rule him out	INDICATION		forward				
+rule him out for	INDICATION		forward				
+rule out	INDICATION	(r/o|rule out|\br o\b|r\.o\.|\bro\b)	forward				
+rule out for	INDICATION		forward				
+rule patient out for	INDICATION	rule (him|her|patient|the patient|subject) out for	forward				
+rule the patient out	INDICATION		forward				
+rule the patient out for	INDICATION		forward				
+ruled her out against	DEFINITE_NEGATED_EXISTENCE	ruled\s(him|her|the subject|the patient|subject|patient)\sout( against| for)?	forward	4/16/2013			
+ruled out against	DEFINITE_NEGATED_EXISTENCE		forward				
+ruled out for	DEFINITE_NEGATED_EXISTENCE		forward				
+rules her out	DEFINITE_NEGATED_EXISTENCE		forward				
+rules her out for	DEFINITE_NEGATED_EXISTENCE	rules\s(him|her)\sout\sfor	forward				
+rules him out	DEFINITE_NEGATED_EXISTENCE	rules\s(him|her)\sout	forward				
+rules him out for	DEFINITE_NEGATED_EXISTENCE	rules\s(him|her)\sout\sfor	forward				
+rules out	DEFINITE_NEGATED_EXISTENCE		forward				
+rules out for	DEFINITE_NEGATED_EXISTENCE		forward				
+rules the patient out	DEFINITE_NEGATED_EXISTENCE		forward				
+rules the patient out for	DEFINITE_NEGATED_EXISTENCE		forward				
+sequelae of	HISTORICAL		forward				
+should be ruled out for	INDICATION		forward				
+simulating	PROBABLE_NEGATED_EXISTENCE		forward	3/22/2013			
+study for detection	INDICATION		forward				
+subacute	HISTORICAL		forward				
+sufficient to rule out	DEFINITE_NEGATED_EXISTENCE	sufficient\sto\srule\s((her|him|the patient|the subject)\s)?out	forward				
+suspicious	PROBABLE_EXISTENCE		forward				
+suspicous	PROBABLE_EXISTENCE		forward				
+test for	AMBIVALENT_EXISTENCE		forward				
+to exclude	PROBABLE_NEGATED_EXISTENCE		forward				
+unable to adequately assess	AMBIVALENT_EXISTENCE		forward				
+unable to assess	AMBIVALENT_EXISTENCE		forward				
+unremarkable for	DEFINITE_NEGATED_EXISTENCE		forward				
+warned of	FUTURE		forward	3/22/2013			
+were warned	FUTURE		forward				
+what must be ruled out is	INDICATION		forward				
+will be ruled out for	INDICATION		forward				
+with no	DEFINITE_NEGATED_EXISTENCE		forward				
+without	DEFINITE_NEGATED_EXISTENCE		forward				
+without difficulty	PSEUDONEG		forward				
+without indication	PROBABLE_NEGATED_EXISTENCE		forward				
+without sign	DEFINITE_NEGATED_EXISTENCE	without sign(s)?	forward				
+worrisome	PROBABLE_EXISTENCE		forward				
+#NAME?	DEFINITE_NEGATED_EXISTENCE		forward				
+although	CONJ		terminate				
+apart from	CONJ		terminate				
+as a cause for	CONJ		terminate				
+as a cause of	CONJ		terminate				
+as a etiology for	CONJ		terminate				
+as a etiology of	CONJ		terminate				
+as a reason for	CONJ		terminate				
+as a reason of	CONJ		terminate				
+as a secondary cause for	CONJ		terminate				
+as a secondary cause of	CONJ		terminate				
+as a secondary etiology for	CONJ		terminate				
+as a secondary etiology of	CONJ		terminate				
+as a secondary origin for	CONJ		terminate				
+as a secondary origin of	CONJ		terminate				
+as a secondary reason for	CONJ		terminate				
+as a secondary reason of	CONJ		terminate				
+as a secondary source for	CONJ		terminate				
+as a secondary source of	CONJ		terminate				
+as a source for	CONJ		terminate				
+as a source of	CONJ		terminate				
+as an cause for	CONJ		terminate				
+as an cause of	CONJ		terminate				
+as an etiology for	CONJ		terminate				
+as an etiology of	CONJ		terminate				
+as an origin for	CONJ		terminate				
+as an origin of	CONJ		terminate				
+as an reason for	CONJ		terminate				
+as an reason of	CONJ		terminate				
+as an secondary cause for	CONJ		terminate				
+as an secondary cause of	CONJ		terminate				
+as an secondary etiology for	CONJ		terminate				
+as an secondary etiology of	CONJ		terminate				
+as an secondary origin for	CONJ		terminate				
+as an secondary origin of	CONJ		terminate				
+as an secondary reason for	CONJ		terminate				
+as an secondary reason of	CONJ		terminate				
+as an secondary source for	CONJ		terminate				
+as an secondary source of	CONJ		terminate				
+as an source for	CONJ		terminate				
+as an source of	CONJ		terminate				
+as the cause for	CONJ		terminate				
+as the cause of	CONJ		terminate				
+as the etiology for	CONJ		terminate				
+as the etiology of	CONJ		terminate				
+as the origin for	CONJ		terminate				
+as the origin of	CONJ		terminate				
+as the reason for	CONJ		terminate				
+as the reason of	CONJ		terminate				
+as the secondary cause for	CONJ		terminate				
+as the secondary cause of	CONJ		terminate				
+as the secondary etiology for	CONJ		terminate				
+as the secondary etiology of	CONJ		terminate				
+as the secondary origin for	CONJ		terminate				
+as the secondary origin of	CONJ		terminate				
+as the secondary reason for	CONJ		terminate				
+as the secondary reason of	CONJ		terminate				
+as the secondary source for	CONJ		terminate				
+as the secondary source of	CONJ		terminate				
+as the source for	CONJ		terminate				
+as the source of	CONJ		terminate				
+as there are 	CONJ		terminate	2/14/2013			
+aside from	CONJ		terminate				
+but	CONJ		terminate				
+cause for	CONJ		terminate				
+cause of	CONJ		terminate				
+causes for	CONJ		terminate				
+causes of	CONJ		terminate				
+etiology for	CONJ		terminate				
+etiology of	CONJ		terminate				
+except	CONJ		terminate				
+however	CONJ		terminate				
+involving	CONJ		terminate				
+nevertheless	CONJ		terminate				
+origin for	CONJ		terminate				
+origin of	CONJ		terminate				
+origins for	CONJ		terminate				
+origins of	CONJ		terminate				
+other possibilities of	CONJ		terminate				
+reason for	CONJ		terminate				
+reason of	CONJ		terminate				
+reasons for	CONJ		terminate				
+reasons of	CONJ		terminate				
+secondary to	CONJ		terminate				
+source for	CONJ		terminate				
+source of	CONJ		terminate				
+sources for	CONJ		terminate				
+sources of	CONJ		terminate				
+still	CONJ		terminate				
+though	CONJ		terminate				
+trigger event for	CONJ		terminate				
+which	CONJ		terminate				
+yet	CONJ		terminate				
+(no|nothing) convincing	DEFINITE_NEGATED_EXISTENCE		forward				
+(the patient|him|her) was not	DEFINITE_NEGATED_EXISTENCE		forward				
+as a suggestion	PROBABLE_EXISTENCE		bidirectional				
+associated with	PROBABLE_EXISTENCE		forward				
+believe	DEFINITE_EXISTENCE		bidirectional				
+borderline	AMBIVALENT_EXISTENCE		bidirectional				
+can rule out	DEFINITE_NEGATED_EXISTENCE		forward				
+can rule out against	DEFINITE_NEGATED_EXISTENCE		forward				
+can rule out for	DEFINITE_NEGATED_EXISTENCE		forward				
+can see	DEFINITE_EXISTENCE		forward				
+cannot rule out	AMBIVALENT_EXISTENCE	cannot rule (the patient |him |her )?out	forward				
+completely excluded	DEFINITE_NEGATED_EXISTENCE	(completely|entirely)? excluded	backward				
+construed as	PROBABLE_EXISTENCE		bidirectional				
+could be	PROBABLE_EXISTENCE		forward				
+could not be ruled	AMBIVALENT_EXISTENCE		bidirectional				
+could represent	PROBABLE_EXISTENCE		forward				
+equivocal	AMBIVALENT_EXISTENCE		bidirectional				
+every indication	PROBABLE_EXISTENCE		forward				
+excluded	DEFINITE_NEGATED_EXISTENCE		backward				
+exhibit	PROBABLE_EXISTENCE		bidirectional				
+gross evidence	DEFINITE_EXISTENCE		forward				
+high probability	DEFINITE_EXISTENCE		bidirectional				
+highly hesitant	AMBIVALENT_EXISTENCE		bidirectional				
+indication	AMBIVALENT_EXISTENCE		bidirectional				
+insufficient to rule (the patient|him|her) out for	AMBIVALENT_EXISTENCE		forward				
+is positive	DEFINITE_EXISTENCE		bidirectional				
+no other (CT|radiographic|sonographic|MR|etc) evidence	PROBABLE_NEGATED_EXISTENCE		forward				
+no secondary (CT|radiographic|sonographic|MR|etc) signs	PROBABLE_NEGATED_EXISTENCE		forward				
+no suspicious	PROBABLE_NEGATED_EXISTENCE		forward				
+not adequate to rule out	AMBIVALENT_EXISTENCE	not adequate to rule ((the patient|him|her)\s)?out	forward				
+not likely	DEFINITE_NEGATED_EXISTENCE		bidirectional				
+not only	PSEUDONEG		forward				
+reveals	DEFINITE_EXISTENCE		forward				
+seen best	PROBABLE_EXISTENCE		backward				
+signs of	PROBABLE_EXISTENCE		bidirectional				
+was not excluded	AMBIVALENT_EXISTENCE	(was|were) not excluded	backward				
+if	HYPOTHETICAL		forward				
+decrease	HISTORICAL	decreas(e|ed|ing)|reduction|reduced	bidirectional				
+increase	HISTORICAL	increas(e|ing|ed)	bidirectional				
+possibly	PROBABLE_EXISTENCE		forward				
+decrease the likelihood	PROBABLE_NEGATED_EXISTENCE	decrease the likelihood|decreas(ed|ing|es)(\sthe)? likelihood	forward				
+suspect	PROBABLE_EXISTENCE		forward				
+likely represents	PROBABLE_EXISTENCE	likely (represents|representing)	forward				

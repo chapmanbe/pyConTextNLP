@@ -57,7 +57,7 @@ wall	HEART_ANATOMY		bidirectional
 left ventricular wall	HEART_ANATOMY	(\blv\b|left ventricular)( wall)?	bidirectional
 right ventricular wall	HEART_ANATOMY	(\brv\b|right ventricular)( wall)?	bidirectional
 myocardial	HEART_ANATOMY	(myocardial|myocardium)	bidirectional
-cardiac	HEART_ANATOMY	(cardiac|heart)	bidirectional
+cardiac	HEART_ANATOMY	(cardiac|heart)	forward
 omental	OTHER_CRITICAL_ANATOMY	(omentum|omental)	bidirectional
 spleen	OTHER_CRITICAL_ANATOMY	(spleen|splenic)	bidirectional
 kidney	OTHER_CRITICAL_ANATOMY	(kidney|\brenal\b)	bidirectional
