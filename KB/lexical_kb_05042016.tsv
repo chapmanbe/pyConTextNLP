@@ -49,7 +49,7 @@ equivocal	PROBABLE_EXISTENCE		bidirectional
 evaluation	INDICATION		bidirectional				
 evolving	HISTORICAL		bidirectional				
 healing	HISTORICAL	\b(healing|healed)\b	bidirectional				
-improved	HISTORICAL	improv(ed|ing|ement)	bidirectional			4/2013	
+improved	HISTORICAL	improv[a-z]+	bidirectional			4/2013	
 incompletely evaluated	AMBIVALENT_EXISTENCE		bidirectional	4/29/2013			
 interval change	HISTORICAL		bidirectional				
 interval increase	HISTORICAL	(interval)\b[\d\D\s]*increase	bidirectional	4/29/2013			
@@ -78,8 +78,8 @@ should be considered	PROBABLE_EXISTENCE		bidirectional
 stable	HISTORICAL		bidirectional				
 still evident	HISTORICAL		bidirectional	4/29/2013			
 subacute	HISTORICAL		bidirectional				
-suggest	PROBABLE_EXISTENCE	\bsuggest(ed|ive)?\b	bidirectional				
-unchanged	HISTORICAL	unchang(ed|ing)	bidirectional				
+suggest	PROBABLE_EXISTENCE	\bsuggest[a-z]+\b	bidirectional				
+unchanged	HISTORICAL	unchang[a-z]+	bidirectional				
 versus	AMBIVALENT_EXISTENCE		bidirectional				
 absence of	DEFINITE_NEGATED_EXISTENCE		forward				
 adequate to rule the patient out	DEFINITE_NEGATED_EXISTENCE		forward				
@@ -372,9 +372,9 @@ seen best	PROBABLE_EXISTENCE		backward
 signs of	PROBABLE_EXISTENCE		bidirectional				
 was not excluded	AMBIVALENT_EXISTENCE	(was|were) not excluded	backward				
 if	HYPOTHETICAL		forward				
-decrease	HISTORICAL	decreas(e|ed|ing)|reduction|reduced	bidirectional				
-increase	HISTORICAL	increas(e|ing|ed)	bidirectional				
+decrease	HISTORICAL	decrease|decreased|decreasing|reduction|reduced	bidirectional				
+increase	HISTORICAL	increase|increasing|increased	bidirectional				
 possibly	PROBABLE_EXISTENCE		forward				
-decrease the likelihood	PROBABLE_NEGATED_EXISTENCE	decrease the likelihood|decreas(ed|ing|es)(\sthe)? likelihood	forward				
+decrease the likelihood	PROBABLE_NEGATED_EXISTENCE	decreas[a-z]+(\sthe)? likelihood	forward				
 suspect	PROBABLE_EXISTENCE		forward				
 likely represents	PROBABLE_EXISTENCE	likely (represents|representing)	forward				

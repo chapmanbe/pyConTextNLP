@@ -48,7 +48,7 @@ anterior	HEART_ANATOMY		bidirectional
 septal	HEART_ANATOMY		bidirectional
 septum	HEART_ANATOMY	(cardiac septum|septum)	bidirectional
 inferior	HEART_ANATOMY		bidirectional
-apex	HEART_ANATOMY	(apex|apical|cardiac apex|apex of (the )?heart)	bidirectional
+heart apex	HEART_ANATOMY	(cardiac apex|apex of (the )?heart)	bidirectional
 inferolateral	HEART_ANATOMY		bidirectional
 lateral 	HEART_ANATOMY		bidirectional
 anteroseptal 	HEART_ANATOMY		bidirectional
