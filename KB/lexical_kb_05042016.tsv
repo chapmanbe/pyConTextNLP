@@ -57,7 +57,7 @@ likely	PROBABLE_EXISTENCE		bidirectional
 likely chronic	HISTORICAL		bidirectional	2/28/2013	thought of just changing chronic to bidirectional	 but also capture likely	
 may be ruled out	DEFINITE_NEGATED_EXISTENCE		bidirectional				
 new	ACUTE		bidirectional				
-new from prior exam	ACUTE	new from(\sthe) prior (exam|study)	bidirectional				
+new from prior exam	ACUTE	new from(\sthe)? prior (exam|study)	bidirectional				
 no change in	HISTORICAL	(no(t)? ([a-zA-z] )?change(d)?( in)?)	bidirectional	2/28/2013		4/15/2013	
 no longer noted	DEFINITE_NEGATED_EXISTENCE	no longer (seen|noted|visualized)	bidirectional				
 not	DEFINITE_NEGATED_EXISTENCE	\bnot\b	bidirectional	3/23/2013			
