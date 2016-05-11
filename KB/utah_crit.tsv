@@ -38,4 +38,4 @@ pneumonia	PNEUMONIA	(pneumonia|consolidation|aspiration)		Chest
 cancer	CANCER	cancer|metastatic(\sdisease|\slesion)?|metastases|carcinoma|sarcoma|malignancy		Spine, Neuro, ABD/Pel, Chest, Extremity
 NO CRITICAL FINDING	NULL_FINDING			Spine, Neuro, ABD/Pel, Chest, Extremity
 0:UNREVIEWED	NULL_FINDING			Spine, Neuro, ABD/Pel, Chest, Extremity
-thrombosis	THROMBOSIS	(thromb(us|i|osis|osed)\b|clob\b)		Spine, Neuro, ABD/Pel, Chest, Extremity
+thrombosis	THROMBOSIS	(thromb(us|i|osis|osed)\b|clob\b)		Spine, Neuro, ABD/Pel, Extremity
