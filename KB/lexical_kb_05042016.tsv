@@ -96,7 +96,7 @@ cannot totally exclude	PROBABLE_NEGATED_EXISTENCE		forward
 change in	HISTORICAL		forward				
 changing	HISTORICAL		forward				
 checked for	PROBABLE_EXISTENCE		forward				
-clinical concern 	FUTURE	clinical\s(concern|suspicion)\b	forward	2/28/2013	simplified expression 		
+clinical concern	FUTURE	clinical (concern|suspicion)\b	forward	2/28/2013	simplified expression 		
 clinical history	HISTORICAL		forward				
 compatible with	DEFINITE_EXISTENCE		forward				
 concerning for	PROBABLE_EXISTENCE		forward				
@@ -222,7 +222,6 @@ sequelae of	HISTORICAL		forward
 should be ruled out for	INDICATION		forward				
 simulating	PROBABLE_NEGATED_EXISTENCE		forward	3/22/2013			
 study for detection	INDICATION		forward				
-subacute	HISTORICAL		forward				
 sufficient to rule out	DEFINITE_NEGATED_EXISTENCE	sufficient\sto\srule\s((her|him|the patient|the subject)\s)?out	forward				
 suspicious	PROBABLE_EXISTENCE		forward				
 suspicous	PROBABLE_EXISTENCE		forward				
