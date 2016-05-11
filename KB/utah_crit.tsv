@@ -3,7 +3,7 @@ pulmonary embolism	PULMONARY_EMBOLISM	pulmonary\s(artery )?(embol[a-z]+)|\bpe\b|
 aneurysm	ANEURYSM	\baneurysm[a-z]*\b|(aneurysmal )?dilatation		Chest, Neuro, ABD/Pel
 aortic dissection	AORTIC_DISSECTION	(aortic|aorta)\s(artery\s)?dissection		Chest, ABD/Pel
 appendicitis	APPENDICITIS			ABD/Pel
-inflammation	INFLAMMATION	inflammation|inflammatory|infection		Spine, Neuro, ABD/Pel, Chest, Extremity
+inflammation	INFLAMMATION	inflammation|inflammatory|infection		Spine, Neuro, ABD/Pel, Extremity
 bowel obstruction	BOWEL_OBSTRUCTION			ABD/Pel
 midline shift	BRAIN_HERNIATION	((subfalcian|subfalcine|tonsillar)\sherniation)|((midline|mid-line)\sshift)		Neuro
 carotid dissection	CAROTID_DISSECTION	carotid?\s*?\w*\s*dissection		Neuro
