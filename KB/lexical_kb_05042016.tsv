@@ -379,4 +379,4 @@ suspect	PROBABLE_EXISTENCE		forward
 likely represents	PROBABLE_EXISTENCE	likely (represents|representing)	forward				
 without change	HISTORICAL		backwards				
 risk factor	FUTURE	risk factor(s)?	bidirectional				
-favor	PROBABLE_EXISTENCE	n	bidirectional				
+favor	PROBABLE_EXISTENCE		bidirectional				
