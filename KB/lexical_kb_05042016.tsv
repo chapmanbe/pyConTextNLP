@@ -27,7 +27,6 @@ now measuring	HISTORICAL		backward
 ought to be ruled out	INDICATION		backward				
 progressed	HISTORICAL		backward	3/22/2013			
 protocol	INDICATION		backward				
-resolved	DEFINITE_NEGATED_EXISTENCE		backward				
 resolved	HISTORICAL		backward				
 should be ruled out	INDICATION		backward				
 suspected	PROBABLE_EXISTENCE		backward	4/29/2013			
@@ -49,7 +48,7 @@ equivocal	PROBABLE_EXISTENCE		bidirectional
 evaluation	INDICATION		bidirectional				
 evolving	HISTORICAL		bidirectional				
 healing	HISTORICAL	\b(healing|healed)\b	bidirectional				
-improved	HISTORICAL	improv[a-z]+	bidirectional			4/2013	
+improved	HISTORICAL	improved|improving|improvement	bidirectional			4/2013	
 incompletely evaluated	AMBIVALENT_EXISTENCE		bidirectional	4/29/2013			
 interval change	HISTORICAL		bidirectional				
 interval increase	HISTORICAL	(interval)\b[\d\D\s]*increase	bidirectional	4/29/2013			
@@ -79,7 +78,7 @@ stable	HISTORICAL		bidirectional
 still evident	HISTORICAL		bidirectional	4/29/2013			
 subacute	HISTORICAL		bidirectional				
 suggest	PROBABLE_EXISTENCE	\bsuggest[a-z]+\b	bidirectional				
-unchanged	HISTORICAL	unchang[a-z]+	bidirectional				
+unchanged	HISTORICAL	unchanged|unchanging	bidirectional				
 versus	AMBIVALENT_EXISTENCE		bidirectional				
 absence of	DEFINITE_NEGATED_EXISTENCE		forward				
 adequate to rule the patient out	DEFINITE_NEGATED_EXISTENCE		forward				
@@ -378,3 +377,6 @@ possibly	PROBABLE_EXISTENCE		forward
 decrease the likelihood	PROBABLE_NEGATED_EXISTENCE	decreas[a-z]+(\sthe)? likelihood	forward				
 suspect	PROBABLE_EXISTENCE		forward				
 likely represents	PROBABLE_EXISTENCE	likely (represents|representing)	forward				
+without change	HISTORICAL		backwards				
+risk factor	FUTURE	risk factor(s)?	bidirectional				
+favor	PROBABLE_EXISTENCE	n	bidirectional				
