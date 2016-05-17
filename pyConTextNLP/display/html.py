@@ -15,7 +15,7 @@ def __insert_color(txt,s,c):
     return txt[:s[0]]+'<span style="color: {0};">'.format(c)+\
            txt[s[0]:s[1]]+'</span>'+txt[s[1]:]
 
-def mark_text(txt,nodes,colors = {"name":"red","pet":"blue"},default_color="blue"):
+def mark_text(txt,nodes,colors = {"name":"red","pet":"blue"},default_color="black"):
     if not nodes:
         return txt
     else:
@@ -26,7 +26,7 @@ def mark_text(txt,nodes,colors = {"name":"red","pet":"blue"},default_color="blue
                          nodes,
                          colors=colors)
 
-def mark_document_with_html(doc,colors = {"name":"red","pet":"blue"}, default_color="blue"):
+def mark_document_with_html(doc,colors = {"name":"red","pet":"blue"}, default_color="black"):
     """takes a ConTextDocument object and returns an HTML paragraph with marked phrases in the
     object highlighted with the colors coded in colors
 
