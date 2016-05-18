@@ -38,6 +38,12 @@ Dependencies include
 
 But `easy_install` should also install everything for you. There is optional functionality that is dependent on pygraphviz. I do not yet have this worked into the setuptools script.
 
+
+## Tutorials
+
+See the [notebooks folder](./notebooks) for a series of walkthroughs demonstrating pyConTextNLP core concepts with example data.
+
+
 ## Code Structure
 
 The code has been modified substantially since the code base used for the JBI publication. In the current version, pyConTextNLP corresponds to pyConTextGraph in previous versions. This code uses [https://networkx.github.io/ NetworkX] to structure the relationship between targets and modifiers in the markup.
