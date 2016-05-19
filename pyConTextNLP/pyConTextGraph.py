@@ -372,7 +372,6 @@ class ConTextDocument(object):
         tmp = list(zip(*edges))
         if len(tmp) > 1:
             tmp = [self.__root, tmp[1]]
-            print("tmp:", tmp)
         else:
             tmp = [self.__root]
         return tmp
