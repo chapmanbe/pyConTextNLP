@@ -678,7 +678,23 @@ class ConTextMarkup(nx.DiGraph):
         """
         self.__prune_marks(self.nodes(data=True))
     def dropInactiveModifiers(self):
-        mnodes = [ n for n in self.getConTextModeNodes("modifier") if self.degree(n) == 0]
+        # if self.getVerbose():
+        #     print("### in dropInactiveModifiers.")
+        #     print("Raw:", self.getRawText())
+        #     print(" All modifiers:")
+        #     for n in self.getConTextModeNodes("modifier") :
+        #         print(n,self.degree(n))
+        #     print("All targets ({}):".format(self.getNumMarkedTargets()))
+        #     for n in self.getMarkedTargets() :
+        #         print(n)
+
+        if self.getNumMarkedTargets() == 0:
+            if self.getVerbose():
+                print("No targets in this sentence; dropping ALL modifiers.")
+            mnodes = self.getConTextModeNodes("modifier")
+        else:
+            mnodes = [ n for n in self.getConTextModeNodes("modifier") if self.degree(n) == 0]
+
         if self.getVerbose() and mnodes:
             print(u"dropping the following inactive modifiers")
             for mn in mnodes:
