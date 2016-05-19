@@ -17,8 +17,8 @@ pyConTextNLP is a partial implementation of the ConText algorithm using Python. 
 
 Other publications/presentations based on pyConText include:
   * Wilson RA, et al. "Automated ancillary cancer history classification for mesothelioma patients from free-text clinical reports." J Pathol Inform. 2010 Oct 11;1:24.
-  * Chapman BE, Lee S, Kang HP, Chapman WW. "Using ConText to Identify Candidate Pulmonary Embolism Subjects Based on Dictated Radiology Reports."" (Presented at AMIA Clinical Research Informatics Summit 2011)
-  * Wilson RA, Chapman WW, DeFries SJ, Becich MJ, Chapman BE. "Identifying History of Ancillary Cancers in Mesothelioma Patients from Free-Text Clinical Reports."" (Presented at AMIA 2010).
+  * Chapman BE, Lee S, Kang HP, Chapman WW. "Using ConText to Identify Candidate Pulmonary Embolism Subjects Based on Dictated Radiology Reports." (Presented at AMIA Clinical Research Informatics Summit 2011)
+  * Wilson RA, Chapman WW, DeFries SJ, Becich MJ, Chapman BE. "Identifying History of Ancillary Cancers in Mesothelioma Patients from Free-Text Clinical Reports." (Presented at AMIA 2010).
 
 Note: we changed the package name from pyConText to pyConTextNLP because of a name conflict on pypi.
 
@@ -37,6 +37,12 @@ Dependencies include
   - networkx
 
 But `easy_install` should also install everything for you. There is optional functionality that is dependent on pygraphviz. I do not yet have this worked into the setuptools script.
+
+
+## Tutorials
+
+See the [notebooks folder](./notebooks) for a series of walkthroughs demonstrating pyConTextNLP core concepts with example data.
+
 
 ## Code Structure
 
