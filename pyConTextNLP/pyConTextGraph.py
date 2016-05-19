@@ -367,13 +367,13 @@ class ConTextDocument(object):
             return tmp[1]
 
     def getDocumentSections(self):
-        edges = [ (e[2]['sectionNumber'],e[1]) for e in self.__document.edges(data=True) if e[2].get("category") == "section"]
+        edges = [ (e[2]['__sectionNumber'],e[1]) for e in self.__document.edges(data=True) if e[2].get("category") == "section"]
         edges.sort()
         tmp = list(zip(*edges))
-        try:
-            tmp = tmp[1]
-            tmp.insert(0,self.__root)
-        except IndexError:
+        if len(tmp) > 1:
+            tmp = [self.__root, tmp[1]]
+            print("tmp:", tmp)
+        else:
             tmp = [self.__root]
         return tmp
 
@@ -706,7 +706,7 @@ class ConTextMarkup(nx.DiGraph):
         computes the text difference between the modifier and each modified
         target and keeps only the minimum distance relationship
 
-        Finally, we make sure that tehre are no self modifying modifiers present (e.g. "free" in
+        Finally, we make sure that there are no self modifying modifiers present (e.g. "free" in
         the phrase "free air" modifying the target "free air").
         """
         modifiers = self.getConTextModeNodes("modifier")
@@ -723,7 +723,7 @@ class ConTextMarkup(nx.DiGraph):
 
     def pruneSelfModifyingRelationships(self):
         """
-        We make sure that tehre are no self modifying modifiers present (e.g. "free" in
+        We make sure that there are no self modifying modifiers present (e.g. "free" in
         the phrase "free air" modifying the target "free air").
         modifiers = self.getConTextModeNodes("modifier")
         """
