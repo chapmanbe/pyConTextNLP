@@ -308,7 +308,7 @@ class ConTextDocument(object):
         self.__document.add_edge(self.__currentParent,sectionLabel,category="section",__sectionNumber=self.__currentSectionNum)
         self.__currentSectionNum += 1
         if setToParent:
-            self.__currentParent = self.__document.node(sectionLabel)
+            self.__currentParent = sectionLabel
 
     def getDocument(self):
         return self.__document

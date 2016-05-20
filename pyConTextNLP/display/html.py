@@ -1,6 +1,7 @@
 """Module containing functions for generating various display options for pyConTextNLP"""
 import copy
 from ..utils import get_document_markups
+from ..utils import get_section_markups
 
 def __sort_by_span(nodes):
     n = copy.copy(nodes)
@@ -38,3 +39,34 @@ def mark_document_with_html(doc,colors = {"name":"red","pet":"blue"}, default_co
                                                  __sort_by_span(m.nodes()),
                                                  colors=colors,
                                                  default_color=default_color) for m in get_document_markups(doc)]))
+
+
+
+def mark_document_with_html_sections(doc,colors = {"name":"red","pet":"blue"}, default_color="black"):
+    """takes a ConTextDocument object and returns
+    a series of sections marked in HTML header tags followed by
+    HTML paragraphs with marked phrases in the
+    object highlighted with the colors coded in colors
+
+    doc: ConTextDocument
+    colors: dictionary keyed by ConText category with values valid HTML colors
+    """
+    h = """"""
+
+    for hierarchy in doc.getDocumentSections():
+        if hierarchy == 'document':
+            continue
+        for section in hierarchy:
+            h += """<h2> {0} </h2>""".format(section)
+            # print("## h2: ", section)
+        # print("#### Nodes:", context.getSectionNodes(section))
+        # print("#### Marked up sentences:", context.getSectionMarkups(section))
+    #     h += html.mark_document_with_html(context.getSectionMarkups(section),colors = colors, default_color="black")
+    #     print(h)
+    #
+            h += """<p> {0} </p>""".format(" ".join([mark_text(
+                        m.graph['__txt'], __sort_by_span(m.nodes()), colors=colors, default_color=default_color
+                    ) for m in get_section_markups(doc,section)
+                ]))
+
+    return h
