@@ -308,7 +308,7 @@ class ConTextDocument(object):
         self.__document.add_edge(self.__currentParent,sectionLabel,category="section",__sectionNumber=self.__currentSectionNum)
         self.__currentSectionNum += 1
         if setToParent:
-            self.__currentParent = self.__document.node(sectionLabel)
+            self.__currentParent = sectionLabel
 
     def getDocument(self):
         return self.__document
@@ -367,13 +367,12 @@ class ConTextDocument(object):
             return tmp[1]
 
     def getDocumentSections(self):
-        edges = [ (e[2]['sectionNumber'],e[1]) for e in self.__document.edges(data=True) if e[2].get("category") == "section"]
+        edges = [ (e[2]['__sectionNumber'],e[1]) for e in self.__document.edges(data=True) if e[2].get("category") == "section"]
         edges.sort()
         tmp = list(zip(*edges))
-        try:
-            tmp = tmp[1]
-            tmp.insert(0,self.__root)
-        except IndexError:
+        if len(tmp) > 1:
+            tmp = [self.__root, tmp[1]]
+        else:
             tmp = [self.__root]
         return tmp
 
@@ -678,7 +677,23 @@ class ConTextMarkup(nx.DiGraph):
         """
         self.__prune_marks(self.nodes(data=True))
     def dropInactiveModifiers(self):
-        mnodes = [ n for n in self.getConTextModeNodes("modifier") if self.degree(n) == 0]
+        # if self.getVerbose():
+        #     print("### in dropInactiveModifiers.")
+        #     print("Raw:", self.getRawText())
+        #     print(" All modifiers:")
+        #     for n in self.getConTextModeNodes("modifier") :
+        #         print(n,self.degree(n))
+        #     print("All targets ({}):".format(self.getNumMarkedTargets()))
+        #     for n in self.getMarkedTargets() :
+        #         print(n)
+
+        if self.getNumMarkedTargets() == 0:
+            if self.getVerbose():
+                print("No targets in this sentence; dropping ALL modifiers.")
+            mnodes = self.getConTextModeNodes("modifier")
+        else:
+            mnodes = [ n for n in self.getConTextModeNodes("modifier") if self.degree(n) == 0]
+
         if self.getVerbose() and mnodes:
             print(u"dropping the following inactive modifiers")
             for mn in mnodes:
@@ -690,7 +705,7 @@ class ConTextMarkup(nx.DiGraph):
         computes the text difference between the modifier and each modified
         target and keeps only the minimum distance relationship
 
-        Finally, we make sure that tehre are no self modifying modifiers present (e.g. "free" in
+        Finally, we make sure that there are no self modifying modifiers present (e.g. "free" in
         the phrase "free air" modifying the target "free air").
         """
         modifiers = self.getConTextModeNodes("modifier")
@@ -707,7 +722,7 @@ class ConTextMarkup(nx.DiGraph):
 
     def pruneSelfModifyingRelationships(self):
         """
-        We make sure that tehre are no self modifying modifiers present (e.g. "free" in
+        We make sure that there are no self modifying modifiers present (e.g. "free" in
         the phrase "free air" modifying the target "free air").
         modifiers = self.getConTextModeNodes("modifier")
         """
