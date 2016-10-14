@@ -98,9 +98,8 @@ else:
         p = urllib.parse.urlparse(csvFile)
         if not p.scheme:
             csvFile = "file://"+csvFile
-        f0 = urllib.request.urlopen(csvFile, mode="rU", newline=None)
-        return csv.reader(StringIO(f0.read().decode()), delimiter="\t"), f0
-
+        f0 = urllib.request.urlopen(csvFile, data=None)
+        return csv.reader(StringIO(f0.read().decode(), newline=None), delimiter="\t" ), f0
 
 def readConTextItems(csvFile,
                      encoding='utf-8',
