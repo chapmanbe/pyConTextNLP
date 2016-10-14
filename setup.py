@@ -1,7 +1,12 @@
 from setuptools import setup, find_packages  # Always prefer setuptools over distutils
 from codecs import open  # To use a consistent encoding
 from os import path
+import json
 
+version = {}
+with open(path.join("pyConTextNLP","version.py")) as f0:
+    exec(f0.read(), version)
+print(version)
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the relevant file
@@ -14,7 +19,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.6.1.0',
+    version=version["__version__"],
 
     description='A Python implementation of the ConText algorithm',
     long_description=long_description,

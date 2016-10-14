@@ -21,5 +21,10 @@ other.
 
 Also it is hoped that the use of a directional graph could ultimately simplify
 our itemData structures as we could chain together items"""
-__version_info__ = ('0','6','0','0')
-__version__ = '.'.join(__version_info__)
+
+import os
+version = {}
+with open(os.path.join(os.path.dirname(__file__),"version.py")) as f0:
+    exec(f0.read(), version)
+
+__version__ = version['__version__']
