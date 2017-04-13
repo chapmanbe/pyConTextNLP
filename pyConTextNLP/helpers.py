@@ -29,7 +29,7 @@ class sentenceSplitter(object):
         useCaseVariants: add upper and lower case variants of terms also
         """
 
-        self.defaultExceptions = ['.','Dr.','Mr.','Mrs.','Ms.','M.D.',
+        self.defaultExceptions = ['.','Dr.','Mr.','Mrs.','Ms.','M.D.', 'D.O.',
                                'Ph.D.','D.M.D.','R.N.','B.A.','A.B.',
                                'B.S.','M.S.','q.','viz.','e.g.']
         self.exceptionTerms = set(())
