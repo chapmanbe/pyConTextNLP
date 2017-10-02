@@ -51,6 +51,11 @@ class contextItem(object):
             self.__category.append(c.lower().strip())
         self.__re = args[2] # I need to figure out how to read this raw string in properly
         self.__rule = args[3]
+
+        # generate regex from literal if no regex provided
+        if not self.__re:
+            self.__re = r"\b{}\b".format(self.__literal)
+
     def getLiteral(self):
         """return the literal associated with this item"""
         return self.__literal
