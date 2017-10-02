@@ -523,7 +523,7 @@ class ConTextMarkup(nx.DiGraph):
         if self.getVerbose():
             print(u"cleaned text is now",self.getText())
     def getXML(self):
-        nodes = self.nodes(data=True)
+        nodes = list(self.nodes(data=True))
         nodes.sort()
         nodeString = u''
         for n in nodes:
@@ -547,7 +547,7 @@ class ConTextMarkup(nx.DiGraph):
                     modificationString += u"""<modifiedNode> {0} </modifiedNode>\n""".format(m.getTagID())
                     modificationString += u"""</modifies>\n"""
             nodeString += nodeXMLSkel.format(attributeString+"{0}".format(n[0].getXML())+modificationString )
-        edges = self.edges(data=True)
+        edges = list(self.edges(data=True))
         edges.sort()
         edgeString = u''
         for e in edges:
@@ -569,7 +569,7 @@ class ConTextMarkup(nx.DiGraph):
         for n in nodes:
             txt += "*"*32+"\n"
             txt += "TARGET: {0}\n".format(n[0].__unicode__())
-            modifiers = self.predecessors(n[0])
+            modifiers = list(self.predecessors(n[0]))
             modifiers.sort()
             for m in modifiers:
                 txt += "-"*4+"MODIFIED BY: {0}\n".format(m.__unicode__())
@@ -739,10 +739,13 @@ class ConTextMarkup(nx.DiGraph):
         if self.getVerbose():
             print("removing the following self modifying nodes",nodesToRemove)
         self.remove_nodes_from(nodesToRemove)
-    def __prune_marks(self, marks):
-        if len(marks) < 2:
+    def __prune_marks(self, _marks):
+        if len(_marks) < 2:
             return
         # this can surely be done faster
+        # With NetworkX > 2.0, instead of having lists we now have NodeViews which are dictionary like
+        # We have to convert to a list to get the smae functionality to work
+        marks = list(_marks)
         marks.sort()
         nodesToRemove = []
         for i in range(len(marks)-1):
@@ -795,7 +798,7 @@ class ConTextMarkup(nx.DiGraph):
         """
         Return the list of marked targets in the current sentence. List is sorted by span
         """
-        targets = self.getConTextModeNodes("target")
+        targets = list(self.getConTextModeNodes("target"))
         targets.sort()
         return targets
     def getNumMarkedTargets(self):
@@ -808,7 +811,7 @@ class ConTextMarkup(nx.DiGraph):
         """
         return immediate predecessorts of node. The returned list is sorted by node span.
         """
-        modifiers = self.predecessors(node)
+        modifiers = list(self.predecessors(node))
         modifiers.sort()
         return modifiers
     def isModifiedByCategory(self,node, queryCategory):

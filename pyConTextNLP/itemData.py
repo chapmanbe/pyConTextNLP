@@ -16,7 +16,6 @@
 A module defining the itemData class. itemData objects are the basis tools for text markup.
 """
 import platform
-import sqlite3
 
 if platform.python_version_tuple()[0] == '2':
 
