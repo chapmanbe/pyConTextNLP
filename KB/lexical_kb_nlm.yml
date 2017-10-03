@@ -1,0 +1,551 @@
+Comments: ''
+Direction: terminate
+Lex: although
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: apart from
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a cause for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a cause of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a etiology for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a etiology of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a reason for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a reason of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary cause for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary cause of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary etiology for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary etiology of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary origin for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary origin of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary reason for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary reason of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary source for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary source of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a source for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a source of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an cause for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an cause of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an etiology for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an etiology of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an origin for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an origin of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an reason for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an reason of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary cause for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary cause of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary etiology for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary etiology of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary origin for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary origin of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary reason for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary reason of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary source for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary source of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an source for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an source of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the cause for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the cause of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the etiology for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the etiology of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the origin for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the origin of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the reason for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the reason of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary cause for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary cause of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary etiology for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary etiology of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary origin for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary origin of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary reason for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary reason of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary source for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary source of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the source for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the source of
+Regex: ''
+Type: CONJ
+---
+Comments: 2/14/2013
+Direction: terminate
+Lex: 'as there are '
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: aside from
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: but
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: cause for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: cause of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: causes for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: causes of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: etiology for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: etiology of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: except
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: however
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: involving
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: nevertheless
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: origin for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: origin of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: origins for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: origins of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: other possibilities of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: reason for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: reason of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: reasons for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: reasons of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: secondary to
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: source for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: source of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: sources for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: sources of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: still
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: though
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: trigger event for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: which
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: yet
+Regex: ''
+Type: CONJ

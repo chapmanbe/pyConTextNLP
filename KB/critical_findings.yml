@@ -1,0 +1,257 @@
+Comments: ''
+Direction: ''
+Lex: embolism
+Regex: \b(emboli|embolism|embolus)\b
+Type: PULMONARY_EMBOLISM
+---
+Comments: ''
+Direction: ''
+Lex: pe
+Regex: \bpe\b
+Type: PULMONARY_EMBOLISM
+---
+Comments: ''
+Direction: ''
+Lex: pulmonary embolism
+Regex: pulmonary\s(artery )?(embol[a-z]+)
+Type: PULMONARY_EMBOLISM
+---
+Comments: ''
+Direction: ''
+Lex: aneurysm (target)
+Regex: aneurysm[a-z]*
+Type: ANEURYSM
+---
+Comments: ''
+Direction: ''
+Lex: dilation
+Regex: ''
+Type: ANEURYSM
+---
+Comments: ''
+Direction: ''
+Lex: aneurysmal dilatation
+Regex: (aneurysmal )?dilatation
+Type: ANEURYSM
+---
+Comments: ''
+Direction: ''
+Lex: aortic dissection
+Regex: (aortic|aorta)\s(artery\s)? dissection
+Type: AORTIC_DISSECTION
+---
+Comments: ''
+Direction: ''
+Lex: appendicitis
+Regex: ''
+Type: APPENDICITIS
+---
+Comments: ''
+Direction: ''
+Lex: bowel obstruction
+Regex: ''
+Type: BOWEL_OBSTRUCTION
+---
+Comments: ''
+Direction: ''
+Lex: midline shift
+Regex: ((subfalcian|subfalcine|tonsillar)\sherniation)|((midline|mid-line)\sshift)
+Type: BRAIN_HERNIATION
+---
+Comments: ''
+Direction: ''
+Lex: carotid dissection
+Regex: carotid?\s*?\w*\s*dissection
+Type: CAROTID_DISSECTION
+---
+Comments: ''
+Direction: ''
+Lex: cerebral hemorrhage
+Regex: (cereblal|intracranial|brain)\s(hemorrhage|hematoma|bleed)
+Type: CEREBRAL_HEMORRHAGE
+---
+Comments: ''
+Direction: ''
+Lex: cervical fracture
+Regex: (cervical spine|c[1-7]|hangman|jefferson|dens|odontoid)\sfracture
+Type: CERVICAL_FRACTURE
+---
+Comments: ''
+Direction: ''
+Lex: cholecystitis
+Regex: ''
+Type: CHOLECYSTITIS
+---
+Comments: ''
+Direction: ''
+Lex: cord compression
+Regex: ''
+Type: CORD_COMPRESSION
+---
+Comments: ''
+Direction: ''
+Lex: depressed skull fracture
+Regex: ''
+Type: DEPRESSED_SKULL_FRACTURE
+---
+Comments: ''
+Direction: ''
+Lex: diverticulitis
+Regex: ''
+Type: DIVERTICULITIS
+---
+Comments: ''
+Direction: 2/28/13
+Lex: DVT
+Regex: ((non.?)?occlusive)?\s?(thromb(us|i|osis|osed)\b|DVT|clot\b)
+Type: DVT
+---
+Comments: ''
+Direction: ''
+Lex: ectasia
+Regex: (ectasia| ectatic)
+Type: ECTASIA
+---
+Comments: ''
+Direction: ''
+Lex: ectopic pregnancy
+Regex: ''
+Type: ECTOPIC_PREGNANCY
+---
+Comments: ''
+Direction: ''
+Lex: epiglottitis
+Regex: ''
+Type: EPIGLOTTITIS
+---
+Comments: ''
+Direction: ''
+Lex: fetal demise
+Regex: ''
+Type: FETAL_DEMISE
+---
+Comments: ''
+Direction: ''
+Lex: free air
+Regex: (pneumoperitoneum|((intraperitoneal|free)\s(gas|air)))
+Type: FREE_AIR
+---
+Comments: ''
+Direction: ''
+Lex: infarct
+Regex: \b(stroke|infarct|infarction)\b
+Type: INFARCT
+---
+Comments: ''
+Direction: ''
+Lex: ischemic bowel
+Regex: ''
+Type: ISCHEMIC_BOWEL
+---
+Comments: ''
+Direction: ''
+Lex: lacunar infarct
+Regex: ''
+Type: LACUNAR_INFARCT
+---
+Comments: ''
+Direction: ''
+Lex: mediastinal emphysema
+Regex: ''
+Type: MEDIASTINAL_EMPHYSEMA
+---
+Comments: ''
+Direction: ''
+Lex: omental infarct
+Regex: ''
+Type: OMENTAL_INFARCT
+---
+Comments: ''
+Direction: ''
+Lex: bone infarct
+Regex: (bone infarct|osteonecrosis)
+Type: OSTEONECROSIS
+---
+Comments: ''
+Direction: ''
+Lex: pneumonia
+Regex: pneumoni*
+Type: PNEUMONIA
+---
+Comments: ''
+Direction: ''
+Lex: aspiration
+Regex: aspirat*
+Type: PNEUMONIA
+---
+Comments: ''
+Direction: ''
+Lex: consolidation
+Regex: consolidat*
+Type: PNEUMONIA
+---
+Comments: ''
+Direction: ''
+Lex: pneumothorax
+Regex: ''
+Type: PNEUMOTHORAX
+---
+Comments: ''
+Direction: ''
+Lex: portal venous air
+Regex: portal\b(venous\b)?(gas|air)
+Type: PORTAL_VENOUS_AIR
+---
+Comments: ''
+Direction: ''
+Lex: renal infarct
+Regex: ''
+Type: RENAL_INFARCT
+---
+Comments: ''
+Direction: ''
+Lex: retroperitoneal hemorrhage
+Regex: (retro|intra)?peritoneal\s(hemorrhage|hematoma|bleed)
+Type: RETROPERITONEAL_HEMORRHAGE
+---
+Comments: ''
+Direction: ''
+Lex: retropharyngeal abscess
+Regex: ''
+Type: RETROPHARYNGEAL_ABSCESS
+---
+Comments: ''
+Direction: ''
+Lex: ruptured aneurysm
+Regex: (ruptured aneurysm|aortic rupture)
+Type: RUPTURED_ANEURYSM
+---
+Comments: ''
+Direction: ''
+Lex: spinal cord compression
+Regex: ''
+Type: SPINAL_CORD_COMPRESSION
+---
+Comments: ''
+Direction: ''
+Lex: splenic infarct
+Regex: ''
+Type: SPLENIC_INFARCT
+---
+Comments: ''
+Direction: ''
+Lex: tension pneumothorax
+Regex: ''
+Type: TENSION_PNEUMOTHORAX
+---
+Comments: ''
+Direction: ''
+Lex: torsion
+Regex: ''
+Type: TORSION
+---
+Comments: ''
+Direction: ''
+Lex: volvulus
+Regex: ''
+Type: VOLVULUS

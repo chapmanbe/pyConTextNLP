@@ -1,0 +1,71 @@
+Comments: ''
+Direction: ''
+Lex: embolism
+Regex: \b(emboli|embolism|embolus)\b
+Type: PULMONARY_EMBOLISM
+---
+Comments: ''
+Direction: ''
+Lex: pe
+Regex: \bpe\b
+Type: PULMONARY_EMBOLISM
+---
+Comments: ''
+Direction: ''
+Lex: pulmonary embolism
+Regex: pulmonary\s(artery )?(embol[a-z]+)
+Type: PULMONARY_EMBOLISM
+---
+Comments: ' # fixes pedoc #129 dq'
+Direction: bidirectional
+Lex: bolus timing
+Regex: \bbolus[ -]{0,1}timing
+Type: QUALITY_FEATURE
+---
+Comments: ''
+Direction: bidirectional
+Lex: limited exam
+Regex: (suboptimal|degraded|limited) (exam[a-z]*|study|scan|evaluation|bolus|timing)
+Type: QUALITY_FEATURE
+---
+Comments: ' #fix for pedoc #231'
+Direction: bidirectional
+Lex: nondiagnostic exam
+Regex: nondiagnostic (exam[a-z]*|study|scan|evaluation)
+Type: QUALITY_FEATURE
+---
+Comments: ''
+Direction: ''
+Lex: artifact
+Regex: artifact(ual)?
+Type: ARTIFACT
+---
+Comments: ''
+Direction: ''
+Lex: bulk motion
+Regex: ''
+Type: ARTIFACT
+---
+Comments: ''
+Direction: ''
+Lex: motion
+Regex: ''
+Type: ARTIFACT
+---
+Comments: ''
+Direction: ''
+Lex: patient motion
+Regex: ''
+Type: ARTIFACT
+---
+Comments: ''
+Direction: ''
+Lex: respiratory motion
+Regex: ''
+Type: ARTIFACT
+---
+Comments: ''
+Direction: ''
+Lex: thromboembolic disease
+Regex: ''
+Type: thromboembolic disease

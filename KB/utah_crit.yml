@@ -1,0 +1,239 @@
+Comments: Chest
+Direction: ''
+Lex: pulmonary embolism
+Regex: pulmonary\s(artery )?(embol[a-z]+)|\bpe\b|pulmonary thromboembolic disease
+Type: PULMONARY_EMBOLISM
+---
+Comments: Chest, Neuro, ABD/Pel
+Direction: ''
+Lex: aneurysm
+Regex: \baneurysm[a-z]*\b|(aneurysmal )?dilatation
+Type: ANEURYSM
+---
+Comments: Chest, ABD/Pel
+Direction: ''
+Lex: aortic dissection
+Regex: (aortic|aorta)\s(artery\s)?dissection
+Type: AORTIC_DISSECTION
+---
+Comments: ABD/Pel
+Direction: ''
+Lex: appendicitis
+Regex: ''
+Type: APPENDICITIS
+---
+Comments: Spine, Neuro, ABD/Pel, Extremity
+Direction: ''
+Lex: inflammation
+Regex: inflammation|inflammatory|infection
+Type: INFLAMMATION
+---
+Comments: ABD/Pel
+Direction: ''
+Lex: bowel obstruction
+Regex: ''
+Type: BOWEL_OBSTRUCTION
+---
+Comments: Neuro
+Direction: ''
+Lex: midline shift
+Regex: ((subfalcian|subfalcine|tonsillar)\sherniation)|((midline|mid-line)\sshift)
+Type: BRAIN_HERNIATION
+---
+Comments: Neuro
+Direction: ''
+Lex: carotid dissection
+Regex: carotid?\s*?\w*\s*dissection
+Type: CAROTID_DISSECTION
+---
+Comments: Neuro
+Direction: ''
+Lex: intracranial hemorrhage
+Regex: (cerebral|intracranial|brain)\s(hemorrhage|hematoma|bleed)
+Type: INTRACRANIAL_HEMORRHAGE
+---
+Comments: Spine, Neuro, ABD/Pel, Chest, Extremity
+Direction: ''
+Lex: fracture
+Regex: fracture(s)?
+Type: FRACTURE
+---
+Comments: ABD/Pel
+Direction: ''
+Lex: cholecystitis
+Regex: ''
+Type: CHOLECYSTITIS
+---
+Comments: Extremity, Spine, Neuro
+Direction: ''
+Lex: cord compression
+Regex: cord compression
+Type: CORD_COMPRESSION
+---
+Comments: Neuro
+Direction: ''
+Lex: depressed skull fracture
+Regex: ''
+Type: DEPRESSED_SKULL_FRACTURE
+---
+Comments: ABD/Pel
+Direction: ''
+Lex: diverticulitis
+Regex: ''
+Type: DIVERTICULITIS
+---
+Comments: ABD/Pel
+Direction: 2/28/13
+Lex: dvt
+Regex: ((non.?)?occlusive)?\s?(thromb(us|i|osis|osed)\b|DVT|clot\b)
+Type: DVT
+---
+Comments: ABD/Pel
+Direction: ''
+Lex: ectasia
+Regex: (ectasia| ectatic)
+Type: ECTASIA
+---
+Comments: ABD/Pel
+Direction: ''
+Lex: ectopic pregnancy
+Regex: ''
+Type: ECTOPIC_PREGNANCY
+---
+Comments: Chest
+Direction: ''
+Lex: epiglottitis
+Regex: ''
+Type: EPIGLOTTITIS
+---
+Comments: ABD/Pel
+Direction: ''
+Lex: fetal demise
+Regex: ''
+Type: FETAL_DEMISE
+---
+Comments: Chest, ABD/Pel
+Direction: ''
+Lex: free air
+Regex: (pneumoperitoneum|((intraperitoneal|free)\s(gas|air)))
+Type: FREE_AIR
+---
+Comments: Neuro, ABD/Pel
+Direction: ''
+Lex: infarct
+Regex: \b(stroke|infarct|infarction)\b
+Type: INFARCT
+---
+Comments: ABD/Pel
+Direction: ''
+Lex: ischemic bowel
+Regex: ''
+Type: ISCHEMIC_BOWEL
+---
+Comments: Neuro
+Direction: ''
+Lex: lacunar infarct
+Regex: ''
+Type: LACUNAR_INFARCT
+---
+Comments: Chest
+Direction: ''
+Lex: mediastinal emphysema
+Regex: (mediastinal emphysema|pneumomediastinum)
+Type: MEDIASTINAL_EMPHYSEMA
+---
+Comments: ABD/Pel
+Direction: ''
+Lex: omental infarct
+Regex: ''
+Type: OMENTAL_INFARCT
+---
+Comments: Extremity
+Direction: ''
+Lex: bone infarct
+Regex: (bone infarct|osteonecrosis)
+Type: OSTEONECROSIS
+---
+Comments: Chest
+Direction: ''
+Lex: pneumothorax
+Regex: pneumothorax|hydropneumothorax|pneumothoraces
+Type: PNEUMOTHORAX
+---
+Comments: ABD/Pel
+Direction: ''
+Lex: portal venous air
+Regex: portal (venous\s)?(gas|air)
+Type: PORTAL_VENOUS_AIR
+---
+Comments: ABD/Pel
+Direction: ''
+Lex: renal infarct
+Regex: ''
+Type: RENAL_INFARCT
+---
+Comments: ABD/Pel
+Direction: ''
+Lex: retroperitoneal hemorrhage
+Regex: (retro|intra)?peritoneal\s(hemorrhage|hematoma|bleed)
+Type: RETROPERITONEAL_HEMORRHAGE
+---
+Comments: Chest
+Direction: ''
+Lex: retropharyngeal abscess
+Regex: ''
+Type: RETROPHARYNGEAL_ABSCESS
+---
+Comments: Chest, Neuro, ABD/Pel
+Direction: ''
+Lex: ruptured aneurysm
+Regex: (ruptured aneurysm|aortic rupture)
+Type: RUPTURED_ANEURYSM
+---
+Comments: Chest, ABD/Pel
+Direction: ''
+Lex: splenic infarct
+Regex: ''
+Type: SPLENIC_INFARCT
+---
+Comments: ABD/Pel
+Direction: ''
+Lex: torsion
+Regex: ''
+Type: TORSION
+---
+Comments: ABD/Pel
+Direction: ''
+Lex: volvulus
+Regex: ''
+Type: VOLVULUS
+---
+Comments: Chest
+Direction: ''
+Lex: pneumonia
+Regex: (pneumonia|consolidation|aspiration)
+Type: PNEUMONIA
+---
+Comments: Spine, Neuro, ABD/Pel, Chest, Extremity
+Direction: ''
+Lex: cancer
+Regex: cancer|metastatic(\sdisease|\slesion)?|metastases|carcinoma|sarcoma|malignancy
+Type: CANCER
+---
+Comments: Spine, Neuro, ABD/Pel, Chest, Extremity
+Direction: ''
+Lex: NO CRITICAL FINDING
+Regex: ''
+Type: NULL_FINDING
+---
+Comments: Spine, Neuro, ABD/Pel, Chest, Extremity
+Direction: ''
+Lex: 0:UNREVIEWED
+Regex: ''
+Type: NULL_FINDING
+---
+Comments: Spine, Neuro, ABD/Pel, Extremity
+Direction: ''
+Lex: thrombosis
+Regex: (thromb(us|i|osis|osed)\b|clob\b)
+Type: THROMBOSIS
