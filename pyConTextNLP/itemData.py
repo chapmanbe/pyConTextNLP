@@ -13,45 +13,37 @@
 #limitations under the License.
 
 """
-A module defining the itemData class. itemData objects are the basis tools for text markup.
+A module defining the contextItem class.
 """
-import platform
-
-if platform.python_version_tuple()[0] == '2':
-
-    import unicodecsv as csv
-    import urllib2
-    def get_fileobj(csvFile):
-        p = urllib2.urlparse.urlparse(csvFile)
-        if not p.scheme:
-            csvFile = "file://"+csvFile
-        f0 = urllib2.urlopen(csvFile,'rU')
-        return csv.reader(f0, encoding='utf-8', delimiter="\t" ), f0
-
-else:
-    import csv
-    import urllib.request, urllib.error, urllib.parse
-    from io import StringIO
-    def get_fileobj(csvFile):
-        p = urllib.parse.urlparse(csvFile)
-        if not p.scheme:
-            csvFile = "file://"+csvFile
-        f0 = urllib.request.urlopen(csvFile, data=None)
-        return csv.reader(StringIO(f0.read().decode(), newline=None), delimiter="\t" ), f0
-
+import yaml
+import urllib.request, urllib.error, urllib.parse
+def get_items(_file):
+    def get_fileobj(_file):
+        if not urllib.parse.urlparse(_file).scheme:
+            _file = "file://"+_file
+        return urllib.request.urlopen(_file, data=None)
+    f0 = get_fileobj(_file)
+    
+    context_items =  [contextItem((d["Lex"],
+                                   d["Type"],
+                                   r"%s"%d["Regex"],
+                                   d["Direction"])) for d in yaml.load_all(f0)]
+    f0.close()
+    return context_items
 class contextItem(object):
-    __numEnteries = 4
-    def __init__(self,args):
+
+
+    def __init__(self, args):
         self.__literal = args[0]
-# now get category(categories)
         cs = args[1].split(",")
         self.__category = []
         for c in cs:
             self.__category.append(c.lower().strip())
-        self.__re = args[2] # I need to figure out how to read this raw string in properly
-        self.__rule = args[3]
+        self.__re = r"%s"%args[2] # I need to figure out how to read this raw string in properly
+        self.__rule = args[3].lower()
 
         # generate regex from literal if no regex provided
+        
         if not self.__re:
             self.__re = r"\b{}\b".format(self.__literal)
 
@@ -80,93 +72,10 @@ class contextItem(object):
         return self.__re
     def getRule(self):
         return self.__rule
-    def __unicode__(self):
+    def __str__(self):
         txt = """literal<<{0}>>; category<<{1}>>; re<<{2}>>; rule<<{3}>>""".format(
             self.__literal,self.__category,self.__re, self.__rule)
         return txt
-    def __str__(self):
-        return self.__unicode__()#.encode('utf-8')
     def __repr__(self):
         return self.__str__()
 
-class itemData(list):
-    def __init__(self,*args):
-        if args:
-            for a in args:
-                if self.__validate(a):
-                    itm = a
-                else:
-                    try:
-                        itm = contextItem(a)
-                    except:
-                        itm = None
-                if itm:
-                    super(itemData,self).append(itm)
-    def __validate(self,data):
-        return isinstance(data,contextItem)
-
-    def append(self,data):
-        if self.__validate(data):
-            itm = data
-        else:
-            itm = contextItem(data)
-        super(itemData,self).append(itm)
-    def insert(self,index,data):
-        if self.__validate(data):
-            itm = data
-        else:
-            itm = contextItem(data)
-        super(itemData,self).insert(index,itm)
-    def prepend(self,iterable):
-        for i in iterable:
-            if self.__validate(i):
-                itm = i
-            else:
-                itm = contextItem(i)
-            super(itemData,self).insert(0,itm)
-    def extend(self,iterable):
-        for i in iterable:
-            if self.__validate(i):
-                itm = i
-            else:
-                itm = contextItem(i)
-            super(itemData,self).append(itm)
-    def __unicode__(self):
-        tmp = """itemData: {0:d} items [""".format(len(self))
-        for i in self:
-            tmp = tmp+"{0}, ".format(i.getLiteral())
-        tmp = tmp+"]"
-        return tmp
-    def __repr__(self):
-        return self.__unicode__()#.encode('utf-8')
-    def __str__(self):
-        return self.__repr__()
-def instantiateFromCSVtoitemData(csvFile, encoding='utf-8',headerRows=1,
-        literalColumn = 0, categoryColumn = 1, regexColumn = 2, ruleColumn = 3):
-    """
-    takes a CSV file of itemdata rules and creates a single itemData instance.
-    csvFile: name of file to read items from
-    encoding: unicode enocidng to use; default = 'utf-8'
-    headerRows: number of header rows in file; default = 1
-    literalColumn: column from which to read the literal; default = 0
-    categoryColumn: column from which to read the category; default = 1
-    regexColumn: column from which to read the regular expression: default = 2
-    ruleColumn: column from which to read the rule; default = 3
-    """
-    items = itemData() # itemData to be returned to the user
-    header = []
-    reader, f0 = get_fileobj(csvFile)
-    #reader = csv.reader(open(csvFile, 'rU'))
-    # first grab numbe rof specified header rows
-    for i in range(headerRows):
-        row = next(reader)
-        header.append(row)
-    # now grab each itemData
-    for row in reader:
-        tmp = [row[literalColumn], row[categoryColumn],
-               row[regexColumn], row[ruleColumn]]
-        tmp[2] = r"{0}".format(tmp[2]) # convert the regular expression string into a raw string
-        item = contextItem(tmp)
-        items.append(item)
-    f0.close()
-    return items

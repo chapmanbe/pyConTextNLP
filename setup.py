@@ -4,7 +4,7 @@ from os import path
 import json
 
 version = {}
-with open(path.join("pyConTextNLP","version.py")) as f0:
+with open(path.join("pyConTextnLP","version.py")) as f0:
     exec(f0.read(), version)
 print(version)
 here = path.abspath(path.dirname(__file__))
@@ -54,7 +54,6 @@ setup(
         # that you indicate whether you support Python 2, Python 3 or both.
         #'Programming Language :: Python :: 2',
         #'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
     ],
 
@@ -63,13 +62,16 @@ setup(
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    packages=find_packages(exclude=['contrib', 'docs', 'functional','tests*']),
+    packages=find_packages(exclude=['contrib', 
+                                    'docs', 
+                                    'pyConText',
+                                    'tests*']),
 
     # List run-time dependencies here.  These will be installed by pip when your
     # project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['networkx'],
+    install_requires=['networkx', 'pyyaml'],
 
     # List additional groups of dependencies here (e.g. development dependencies).
     # You can install these using the following syntax, for example:

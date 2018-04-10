@@ -11,7 +11,7 @@ class tagItem(collections.namedtuple('tagItem',
                'id'])):
 
     def __unicode__(self):
-        return u"""%s: %s"""%(self.id, self.foundPhrase)
+        return """%s: %s"""%(self.id, self.foundPhrase)
 
     def __lt__(self, other): return self.span[0] < other.span[0]
 
@@ -31,28 +31,34 @@ class tagItem(collections.namedtuple('tagItem',
         return hash(repr(self))
 
     def __str__(self):
-        description = u"""<id> {0} </id> """.format(self.id)
-        description += u"""<phrase> {0} </phrase> """.format(self.foundPhrase)
+        description = """<id> {0} </id> """.format(self.id)
+        description += """<phrase> {0} </phrase> """.format(self.foundPhrase)
         return description
 
     def __repr__(self):
         """
         __repr__
         """
-        description  = u"""<id> {0} </id>""".format(self.id)
-        description += u"""<phrase> {0} </phrase> """.format(self.foundPhrase)
-        description += u"""<span> {0} </span>""".format(self.span)
-        description += u"""<scope> {0} </scope>""".format(self.scope)
-        description += u"""<conTextItem> {0} </conTextItem>""".format(
+        description  = """<id> {0} </id>""".format(self.id)
+        description += """<phrase> {0} </phrase> """.format(self.foundPhrase)
+        description += """<span> {0} </span>""".format(self.span)
+        description += """<scope> {0} </scope>""".format(self.scope)
+        description += """<conTextItem> {0} </conTextItem>""".format(
             self.conTextItem.__repr__())
         return description
 
 
 def _autoSetScope(rule, span):
     """
-    applies the objects own rule and span to modify the
-    object's scope. Currently only "forward" and "backward"
+    applies the objects own rule and span to modify the object's scope. Currently only "forward" and "backward"
     rules are implemented
+
+    Arguments:
+        rule:
+        span:
+
+    Returns:
+
     """
     if 'forward' in rule:
         return (span[1], -1)
@@ -63,6 +69,15 @@ def _autoSetScope(rule, span):
 def create_tagItem(ci, span, foundPhrase, id):
     """
     create a tagItem with arguments
+
+    Arguments:
+        ci: a conTextItem instance
+        span: a tuple describing the span of the tagged item in the sentence
+        foundPhrase: the phrase matched in the sentence
+        id: a unique identifier
+
+    Returns:
+        
     """
     return tagItem(conTextItem=ci,
                    span=span,
@@ -71,33 +86,18 @@ def create_tagItem(ci, span, foundPhrase, id):
                    id=id)
 
 
-def limitCategoryScopeForward(obj1, obj2):
-    """
-    If obj1 and obj2 are of the same category
-    return a copy of obj1 with modified scope
-    """
-    # If objects are not of the same category
-    # then they don't interact
-    if not ConTextItem.isA(obj1.conTextItem,
-                           obj2.conTextItem):
-        return copy.copy(obj1)
-    if lessthan(obj1, obj2):
-        return create_tagItem(obj1.conTextItem,
-                              obj1.span,
-                              min(obj1.ti.scope[1],
-                                  obj2.getSpan()[0]),
-                              foundPhrase=obj1.foundPhrase,
-                              id=obj1.id)
-    else:
-        return copy.copy(obj1)
-
 
 def scope_modifiable(obj):
     """
-    docstring
+    Determines whether the scope of obj is modifiable
+
+    Arguments:
+        obj: 
+
+    Returns:
+        Boolean
     """
-    return bool(obj.conTextItem.rule) and \
-           'terminate' not in obj.conTextItem.rule
+    return bool(obj.conTextItem.rule) and 'terminate' not in obj.conTextItem.rule
 
 
 def limitCategoryScopeBackward(obj1, obj2):
@@ -125,12 +125,50 @@ def limitCategoryScopeBidirectional(obj1, obj2):
     return limitCategoryScopeBackward(
         limitCategoryScopeForward(obj1, obj2), obj2)
 
+def limitCategoryScopeForward(obj1, obj2):
+    """
+    Returns a copy of obj1 with the forward scope of obj1 modified by obj2
+    
+    Scope is only modified if obj1 and obj2 are of the same category
+
+    Arguments:
+
+        obj1: a ConTextItem
+        obj2: a ConTextItem
+
+    Returns:
+        a ConTextItem
+    """
+    # If objects are not of the same category
+    # then they don't interact
+    if not ConTextItem.isA(obj1.conTextItem,
+                           obj2.conTextItem):
+        return copy.copy(obj1)
+    if lessthan(obj1, obj2):
+        return create_tagItem(obj1.conTextItem,
+                              obj1.span,
+                              min(obj1.ti.scope[1],
+                                  obj2.getSpan()[0]),
+                              foundPhrase=obj1.foundPhrase,
+                              id=obj1.id) # Should probably generate a new id
+    else:
+        return copy.copy(obj1)
+
+
 
 def limitScope(obj1, obj2):
     """
     If obj1 and obj2 are of the same category or
     if obj2 has a rule of 'terminate', then use
     the span of obj2 to update the scope of obj1
+
+    Arguments:
+        obj1: 
+        obj2:
+
+    Returns:
+        A copy of obj1 with scope modified by obj2
+
     """
     if not scope_modifiable(obj1):
         return copy.copy(obj1)

@@ -14,35 +14,73 @@
 """
 ConTextItem---DOCSTRING
 """
-import platform
+import csv
+import urllib.request
+import urllib.error
+import urllib.parse
+from io import StringIO
 import collections
+import yaml
 
 
 class ConTextItem(collections.namedtuple('ConTextItem',
-                  ['literal', 'category', 're', 'rule'])):
+                  ['literal', 'category', 're', 'rule', 'comments'])):
     def __str__(self):
-        return """literal<<{0}>>; category<<{1}>>; re<<{2}>>; rule<<{3}>>""".format(
+        return """literal<<{0}>>; category<<{1}>>; re<<{2}>>; rule<<{3}>>; comments<<{4}>>;""".format(
                         self.literal,
                         get_ConTextItem_category_string(self),
                         self.re,
-                        self.rule)
+                        self.rule,
+                        self.comments)
 
 
 def _get_categories(cats):
+    """
+    Returns a tuple of categories from a string of categories
+
+    Arguments:
+        cats: a string containging comma separted categories
+
+    Returns:
+        A tuple of lower case string categories
+    """
     if "," in cats:
         return tuple([c.lower().strip() for c in cats.split(",")])
     else:
         return (cats.lower().strip(), )
 
 
-def _assign_regex(r1, r2):
-    if r2:
-        return r2.lower().strip()
+def _assign_regex(literal, regex):
+    """
+    Create a regular expression for ConTextItem
+
+    Arguments:
+        literal: The literal for the ConTextItem
+        regex: The regular expression (if provided) for the ConTextItem
+
+    Returns:
+        A string containging the regular expression
+
+    If regex is not False, then create a regular expression by wrapping the literal in word boundaries.
+
+    All terms are converted to lowercase and stripped of leading and trailing white spaces
+    """
+    if regex:
+        return regex.lower().strip()
     else:
-        return r'\b%s\b'%r1.lower().strip()
+        return r'\b%s\b'%literal.lower().strip()
 
 
 def get_ConTextItem_category_string(ci):
+    """
+    reteurns a string of '_' separated categories
+
+    Arguments:
+        ci: a ConTextItem
+
+    Returns:
+        a string of '_' separated categories
+    """
     return "_".join(ci.category)
 
 
@@ -50,7 +88,8 @@ def create_ConTextItem(args):
     return ConTextItem(literal=args[0].lower().strip(),
                        category=_get_categories(args[1]),
                        re=_assign_regex(args[0], args[2]),
-                       rule=args[3]
+                       rule=args[3],
+                       comments=""
                        )
 
 
@@ -75,31 +114,36 @@ def isA(citem, testCategory):
 def ConTextItem2string(ci):
     return ci.__unicode__()
 
-if platform.python_version_tuple()[0] == '2':
+def get_csv_reader(f0):
+    return csv.reader(StringIO(f0.read().decode(), newline=None), delimiter="\t" )
 
-    import unicodecsv as csv
-    import urllib2
+def get_fileobj(_file):
+    if not urllib.parse.urlparse(_file).scheme:
+        _file = "file://"+_file
+    return urllib.request.urlopen(_file, data=None)
 
-    def get_fileobj(csvFile):
-        p = urllib2.urlparse.urlparse(csvFile)
-        if not p.scheme:
-            csvFile = "file://"+csvFile
-        f0 = urllib2.urlopen(csvFile, 'rU')
-        return csv.reader(f0, encoding='utf-8', delimiter="\t"), f0
+def read_yaml(yfile):
+    """
+    Read ConTextItem from _file
 
-else:
-    import csv
-    import urllib.request
-    import urllib.error
-    import urllib.parse
-    from io import StringIO
+    Arguments:
+        yfile: a file or url path containing the yaml data
 
-    def get_fileobj(csvFile):
-        p = urllib.parse.urlparse(csvFile)
-        if not p.scheme:
-            csvFile = "file://"+csvFile
-        f0 = urllib.request.urlopen(csvFile, data=None)
-        return csv.reader(StringIO(f0.read().decode(), newline=None), delimiter="\t" ), f0
+    Returns:
+        A list of ConTextItems
+    """
+    try:
+        f0 = get_fileobj(yfile)
+        context_items =    [ConTextItem(literal=d["Lex"],
+                    category=d["Type"],
+                    re=r"%s"%d["Regex"],
+                    rule=d["Direction"],
+                    comments=d["Comments"]) for d in yaml.load_all(f0)]
+    except FileNotFoundError:
+        context_items = []
+    finally:
+        f0.close()
+    return context_items
 
 def readConTextItems(csvFile,
                      encoding='utf-8',
@@ -121,7 +165,8 @@ def readConTextItems(csvFile,
     """
     items = []
     header = []
-    reader, f0 = get_fileobj(csvFile)
+    f0 = get_fileobj(csvFile)
+    reader = get_csv_reader(f0)
     # reader = csv.reader(open(csvFile, 'rU'))
     # first grab number of specified header rows
     for i in range(headerRows):

@@ -3,8 +3,8 @@ import copy
 from ..utils import get_document_markups
 from ..utils import get_section_markups
 
-def __sort_by_span(nodes):
-    n = copy.copy(nodes)
+def __sort_by_span(_nodes):
+    n = list(copy.copy(_nodes))
     n.sort(key=lambda x: x.getSpan())
     return n
 def __insert_color(txt,s,c):
