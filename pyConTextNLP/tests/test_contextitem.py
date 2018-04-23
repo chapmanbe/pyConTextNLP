@@ -1,5 +1,6 @@
 import unittest
 import pyConTextNLP.itemData as itemData
+import os
 
 class ConTextItemTest(unittest.TestCase):
     def setUp(self):
@@ -22,8 +23,10 @@ class ConTextItemTest(unittest.TestCase):
     #def testSource(self):
         #assert self.context.__file__ == 'pyConTextGraph.pyc'
     def test_itemData_from_yaml(self):
-        f = "https://github.com/chapmanbe/pyConTextNLP/blob/master/KB/domain_kb_test.yml"
-        assert True 
+        f = os.path.join(os.getcwd(), "..", "..", "KB", "utah_crit.yml")
+        #f = "https://github.com/chapmanbe/pyConTextNLP/blob/master/KB/domain_kb_test.yml"
+        #assert os.path.exists(f) 
+        assert itemData.get_items(f)
         #assert itemData.itemData_from_tsv(f)
 
 
