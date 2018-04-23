@@ -1,0 +1,83 @@
+Comments: ''
+Direction: ''
+Lex: hypertension
+Regex: \bhypertension\b
+Type: PULMONARY_ARTERIAL_HYPERTENSION
+---
+Comments: ''
+Direction: ''
+Lex: pah
+Regex: \bpah\b
+Type: PULMONARY_ARTERIAL_HYPERTENSION
+---
+Comments: ''
+Direction: ''
+Lex: pulmonary hypertension
+Regex: pulmonary\s(arterial )?(hypertension)
+Type: PULMONARY_ARTERIAL_ANATOMY
+---
+Comments: ''
+Direction: ' '
+Lex: main pulmonary artery
+Regex: ''
+Type: PULMONARY_ARTERIAL_ANATOMY
+---
+Comments: ''
+Direction: ''
+Lex: pulmonary trunk
+Regex: ''
+Type: PULMONARY_ARTERIAL_ANATOMY
+---
+Comments: ''
+Direction: ''
+Lex: pulmonary artery
+Regex: ''
+Type: PULMONARY_ARTERIAL_ANATOMY
+---
+Comments: ''
+Direction: ''
+Lex: pulmonary arteries
+Regex: ''
+Type: PULMONARY_ARTERIAL_ANATOMY
+---
+Comments: ''
+Direction: ''
+Lex: mosaic
+Regex: ''
+Type: PULMONARY_ARTERIAL_HYPERTENSION
+---
+Comments: ''
+Direction: ''
+Lex: right heart
+Regex: ''
+Type: CARDIAC_ANATOMY
+---
+Comments: ''
+Direction: ''
+Lex: septum
+Regex: ''
+Type: CARDIAC_ANATOMY
+---
+Comments: ''
+Direction: ''
+Lex: enlargement
+Regex: (tapering|enlargement)
+Type: PULMONARY_ARTERIAL_HYPERTENSION
+---
+Comments: ''
+Direction: ''
+Lex: tapering
+Regex: ''
+Type: PULMONARY_ARTERIAL_HYPERTENSION
+---
+Comments: ''
+Direction: ''
+Lex: pruning
+Regex: ''
+Type: PULMONARY_ARTERIAL_HYPERTENSION
+---
+Comments: ''
+Direction: ''
+Lex: right heart strain
+Regex: right heart (strain|failure)
+Type: PULMONARY_ARTERIAL_HYPERTENSION

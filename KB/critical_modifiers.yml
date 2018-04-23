@@ -1,0 +1,107 @@
+Comments: ' # fixes pedoc #129 dq'
+Direction: bidirectional
+Lex: bolus timing
+Regex: \bbolus[ -]{0,1}timing
+Type: QUALITY_FEATURE
+---
+Comments: ''
+Direction: bidirectional
+Lex: limited exam
+Regex: (suboptimal|degraded|limited) (exam[a-z]*|study|scan|evaluation|bolus|timing)
+Type: QUALITY_FEATURE
+---
+Comments: ' #fix for pedoc #231'
+Direction: bidirectional
+Lex: nondiagnostic exam
+Regex: nondiagnostic (exam[a-z]*|study|scan|evaluation)
+Type: QUALITY_FEATURE
+---
+Comments: ''
+Direction: ''
+Lex: artifact
+Regex: artifact(ual)?
+Type: ARTIFACT
+---
+Comments: ''
+Direction: ''
+Lex: bulk motion
+Regex: ''
+Type: ARTIFACT
+---
+Comments: ''
+Direction: ''
+Lex: motion
+Regex: ''
+Type: ARTIFACT
+---
+Comments: ''
+Direction: ''
+Lex: patient motion
+Regex: ''
+Type: ARTIFACT
+---
+Comments: ''
+Direction: ''
+Lex: respiratory motion
+Regex: ''
+Type: ARTIFACT
+---
+Comments: ''
+Direction: ''
+Lex: declot
+Regex: ''
+Type: EXCLUSION
+---
+Comments: ''
+Direction: ''
+Lex: detorsion
+Regex: ''
+Type: EXCLUSION
+---
+Comments: ''
+Direction: ''
+Lex: embolization
+Regex: ''
+Type: EXCLUSION
+---
+Comments: ''
+Direction: ''
+Lex: epiploic appendicitis
+Regex: ''
+Type: EXCLUSION
+---
+Comments: ''
+Direction: ''
+Lex: in the setting of
+Regex: ''
+Type: EXCLUSION
+---
+Comments: ''
+Direction: ''
+Lex: pe examination
+Regex: (pulmonary )(artery )?(embol[a-z]+)(exam[a-z]*|study|protocol)
+Type: EXCLUSION
+---
+Comments: ''
+Direction: ''
+Lex: septic embolism
+Regex: septic\s(emboli|embolus|embolism)
+Type: EXCLUSION
+---
+Comments: ''
+Direction: ''
+Lex: thrombectomy
+Regex: ''
+Type: EXCLUSION
+---
+Comments: ''
+Direction: ''
+Lex: thrombin
+Regex: ''
+Type: EXCLUSION
+---
+Comments: ''
+Direction: ''
+Lex: upstroke
+Regex: ''
+Type: EXCLUSION

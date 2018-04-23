@@ -1,0 +1,610 @@
+Comments: ''
+Direction: bidirectional
+Lex: abdominal aorta
+Regex: abdominal aort(a|ic)
+Type: AORTIC_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: aorta
+Regex: aort(a|ic)
+Type: AORTIC_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: ascending aorta
+Regex: ascending aort(a|ic)
+Type: AORTIC_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: thoracic aorta
+Regex: thoracic aort(a|ic)
+Type: AORTIC_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: A1
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: intracranial
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: cerebral
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: A2
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: ACA
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: anterior limb
+Regex: (anterior limb|crus anterius capsulae internae|capsula interna|pars anterior|crus
+  anterior|capsulae internae)
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: posterior limb
+Regex: (posterior limb|crus posterius capsulae internae|capsula interna|pars posterior|crus
+  posterior|capsulae internae)
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: genu limb
+Regex: (genu limb|internal capsule genu|genu capsulae internae)
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: brain
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: caudate
+Regex: (caudate|caudate nucleus|nucleus caudatus)
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: cerebellar
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: cerebellum
+Regex: (cerebellum|epencephalon-1|kleinhirn)
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: corona radiata
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: cerebral cortex
+Regex: (cerebral cortex|cortex of cerebrum|cortex cerebri|pallium|cortex cerebralis)
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: encephalo
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: brain lobe
+Regex: (frontal|parietal|occipital|temporal|limbic)( lobe(s))?
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: ganglia
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: gray matter
+Regex: (gray|grey) matter
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: white matter
+Regex: white matter
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: gyrus
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: hemisphere
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: insular
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: internal capsule
+Regex: (internal capsule|internal capsule radiations|capsula interna)
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: lentiform
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: M1
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: M2
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: MCA
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: nuclei
+Regex: nucle(i|us)
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: P1
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: P2
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: PCA
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: pons
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: putamen
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: semiovale
+Regex: (semiovale center|semiovale|semi-ovale|medullary center|white matter of cerebrum|centrum
+  semiovale|substantia centralis medullaris cerebri|corpus medullare cerebri|centrum
+  ovale)
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: sulcus
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: territorial
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: territory
+Regex: ''
+Type: BRAIN_ANATOMY
+---
+Comments: ''
+Direction: backward
+Lex: measuring X.X cm
+Regex: (measuring|diameter of|measured) (?P<value>[0-9]+(\.[0-9]*)?)( )?(?P<unit>(cm|mm))
+Type: SEVERITY
+---
+Comments: ''
+Direction: backward
+Lex: measuring XxY cm
+Regex: (measuring|diameter of|measured) (?P<value>[0-9]+(\.[0-9]*)?( )?(x|by)( )?[0-9]+(\.[0-9]*)?)(
+  )?(?P<unit>(cm|mm))
+Type: SEVERITY
+---
+Comments: ''
+Direction: forward
+Lex: X.Y cm
+Regex: (?P<value>[0-9]+(\.[0-9]*)?)( )?(?P<unit>(cm|mm))
+Type: SEVERITY
+---
+Comments: ''
+Direction: forward
+Lex: XxY cm
+Regex: (?P<value>[0-9]+(\.[0-9]*)?( )?(x|by)( )?[0-9]+(\.[0-9]*)?)( )?(?P<unit>(cm|mm))
+Type: SEVERITY
+---
+Comments: ''
+Direction: bidirectional
+Lex: anterior
+Regex: ''
+Type: HEART_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: septal
+Regex: ''
+Type: HEART_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: septum
+Regex: (cardiac septum|septum)
+Type: HEART_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: inferior
+Regex: ''
+Type: HEART_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: heart apex
+Regex: (cardiac apex|apex of (the )?heart)
+Type: HEART_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: inferolateral
+Regex: ''
+Type: HEART_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: 'lateral '
+Regex: ''
+Type: HEART_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: 'anteroseptal '
+Regex: ''
+Type: HEART_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: transmural
+Regex: ''
+Type: HEART_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: wall
+Regex: ''
+Type: HEART_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: left ventricular wall
+Regex: (\blv\b|left ventricular)( wall)?
+Type: HEART_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: right ventricular wall
+Regex: (\brv\b|right ventricular)( wall)?
+Type: HEART_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: myocardial
+Regex: (myocardial|myocardium)
+Type: HEART_ANATOMY
+---
+Comments: ''
+Direction: forward
+Lex: cardiac
+Regex: (cardiac|heart)
+Type: HEART_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: omental
+Regex: (omentum|omental)
+Type: OTHER_CRITICAL_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: spleen
+Regex: (spleen|splenic)
+Type: OTHER_CRITICAL_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: kidney
+Regex: (kidney|\brenal\b)
+Type: OTHER_CRITICAL_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: testis
+Regex: (testis|testicular|testes)
+Type: OTHER_CRITICAL_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: ovary
+Regex: (ovary|ovaries|ovarian)
+Type: OTHER_CRITICAL_ANATOMY
+---
+Comments: ''
+Direction: bidirectional
+Lex: azygos vein
+Regex: ''
+Type: AZYGOS_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: azygos arch
+Regex: ''
+Type: AZYGOS_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: inferior vena cava
+Regex: ''
+Type: LOWER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: common iliac vein
+Regex: ''
+Type: LOWER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: internal iliac vein
+Regex: ''
+Type: LOWER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: external iliac vein
+Regex: ''
+Type: LOWER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: common femoral vein
+Regex: ''
+Type: LOWER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: femoral vein
+Regex: ''
+Type: LOWER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: popliteal vein
+Regex: ''
+Type: LOWER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: anterior tibial vein
+Regex: ''
+Type: LOWER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: peroneal vein
+Regex: ''
+Type: LOWER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: posterior tibial vein
+Regex: ''
+Type: LOWER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: superior vena cava
+Regex: ''
+Type: UPPER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: brachiocephalic vein
+Regex: ''
+Type: UPPER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: subclavian vein
+Regex: ''
+Type: UPPER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: axillary vein
+Regex: ''
+Type: UPPER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: brachial vein
+Regex: ''
+Type: UPPER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: external jugular vein
+Regex: ''
+Type: UPPER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: anterior jugular vein
+Regex: ''
+Type: UPPER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: jugular venous arch
+Regex: ''
+Type: UPPER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: internal jugular vein
+Regex: ''
+Type: UPPER_DEEP_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: hepatic vein
+Regex: ''
+Type: HEPATIC_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: portal vein
+Regex: ''
+Type: PORTAL_SYSTEM_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: splenic vein
+Regex: ''
+Type: PORTAL_SYSTEM_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: inferior mesenteric vein
+Regex: ''
+Type: PORTAL_SYSTEM_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: superior mesenteric vein
+Regex: ''
+Type: PORTAL_SYSTEM_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: pulmonary vein
+Regex: ''
+Type: PULMONARY_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: renal vein
+Regex: ''
+Type: RENAL_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: sigmoid sinus
+Regex: ''
+Type: SINUS_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: inferior petrosal sinus
+Regex: ''
+Type: SINUS_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: cavernous sinus
+Regex: ''
+Type: SINUS_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: greater saphenous vein
+Regex: ''
+Type: LOWER_SUPERFICIAL_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: lesser saphenous vein
+Regex: ''
+Type: LOWER_SUPERFICIAL_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: basilic vein
+Regex: ''
+Type: UPPER_SUPERFICIAL_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: cephalic vein
+Regex: ''
+Type: UPPER_SUPERFICIAL_VEIN
+---
+Comments: ''
+Direction: bidirectional
+Lex: varicocele
+Regex: ''
+Type: VARICOCELE
+---
+Comments: ''
+Direction: bidirectional
+Lex: varicous vein
+Regex: ''
+Type: UPPER_SUPERFICIAL_VEIN

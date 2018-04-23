@@ -1,0 +1,17 @@
+Comments: ''
+Direction: ''
+Lex: pneumonia
+Regex: \bpneumonia[s]?\b
+Type: EVIDENCE_OF_PNEUMONIA
+---
+Comments: ''
+Direction: ''
+Lex: consolidation
+Regex: ''
+Type: EVIDENCE_OF_PNEUMONIA
+---
+Comments: ''
+Direction: ''
+Lex: infiltrate
+Regex: ''
+Type: EVIDENCE_OF_PNEUMONIA

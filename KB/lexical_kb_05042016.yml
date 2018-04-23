@@ -1,0 +1,2280 @@
+Comments: ''
+Direction: backward
+Lex: are ruled out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: be ruled out
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: backward
+Lex: being ruled out
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: backward
+Lex: can be ruled out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: cannot be excluded
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: cannot totally be excluded
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: could be ruled out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: examination
+Regex: \b(examination|exam|study)\b
+Type: INDICATION
+---
+Comments: ''
+Direction: backward
+Lex: free
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: has been ruled out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: have been ruled out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: is in the differential
+Regex: is\sin\sthe\sdifferential
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: is negative
+Regex: (is|was) negative
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: is not excluded
+Regex: (is|was|are|were)\snot\sexcluded
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: 2/28/2013; added definitely; removed ed
+Direction: backward
+Lex: is not entirely excluded
+Regex: (is|was|are|were|does)\snot\s(entirely|totally|definitely|completely\s) excluded
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: 4/29/2013
+Direction: backward
+Lex: is present
+Regex: (is|are) present
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: is ruled out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: is to be ruled out
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: backward
+Lex: is ruled out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: might be ruled out
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: must be ruled out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: not been ruled out
+Regex: ''
+Type: INDICATION
+---
+Comments: 3/22/2013
+Direction: backward
+Lex: not definitively seen
+Regex: not definitively (seen|visualized)
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: not excluded
+Regex: not\s(excluded|ruled\sout)
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: now measuring
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: backward
+Lex: ought to be ruled out
+Regex: ''
+Type: INDICATION
+---
+Comments: 3/22/2013
+Direction: backward
+Lex: progressed
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: backward
+Lex: protocol
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: backward
+Lex: resolved
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: backward
+Lex: should be ruled out
+Regex: ''
+Type: INDICATION
+---
+Comments: 4/29/2013
+Direction: backward
+Lex: suspected
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: unlikely
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: varying ages
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: backward
+Lex: was ruled out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: will be ruled out
+Regex: ''
+Type: INDICATION
+---
+Comments: 2/28/2013
+Direction: backward
+Lex: would not be expected
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: acute
+Regex: ''
+Type: ACUTE
+---
+Comments: ''
+Direction: bidirectional
+Lex: again
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: age indeterminate
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: appear
+Regex: (\bappear\b|\bappears\b)
+Type: PROBABLE_EXISTENCE
+---
+Comments: 2/28/2013
+Direction: bidirectional
+Lex: cannot be completely excluded
+Regex: cannot\sbe\s((entirely|completely|totally)\s)?(excluded|ruled out)
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: 2/28/2013
+Direction: bidirectional
+Lex: cannot be evaluated
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: '2/28/2013; chronicity: make regular expression to capture variations'
+Direction: bidirectional
+Lex: chronic
+Regex: \bchronic[a-z]*\b
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: clear
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: diminished
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: equivocal
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: evaluation
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: bidirectional
+Lex: evolving
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: healing
+Regex: \b(healing|healed)\b
+Type: HISTORICAL
+---
+Comments: 4/2013
+Direction: bidirectional
+Lex: improved
+Regex: improved|improving|improvement
+Type: HISTORICAL
+---
+Comments: 4/29/2013
+Direction: bidirectional
+Lex: incompletely evaluated
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: interval change
+Regex: ''
+Type: HISTORICAL
+---
+Comments: 4/29/2013
+Direction: bidirectional
+Lex: interval increase
+Regex: (interval)\b[\d\D\s]*increase
+Type: HISTORICAL
+---
+Comments: 4/29/2013
+Direction: bidirectional
+Lex: less likely
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: likely
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: 2/28/2013; thought of just changing chronic to bidirectional;  but also
+  capture likely
+Direction: bidirectional
+Lex: likely chronic
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: may be ruled out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: new
+Regex: ''
+Type: ACUTE
+---
+Comments: ''
+Direction: bidirectional
+Lex: new from prior exam
+Regex: new from(\sthe)? prior (exam|study)
+Type: ACUTE
+---
+Comments: 2/28/2013; 4/15/2013
+Direction: bidirectional
+Lex: no change in
+Regex: (no(t)? ([a-zA-z] )?change(d)?( in)?)
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: no longer noted
+Regex: no longer (seen|noted|visualized)
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: 3/23/2013
+Direction: bidirectional
+Lex: not
+Regex: \bnot\b
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: not significantly changed
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: old
+Regex: ''
+Type: HISTORICAL
+---
+Comments: need regular expression
+Direction: bidirectional
+Lex: on previous exam
+Regex: (on |from )?(previous|prior) exam
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: persistent
+Regex: ''
+Type: HISTORICAL
+---
+Comments: 2/28/2013
+Direction: bidirectional
+Lex: possible
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: 3/21/2013; changed to bidirectional
+Direction: bidirectional
+Lex: previous
+Regex: ''
+Type: HISTORICAL
+---
+Comments: 3/21/2013; 3/22/2013
+Direction: bidirectional
+Lex: previously described
+Regex: previously (described|suspected)
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: prior
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: prior study
+Regex: ''
+Type: HISTORICAL
+---
+Comments: 3/21/2013
+Direction: bidirectional
+Lex: probable
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: 4/29/2013
+Direction: bidirectional
+Lex: questionable
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: ruled out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: should be considered
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: stable
+Regex: ''
+Type: HISTORICAL
+---
+Comments: 4/29/2013
+Direction: bidirectional
+Lex: still evident
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: subacute
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: suggest
+Regex: \bsuggest[a-z]+\b
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: unchanged
+Regex: unchanged|unchanging
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: versus
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: absence of
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: adequate to rule the patient out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: appears to be
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: assessment for
+Regex: ''
+Type: INDICATION
+---
+Comments: 4/29/2013
+Direction: forward
+Lex: at risk for
+Regex: (at\s)?risk\s(in\sthe\sfuture\s)?(for|of)
+Type: FUTURE
+---
+Comments: 4/29/2013
+Direction: forward
+Lex: atypical for
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: be ruled out for
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: can be ruled out for
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: can rule the patient out
+Regex: can rule (her|him|the patient) out
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: cannot
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: cannot exclude
+Regex: cannot\sexclude
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: cannot see
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: cannot totally exclude
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: change in
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: changing
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: checked for
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: '2/28/2013; simplified expression '
+Direction: forward
+Lex: clinical concern
+Regex: clinical (concern|suspicion)\b
+Type: FUTURE
+---
+Comments: ''
+Direction: forward
+Lex: clinical history
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: compatible with
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: concerning for
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: 2/14/2013
+Direction: forward
+Lex: consistent with
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: convincing
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: could be ruled out for
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: declined
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: declines
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: make regular expression to capture variations
+Direction: forward
+Lex: decrease in
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: decrease in
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: definite
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: denied
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: denies
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: deny
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: denying
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: did rule (the patient|him|her) out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: did rule out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: differential diagnosis would include
+Regex: differential\s((diagnosis|considerations)\s)?((would|could)\sinclud[a-z]*)?
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: documented
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: evaluate for
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: evaluation of
+Regex: evaluation\s(of|for)
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: evidence
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: did rule her out against
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: examination for
+Regex: (study|exam|examination) for
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: fails to reveal
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: free of
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: gram negative
+Regex: ''
+Type: PSEUDONEG
+---
+Comments: 2/28/2013
+Direction: forward
+Lex: higher sensitivity for
+Regex: ''
+Type: INDICATION
+---
+Comments: 4/29/2013
+Direction: forward
+Lex: highly suggestive
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: history of
+Regex: ''
+Type: HISTORICAL
+---
+Comments: 2/28/2013
+Direction: forward
+Lex: if there are
+Regex: ''
+Type: FUTURE
+---
+Comments: ''
+Direction: forward
+Lex: if there is concern for
+Regex: ''
+Type: FUTURE
+---
+Comments: ''
+Direction: forward
+Lex: is to be ruled out for
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: is more sensitive
+Regex: is more sensitive
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: known
+Regex: \bknown\b
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: low probability
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: 2/28/2013
+Direction: forward
+Lex: may be related
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: may represent
+Regex: (may|might)\s(represent|reflect)
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: might be ruled out for
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: 3/22/2013
+Direction: forward
+Lex: mimicking
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: must be ruled out for
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: negative examination for
+Regex: negative (examination|study|exam|evaluation) for
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: negative for
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: never developed
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: never had
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: 'no'
+Regex: \bno\b
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: 2/28/2013; changed from probable to definite
+Direction: forward
+Lex: no abnormal
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no cause of
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no complaints of
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no convincing
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no definite
+Regex: no[\s]*definite
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: need regular expression
+Direction: forward
+Lex: no definite change
+Regex: ''
+Type: HISTORICAL
+---
+Comments: 2/28/2013; added other probably consider simplifying re as XYZ
+Direction: forward
+Lex: no evidence of
+Regex: (no|without)\s((definite|other|definitive|secondary|indirect)\s)?((radiographic|sonographic|CT)\s)?evidence\s(of|for)
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no findings of
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no findings to indicate
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: 4/16/2013
+Direction: forward
+Lex: no increase
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: no new
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no obvious
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no other
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no sign of
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no significant
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no significant change
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: no significant interval change
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: no signs
+Regex: no sign(s)?
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no definite signs of
+Regex: (no|without) (definite|definitive|secondary|indirect) ((radiographic|sonographic|CT)\s)?signs\s(of|for)
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no suggestion
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: 4/16/2013
+Direction: forward
+Lex: no suspicious change
+Regex: ''
+Type: HISTORICAL
+---
+Comments: 2/14/2013
+Direction: forward
+Lex: no XYZ to suggest
+Regex: (\b(without|no)\b[\d\D\s]*to suggest)
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: nor
+Regex: \bnor\b
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not appreciate
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not associated with
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not cause
+Regex: ''
+Type: PSEUDONEG
+---
+Comments: ''
+Direction: forward
+Lex: not certain whether
+Regex: ''
+Type: PSEUDONEG
+---
+Comments: 3/22/2013
+Direction: forward
+Lex: not clearly evident
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not complain of
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not demonstrate
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not drain
+Regex: ''
+Type: PSEUDONEG
+---
+Comments: ''
+Direction: forward
+Lex: not exhibit
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not extend
+Regex: ''
+Type: PSEUDONEG
+---
+Comments: ''
+Direction: forward
+Lex: not feel
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not had
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not have
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not know of
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not known to have
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not necessarily
+Regex: ''
+Type: PSEUDONEG
+---
+Comments: ''
+Direction: forward
+Lex: not reveal
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not see
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not to be
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: nothing
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: obvious
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: ought to be ruled out for
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: patient was not
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: positive study for
+Regex: positive (study|exam|examination)( for)
+Type: DEFINITE_EXISTENCE
+---
+Comments: 2/14/2013
+Direction: forward
+Lex: 'predispose to '
+Regex: ''
+Type: FUTURE
+---
+Comments: ''
+Direction: forward
+Lex: progression of
+Regex: progression\s(of|in)
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: rather than
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: redemonstration
+Regex: (re-demonstrat[a-z]*|redemonstrat[a-z]*)
+Type: HISTORICAL
+---
+Comments: 2/28/2013; added for Ami's 19649
+Direction: forward
+Lex: remote
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: represents
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: residual
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: resolution of
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: resolving
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: rule her out
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: rule him out
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: rule him out for
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: rule out
+Regex: (r/o|rule out|\br o\b|r\.o\.|\bro\b)
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: rule out for
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: rule patient out for
+Regex: rule (him|her|patient|the patient|subject) out for
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: rule the patient out
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: rule the patient out for
+Regex: ''
+Type: INDICATION
+---
+Comments: 4/16/2013
+Direction: forward
+Lex: ruled her out against
+Regex: ruled\s(him|her|the subject|the patient|subject|patient)\sout( against| for)?
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: ruled out against
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: ruled out for
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: rules her out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: rules her out for
+Regex: rules\s(him|her)\sout\sfor
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: rules him out
+Regex: rules\s(him|her)\sout
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: rules him out for
+Regex: rules\s(him|her)\sout\sfor
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: rules out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: rules out for
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: rules the patient out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: rules the patient out for
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: sequelae of
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: should be ruled out for
+Regex: ''
+Type: INDICATION
+---
+Comments: 3/22/2013
+Direction: forward
+Lex: simulating
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: study for detection
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: sufficient to rule out
+Regex: sufficient\sto\srule\s((her|him|the patient|the subject)\s)?out
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: suspicious
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: suspicous
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: test for
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: to exclude
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: unable to adequately assess
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: unable to assess
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: unremarkable for
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: 3/22/2013
+Direction: forward
+Lex: warned of
+Regex: ''
+Type: FUTURE
+---
+Comments: ''
+Direction: forward
+Lex: were warned
+Regex: ''
+Type: FUTURE
+---
+Comments: ''
+Direction: forward
+Lex: what must be ruled out is
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: will be ruled out for
+Regex: ''
+Type: INDICATION
+---
+Comments: ''
+Direction: forward
+Lex: with no
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: without
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: without difficulty
+Regex: ''
+Type: PSEUDONEG
+---
+Comments: ''
+Direction: forward
+Lex: without indication
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: without sign
+Regex: without sign(s)?
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: worrisome
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: '#NAME?'
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: terminate
+Lex: although
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: apart from
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a cause for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a cause of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a etiology for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a etiology of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a reason for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a reason of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary cause for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary cause of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary etiology for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary etiology of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary origin for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary origin of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary reason for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary reason of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary source for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a secondary source of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a source for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as a source of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an cause for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an cause of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an etiology for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an etiology of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an origin for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an origin of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an reason for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an reason of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary cause for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary cause of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary etiology for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary etiology of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary origin for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary origin of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary reason for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary reason of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary source for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an secondary source of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an source for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as an source of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the cause for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the cause of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the etiology for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the etiology of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the origin for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the origin of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the reason for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the reason of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary cause for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary cause of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary etiology for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary etiology of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary origin for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary origin of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary reason for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary reason of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary source for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the secondary source of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the source for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: as the source of
+Regex: ''
+Type: CONJ
+---
+Comments: 2/14/2013
+Direction: terminate
+Lex: 'as there are '
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: aside from
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: but
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: cause for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: cause of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: causes for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: causes of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: etiology for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: etiology of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: except
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: however
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: involving
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: nevertheless
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: origin for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: origin of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: origins for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: origins of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: other possibilities of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: reason for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: reason of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: reasons for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: reasons of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: secondary to
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: source for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: source of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: sources for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: sources of
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: still
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: though
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: trigger event for
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: which
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: terminate
+Lex: yet
+Regex: ''
+Type: CONJ
+---
+Comments: ''
+Direction: forward
+Lex: (no|nothing) convincing
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: (the patient|him|her) was not
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: as a suggestion
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: associated with
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: believe
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: borderline
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: can rule out
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: can rule out against
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: can rule out for
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: can see
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: cannot rule out
+Regex: cannot rule (the patient |him |her )?out
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: completely excluded
+Regex: (completely|entirely)? excluded
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: construed as
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: could be
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: could not be ruled
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: could represent
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: equivocal
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: every indication
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: excluded
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: exhibit
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: gross evidence
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: high probability
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: highly hesitant
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: indication
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: insufficient to rule (the patient|him|her) out for
+Regex: ''
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: is positive
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no other (CT|radiographic|sonographic|MR|etc) evidence
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no secondary (CT|radiographic|sonographic|MR|etc) signs
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: no suspicious
+Regex: ''
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not adequate to rule out
+Regex: not adequate to rule ((the patient|him|her)\s)?out
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: not likely
+Regex: ''
+Type: DEFINITE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: not only
+Regex: ''
+Type: PSEUDONEG
+---
+Comments: ''
+Direction: forward
+Lex: reveals
+Regex: ''
+Type: DEFINITE_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: seen best
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: bidirectional
+Lex: signs of
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: backward
+Lex: was not excluded
+Regex: (was|were) not excluded
+Type: AMBIVALENT_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: if
+Regex: ''
+Type: HYPOTHETICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: decrease
+Regex: decrease|decreased|decreasing|reduction|reduced
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: increase
+Regex: increase|increasing|increased
+Type: HISTORICAL
+---
+Comments: ''
+Direction: forward
+Lex: possibly
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: decrease the likelihood
+Regex: decreas[a-z]+(\sthe)? likelihood
+Type: PROBABLE_NEGATED_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: suspect
+Regex: ''
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: forward
+Lex: likely represents
+Regex: likely (represents|representing)
+Type: PROBABLE_EXISTENCE
+---
+Comments: ''
+Direction: backwards
+Lex: without change
+Regex: ''
+Type: HISTORICAL
+---
+Comments: ''
+Direction: bidirectional
+Lex: risk factor
+Regex: risk factor(s)?
+Type: FUTURE
+---
+Comments: ''
+Direction: bidirectional
+Lex: favor
+Regex: ''
+Type: PROBABLE_EXISTENCE
