@@ -187,7 +187,6 @@ class ConTextDocument(object):
         markups = [e[1] for e in self.__document.edges(data=True) if e[2].get('category') == 'markup']
         if verbose:
             print("Document markup has {0d} conTextMarkup objects".format(len(markups)))
-        ic = 0
         for i in range(len(markups)):
         #for m in markups:
             m = markups[i]
