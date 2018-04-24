@@ -17,13 +17,15 @@ A module defining the contextItem class.
 """
 import yaml
 import urllib.request, urllib.error, urllib.parse
+
+
+def _get_fileobj(_file):
+    if not urllib.parse.urlparse(_file).scheme:
+        _file = "file://"+_file
+    return urllib.request.urlopen(_file, data=None)
+
 def get_items(_file):
-    def get_fileobj(_file):
-        if not urllib.parse.urlparse(_file).scheme:
-            _file = "file://"+_file
-        return urllib.request.urlopen(_file, data=None)
-    f0 = get_fileobj(_file)
-    
+    f0 = _get_fileobj(_file)
     context_items =  [contextItem((d["Lex"],
                                    d["Type"],
                                    r"%s"%d["Regex"],
