@@ -14,8 +14,14 @@
 """
 ConTextItem---DOCSTRING
 """
-import platform
 import collections
+import csv
+import urllib.request
+import urllib.error
+import urllib.parse
+from io import StringIO
+import yaml
+
 
 
 class ConTextItem(collections.namedtuple('ConTextItem',
@@ -75,79 +81,30 @@ def isA(citem, testCategory):
 def ConTextItem2string(ci):
     return ci.__unicode__()
 
-if platform.python_version_tuple()[0] == '2':
 
-    import unicodecsv as csv
-    import urllib2
+def get_fileobj(csvFile):
+    p = urllib.parse.urlparse(csvFile)
+    if not p.scheme:
+        csvFile = "file://"+csvFile
+    f0 = urllib.request.urlopen(csvFile, data=None)
+    return csv.reader(StringIO(f0.read().decode(), newline=None), delimiter="\t" ), f0
 
-    def get_fileobj(csvFile):
-        p = urllib2.urlparse.urlparse(csvFile)
-        if not p.scheme:
-            csvFile = "file://"+csvFile
-        f0 = urllib2.urlopen(csvFile, 'rU')
-        return csv.reader(f0, encoding='utf-8', delimiter="\t"), f0
 
-else:
-    import csv
-    import urllib.request
-    import urllib.error
-    import urllib.parse
-    from io import StringIO
 
-    def get_fileobj(csvFile):
-        p = urllib.parse.urlparse(csvFile)
-        if not p.scheme:
-            csvFile = "file://"+csvFile
-        f0 = urllib.request.urlopen(csvFile, data=None)
-        return csv.reader(StringIO(f0.read().decode(), newline=None), delimiter="\t" ), f0
 
-def readConTextItems(csvFile,
-                     encoding='utf-8',
-                     headerRows=1,
-                     literalColumn=0,
-                     categoryColumn=1,
-                     regexColumn=2,
-                     ruleColumn=3):
-    """
-    takes a CSV file of itemdata rules and creates a list of
-        ConTextItem instances.
-    csvFile: name of file to read items from
-    encoding: unicode enocidng to use; default = 'utf-8'
-    headerRows: number of header rows in file; default = 1
-    literalColumn: column from which to read the literal; default = 0
-    categoryColumn: column from which to read the category; default = 1
-    regexColumn: column from which to read the regular expression: default = 2
-    ruleColumn: column from which to read the rule; default = 3
-    """
-    items = []
-    header = []
-    reader, f0 = get_fileobj(csvFile)
-    # reader = csv.reader(open(csvFile, 'rU'))
-    # first grab number of specified header rows
-    for i in range(headerRows):
-        row = next(reader)
-        header.append(row)
-    # now grab each itemData
-    for row in reader:
-        tmp = [row[literalColumn], row[categoryColumn],
-               row[regexColumn], row[ruleColumn]]
-        tmp[2] = r"{0}".format(tmp[2])
-        # convert the regular expression string into a raw StringIO
-        item = create_ConTextItem(tmp)
-        items.append(item)
+def _get_fileobj(_file):
+    if not urllib.parse.urlparse(_file).scheme:
+        _file = "file://"+_file
+    return urllib.request.urlopen(_file, data=None)
+
+def get_items(_file):
+    f0 = _get_fileobj(_file)
+    context_items =  [ConTextItem(literal=d["Lex"],
+                                   category=d["Type"],
+                                   re=r"%s"%d["Regex"],
+                                   rule=d["Direction"]) for d in yaml.load_all(f0)]
     f0.close()
-    return items, header
+    return context_items
 
 
-def writeConTextItems(items, fname):
-    """
-    Write the ConTextItems as a tab delimited file to the file specified
-    in fname
-    """
-    with open(fname, 'w') as f0:
-        f0.write("Lex\tType\tRegex\tRule\n")
-        for i in items:
-            f0.write("%s\t%s\t%s\t%s\n" % (i.literal,
-                                           ",".join(i.category),
-                                           i.re,
-                                           i.rule))
+
