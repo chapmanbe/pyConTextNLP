@@ -4,7 +4,7 @@ from os import path
 import json
 
 version = {}
-with open(path.join("pyConTextnLP","version.py")) as f0:
+with open(path.join("pyConTextNLP","version.py")) as f0:
     exec(f0.read(), version)
 print(version)
 here = path.abspath(path.dirname(__file__))
