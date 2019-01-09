@@ -1,7 +1,7 @@
 pyConTextNLP
 ============
 
-This code has been validated using hte included notebooks on Python v 3.7.2
+This code has been validated using the included notebooks on Python v 3.7.2. Python 2.x is no longer supported.
 
 pyConTextNLP is a Python implementation/extension/modification of the
 ConText algorithm described in `CITE <>`__ which is itself a
