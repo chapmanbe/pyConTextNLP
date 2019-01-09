@@ -39,21 +39,29 @@ of a name conflict on pypi.
 Installation
 ------------
 
-Download pyConTextNLP from GitHub at
-https://github.com/chapmanbe/pyConTextNLP or the pypi repository
-http://pypi.python.org/pypi/pyConTextNLP. Since pyConTextNLP is
-registered with pypi, it can be installed with easy\_install or pip:
+Latest Version
+~~~~~~~~~~~~~~
+
+The latest version of pyConTextNLP is available on [github](https://github.com/chapmanbe/pyConTextNLP). 
+The package can be installed by either cloning the repository and running `python setup.py install`. 
+Alternatively or by
+.. code:: shell
+    pip install git+https://github.com/chapmanbe/pyConTextNLP.git 
+
+PyPI
+~~~~~
+
+pyConTextNLP is also available via the Python Package Index and can be installed via
 
 .. code:: shell
 
-    easy_install pyConTextNLP
     pip install pyConTextNLP
 
-Dependencies include - unicodecsv - textblob - networkx
+Dependencies include 
 
-But ``easy_install`` should also install everything for you. There is
-optional functionality that is dependent on pygraphviz. I do not yet
-have this worked into the setuptools script.
+* networkx
+* PyYAML
+
 
 Tutorials
 ---------
@@ -61,23 +69,6 @@ Tutorials
 See the `notebooks folder <./notebooks>`__ for a series of walkthroughs
 demonstrating pyConTextNLP core concepts with example data.
 
-Code Structure
---------------
-
-The code has been modified substantially since the code base used for
-the JBI publication. In the current version, pyConTextNLP corresponds to
-pyConTextGraph in previous versions. This code uses
-[https://networkx.github.io/ NetworkX] to structure the relationship
-between targets and modifiers in the markup.
-
-The package has three files:
-
--  *itemData.py*. This is where the essential domain knowledge is stored
-   in 4-tuples as described in the paper. For a new application, this is
-   where the user will encapsulate the domain knowledge for their
-   application.
--  *pyConTextGraph.py*. This module defines the algorithm
--  *pyConTextSql.py*.
 
 How to Use
 ----------
