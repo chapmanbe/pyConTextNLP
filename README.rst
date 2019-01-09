@@ -1,6 +1,8 @@
 pyConTextNLP
 ============
 
+This code has been validated using hte included notebooks on Python v 3.7.2
+
 pyConTextNLP is a Python implementation/extension/modification of the
 ConText algorithm described in `CITE <>`__ which is itself a
 generalization of the NegEx algorithm described in `CITE <>`__.
