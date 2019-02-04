@@ -34,6 +34,9 @@ class ConTextItem(collections.namedtuple('ConTextItem',
                         self.rule)
 
 
+#   def __new__(ConTextItem,l,c,rgx, rl, *args, **kwargs):
+#       _l = l.lower().strip()
+#       return super().__new__(ConTextItem, _l, c, _assign_regex(_l, rgx), rl)
 def _get_categories(cats):
     if "," in cats:
         return tuple([c.lower().strip() for c in cats.split(",")])
