@@ -88,17 +88,33 @@ class tagObject(object):
         update the scope of self
         returns True if a obj modified the scope of self"""
         if not self.getRule() or self.getRule()== 'terminate' or \
-             (not self.isA(obj.getCategory()) and obj.getRule() != 'terminate'):
+            (not self.isA(obj.getCategory()) and obj.getRule() != 'terminate'):
             return False
+
+        # Change scope of self
         originalScope = copy.copy((self.getScope()))
-        if 'forward' in self.getRule().lower() or \
-            'bidirectional' in self.getRule().lower():
-            if obj > self:
+
+        # Case1: self is bidirectional:
+        if 'bidirectional' in self.getRule().lower():
+            # self is upstream of obj:
+            if self.getSpan()[1] <= obj.getSpan()[0]:
+                # Adjust self downstream scope if currently includes obj
                 self.__scope[1] = min(self.__scope[1],obj.getSpan()[0])
-        elif 'backward' in self.getRule().lower() or \
-              'bidirectional' in self.getRule().lower():
-            if obj < self:
+            # obj is upstream of self:
+            elif obj.getSpan()[1] <= self.getSpan()[0]:
+                # Adjust self upstream scope if currently includes obj
                 self.__scope[0] = max(self.__scope[0],obj.getSpan()[1])
+
+        # Case2: self has forward scope and is upstream of obj
+        elif 'forward' in self.getRule().lower() and \
+            self.getSpan()[1] <= obj.getSpan()[0]:
+                self.__scope[1] = min(self.__scope[1],obj.getSpan()[0])
+
+        # Case3: self has backward scope and is downstream of obj
+        elif 'backward' in self.getRule().lower() and \
+            obj.getSpan()[1] <= self.getSpan()[0]:
+                self.__scope[0] = max(self.__scope[0],obj.getSpan()[1])
+
         if originalScope != self.__scope:
             return True
         else:
@@ -111,7 +127,7 @@ class tagObject(object):
         if not self.getRule() or self.getRule() == 'terminate':
             return False
         if self.__scope[0] <= term.getSpan()[0] <= self.__scope[1]:
-            return True 
+            return True
 
 
     def getConTextCategory(self):
@@ -266,6 +282,3 @@ class tagObject(object):
         return self.__unicode__()
     def __repr__(self):
         return self.__unicode__()
-
-
-
