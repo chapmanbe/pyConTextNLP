@@ -6,8 +6,8 @@ This package has been in defacto retirement for many years. The direct successor
 This code has been validated using the included notebooks on Python v 3.7.2. Python 2.x is no longer supported.
 
 pyConTextNLP is a Python implementation/extension/modification of the
-ConText algorithm described in `CITE <>`__ which is itself a
-generalization of the NegEx algorithm described in `CITE <>`__.
+ConText algorithm described in `"Context: An Algorithm for Determining Negation, Experiencer, and Temporal Status from Clinical Reports" <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2757457/>`_ which is itself a
+generalization of the NegEx algorithm described in `"A simple algorithm for identifying negated findings and diseases in discharge summaries" <https://pubmed.ncbi.nlm.nih.gov/12123149/>`_.
 
 The package is maintained by Brian Chapman at the University of Utah.
 Other active and past developers include:
