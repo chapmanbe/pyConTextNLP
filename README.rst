@@ -1,6 +1,8 @@
 pyConTextNLP
 ============
 
+This package has been in defacto retirement for many years. The direct successor to this project is [MedSpaCy](https://github.com/medspacy/medspacy).
+
 This code has been validated using the included notebooks on Python v 3.7.2. Python 2.x is no longer supported.
 
 pyConTextNLP is a Python implementation/extension/modification of the
