@@ -15,6 +15,7 @@
 """
 A module defining the contextItem class.
 """
+import pandas as pd
 import yaml
 import urllib.request, urllib.error, urllib.parse
 
@@ -25,12 +26,23 @@ def _get_fileobj(_file):
     return urllib.request.urlopen(_file, data=None)
 
 def get_items(_file):
-    f0 = _get_fileobj(_file)
+
+    opened = False
+    if _file.endswith(".tsv"):
+        df = pd.read_csv(_file, sep="\t", keep_default_na=False)
+        items_input = (row[1] for row in df.iterrows())
+    else:
+        f0 = _get_fileobj(_file)
+        opened = True
+        items_input = yaml.safe_load_all(f0)
+
     context_items =  [contextItem((d["Lex"],
                                    d["Type"],
                                    r"%s"%d["Regex"],
-                                   d["Direction"])) for d in yaml.load_all(f0)]
-    f0.close()
+                                   d["Direction"])) for d in items_input]
+    if opened:
+        f0.close()
+
     return context_items
 
 
