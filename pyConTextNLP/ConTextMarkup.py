@@ -12,7 +12,7 @@ REG_CLEAN1 = re.compile(r"""\W""", re.UNICODE)
 REG_CLEAN2 = re.compile(r"""\s+""", re.UNICODE)
 REG_CLEAN3 = re.compile(r"""\d""", re.UNICODE)
 
-COMPILED_REGEXPRS = {}
+
 
 NODE_XML_SKEL = \
 """
@@ -305,22 +305,20 @@ class ConTextMarkup(nx.DiGraph):
 
         # See if we have already created a regular expression
 
-        if not item.getLiteral() in COMPILED_REGEXPRS:
-            if not item.getRE():
-                reg_exp = r"\b{}\b".format(item.getLiteral())
-                if self.getVerbose():
-                    print("generating regular expression", reg_exp)
-            else:
-                reg_exp = item.getRE()
-                if self.getVerbose():
-                    print("using provided regular expression", reg_exp)
-            if ignoreCase:
-                regex = re.compile(reg_exp, re.IGNORECASE|re.UNICODE)
-            else:
-                regex = re.compile(reg_exp, re.UNICODE)
-            COMPILED_REGEXPRS[item.getLiteral()] = regex
+
+        if not item.getRE():
+            reg_exp = r"\b{}\b".format(item.getLiteral())
+            if self.getVerbose():
+                print("generating regular expression", reg_exp)
         else:
-            regex = COMPILED_REGEXPRS[item.getLiteral()]
+            reg_exp = item.getRE()
+            if self.getVerbose():
+                print("using provided regular expression", reg_exp)
+        if ignoreCase:
+            regex = re.compile(reg_exp, re.IGNORECASE|re.UNICODE)
+        else:
+            regex = re.compile(reg_exp, re.UNICODE)
+
         _iter = regex.finditer(self.getText())
         terms = []
         for i in _iter:
